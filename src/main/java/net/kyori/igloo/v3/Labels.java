@@ -105,6 +105,14 @@ public interface Labels {
     void add(@NonNull final Iterable<String> names) throws IOException;
 
     /**
+     * Set an issues labels.
+     *
+     * @param names the label names
+     * @throws IOException if an exception occurs while setting the labels
+     */
+    void set(@NonNull final Iterable<String> names) throws IOException;
+
+    /**
      * Remove a label from the issue.
      *
      * @param name the label name
@@ -130,6 +138,11 @@ public interface Labels {
       @Override
       public void add(@NonNull final Iterable<String> names) throws IOException {
         this.request.post(names);
+      }
+
+      @Override
+      public void set(@NonNull final Iterable<String> names) throws IOException {
+        this.request.put(names);
       }
 
       @Override
