@@ -23,10 +23,12 @@
  */
 package net.kyori.igloo.v3;
 
+import com.google.api.client.http.HttpBackOffIOExceptionHandler;
 import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.json.Json;
+import com.google.api.client.util.ExponentialBackOff;
 import com.google.gson.Gson;
 import net.kyori.blizzard.NonNull;
 
@@ -126,6 +128,8 @@ public interface GitHub {
 
     private Impl(final Gson gson, final String authentication) {
       final HttpRequestFactory factory = new ApacheHttpTransport().createRequestFactory((request) -> {
+        request.setIOExceptionHandler(new HttpBackOffIOExceptionHandler(new ExponentialBackOff()));
+        request.setNumberOfRetries(10);
         final HttpHeaders headers = request.getHeaders();
         headers.setAccept("application/vnd.github.v3+json");
         headers.setContentType(Json.MEDIA_TYPE);
