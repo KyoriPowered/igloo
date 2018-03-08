@@ -25,12 +25,10 @@ package net.kyori.igloo.v3;
 
 import com.google.api.client.http.EmptyContent;
 import com.google.api.client.json.GenericJson;
-import com.google.common.base.Suppliers;
 import com.google.gson.annotations.SerializedName;
 import net.kyori.blizzard.NonNull;
 import net.kyori.blizzard.Nullable;
 import net.kyori.cereal.Document;
-import net.kyori.lunar.exception.Exceptions;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -255,7 +253,7 @@ public interface Issue {
 
     Impl(final Request request, final int number) {
       super(request, number);
-      this.json = Suppliers.memoize(Exceptions.rethrowSupplier(() -> this.request.get(GenericJson.class))::get);
+      this.json = Request.getAsJson(this.request);
     }
 
     @NonNull

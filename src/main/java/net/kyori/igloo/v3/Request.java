@@ -29,22 +29,36 @@ import com.google.api.client.http.HttpContent;
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.HttpResponse;
+import com.google.api.client.json.GenericJson;
 import com.google.api.client.json.Json;
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
+import com.google.common.base.Suppliers;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import net.kyori.blizzard.NonNull;
+import net.kyori.lunar.exception.Exceptions;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * A wrapper around an {@link HttpRequest http request}.
  */
 public interface Request {
+  /**
+   * GET as JSON.
+   *
+   * @param request the request
+   * @return the response, as json
+   */
+  static Supplier<GenericJson> getAsJson(final Request request) {
+    return Suppliers.memoize(Exceptions.rethrowSupplier(() -> request.get(GenericJson.class))::get);
+  }
+
   /**
    * Append components to the path of the request.
    *
