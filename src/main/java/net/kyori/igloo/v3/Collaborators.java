@@ -23,7 +23,7 @@
  */
 package net.kyori.igloo.v3;
 
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A repository's collaborators.
@@ -35,8 +35,7 @@ public interface Collaborators {
    * @param user the user
    * @return the collaborator
    */
-  @NonNull
-  Collaborator get(@NonNull final User user);
+  @NonNull Collaborator get(final @NonNull User user);
 
   final class Impl implements Collaborators {
     private final Request request;
@@ -45,9 +44,8 @@ public interface Collaborators {
       this.request = request.path("collaborators");
     }
 
-    @NonNull
     @Override
-    public Collaborator get(@NonNull final User user) {
+    public @NonNull Collaborator get(final @NonNull User user) {
       return new Collaborator.Impl(this.request, user);
     }
   }

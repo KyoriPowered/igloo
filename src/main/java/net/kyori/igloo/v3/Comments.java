@@ -23,7 +23,7 @@
  */
 package net.kyori.igloo.v3;
 
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 
@@ -38,8 +38,7 @@ public interface Comments {
    * @return the comment that was posted
    * @throws IOException if an exception occurs while posting the comment
    */
-  @NonNull
-  Comment post(@NonNull final Comment.Partial.Body body) throws IOException;
+  @NonNull Comment post(final Comment.Partial.@NonNull Body body) throws IOException;
 
   final class Impl implements Comments {
     private final Request request;
@@ -48,9 +47,8 @@ public interface Comments {
       this.request = request.path("comments");
     }
 
-    @NonNull
     @Override
-    public Comment post(@NonNull final Comment.Partial.Body body) throws IOException {
+    public @NonNull Comment post(final Comment.Partial.@NonNull Body body) throws IOException {
       return new Comment.Impl(this.request.post(body, Partial.Id.class).id);
     }
   }

@@ -30,7 +30,7 @@ import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.json.Json;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.gson.Gson;
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Provides access to v3 of the GitHub API.
@@ -46,8 +46,7 @@ public interface GitHub {
    *
    * @return a new builder
    */
-  @NonNull
-  static Builder builder() {
+  static @NonNull Builder builder() {
     return new Builder.Impl();
   }
 
@@ -56,16 +55,14 @@ public interface GitHub {
    *
    * @return repositories
    */
-  @NonNull
-  Repositories repositories();
+  @NonNull Repositories repositories();
 
   /**
    * Gets users.
    *
    * @return users
    */
-  @NonNull
-  Users users();
+  @NonNull Users users();
 
   /**
    * A builder for creating instances of the GitHub API.
@@ -77,8 +74,7 @@ public interface GitHub {
      * @param gson the gson instance
      * @return the builder
      */
-    @NonNull
-    Builder gson(@NonNull final Gson gson);
+    @NonNull Builder gson(final @NonNull Gson gson);
 
     /**
      * Sets the api authentication token.
@@ -86,38 +82,33 @@ public interface GitHub {
      * @param token the api authentication token
      * @return the builder
      */
-    @NonNull
-    Builder token(@NonNull final String token);
+    @NonNull Builder token(final @NonNull String token);
 
     /**
      * Builds.
      *
      * @return github api
      */
-    @NonNull
-    GitHub build();
+    @NonNull GitHub build();
 
     final class Impl implements Builder {
       private Gson gson;
       private String token;
 
-      @NonNull
       @Override
-      public Builder gson(@NonNull final Gson gson) {
+      public @NonNull Builder gson(final @NonNull Gson gson) {
         this.gson = gson;
         return this;
       }
 
-      @NonNull
       @Override
-      public Builder token(@NonNull final String token) {
+      public @NonNull Builder token(final @NonNull String token) {
         this.token = token;
         return this;
       }
 
-      @NonNull
       @Override
-      public GitHub build() {
+      public @NonNull GitHub build() {
         return new GitHub.Impl(this.gson, this.token);
       }
     }
@@ -139,15 +130,13 @@ public interface GitHub {
       this.request = new Request.Impl(gson, factory, new Request.Url(API_ENDPOINT));
     }
 
-    @NonNull
     @Override
-    public Repositories repositories() {
+    public @NonNull Repositories repositories() {
       return new Repositories.Impl(this.request);
     }
 
-    @NonNull
     @Override
-    public Users users() {
+    public @NonNull Users users() {
       return new Users.Impl();
     }
   }

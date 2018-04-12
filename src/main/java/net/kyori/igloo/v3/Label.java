@@ -24,8 +24,8 @@
 package net.kyori.igloo.v3;
 
 import com.google.common.base.MoreObjects;
-import net.kyori.blizzard.NonNull;
 import net.kyori.cereal.Document;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -39,24 +39,21 @@ public interface Label {
    *
    * @return the url
    */
-  @NonNull
-  String url();
+  @NonNull String url();
 
   /**
    * Gets the name.
    *
    * @return the name
    */
-  @NonNull
-  String name();
+  @NonNull String name();
 
   /**
    * Gets the color.
    *
    * @return the color
    */
-  @NonNull
-  String color();
+  @NonNull String color();
 
   /**
    * Submits an edit to the label.
@@ -65,7 +62,7 @@ public interface Label {
    * @param <E> the edit type
    * @throws IOException if an exception occurs during edit
    */
-  <E extends Edit> void edit(@NonNull final E edit) throws IOException;
+  <E extends Edit> void edit(final @NonNull E edit) throws IOException;
 
   /**
    * Deletes the label.
@@ -109,8 +106,7 @@ public interface Label {
        *
        * @return the label name
        */
-      @NonNull
-      String name();
+      @NonNull String name();
     }
 
     /**
@@ -122,8 +118,7 @@ public interface Label {
        *
        * @return the label color
        */
-      @NonNull
-      String color();
+      @NonNull String color();
     }
   }
 
@@ -140,26 +135,23 @@ public interface Label {
       this.color = color;
     }
 
-    @NonNull
     @Override
-    public String url() {
+    public @NonNull String url() {
       return this.url;
     }
 
-    @NonNull
     @Override
-    public String name() {
+    public @NonNull String name() {
       return this.name;
     }
 
-    @NonNull
     @Override
-    public String color() {
+    public @NonNull String color() {
       return this.color;
     }
 
     @Override
-    public <E extends Edit> void edit(@NonNull final E edit) throws IOException {
+    public <E extends Edit> void edit(final @NonNull E edit) throws IOException {
       this.request.patch(edit);
     }
 

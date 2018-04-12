@@ -24,7 +24,7 @@
 package net.kyori.igloo.v3;
 
 import com.google.common.base.MoreObjects;
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
 
@@ -39,8 +39,7 @@ public interface RepositoryId {
    * @param repo the repository name
    * @return the repository id
    */
-  @NonNull
-  static RepositoryId of(@NonNull final String user, @NonNull final String repo) {
+  static @NonNull RepositoryId of(final @NonNull String user, final @NonNull String repo) {
     return new Impl(user, repo);
   }
 
@@ -49,24 +48,21 @@ public interface RepositoryId {
    *
    * @return the user name
    */
-  @NonNull
-  String user();
+  @NonNull String user();
 
   /**
    * Gets the repository name.
    *
    * @return the repository name
    */
-  @NonNull
-  String repo();
+  @NonNull String repo();
 
   /**
    * Gets the repository id as a string.
    *
    * @return string
    */
-  @NonNull
-  default String asString() {
+  default @NonNull String asString() {
     return this.user() + '/' + this.repo();
   }
 
@@ -79,15 +75,13 @@ public interface RepositoryId {
       this.repo = repo;
     }
 
-    @NonNull
     @Override
-    public String user() {
+    public @NonNull String user() {
       return this.user;
     }
 
-    @NonNull
     @Override
-    public String repo() {
+    public @NonNull String repo() {
       return this.repo;
     }
 

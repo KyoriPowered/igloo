@@ -23,7 +23,7 @@
  */
 package net.kyori.igloo.v3;
 
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A repository.
@@ -34,24 +34,21 @@ public interface Repository {
    *
    * @return collaborators
    */
-  @NonNull
-  Collaborators collaborators();
+  @NonNull Collaborators collaborators();
 
   /**
    * Gets issues.
    *
    * @return issues
    */
-  @NonNull
-  Issues issues();
+  @NonNull Issues issues();
 
   /**
    * Gets labels.
    *
    * @return labels
    */
-  @NonNull
-  Labels.Repository labels();
+  Labels.@NonNull Repository labels();
 
   final class Impl implements Repository {
     private final Request request;
@@ -60,21 +57,18 @@ public interface Repository {
       this.request = request.path("repos", id.user(), id.repo());
     }
 
-    @NonNull
     @Override
-    public Collaborators collaborators() {
+    public @NonNull Collaborators collaborators() {
       return new Collaborators.Impl(this.request);
     }
 
-    @NonNull
     @Override
-    public Issues issues() {
+    public @NonNull Issues issues() {
       return new Issues.Impl(this.request);
     }
 
-    @NonNull
     @Override
-    public Labels.Repository labels() {
+    public Labels.@NonNull Repository labels() {
       return new Labels.Repository.Impl(this.request);
     }
   }

@@ -23,7 +23,7 @@
  */
 package net.kyori.igloo.v3;
 
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Users.
@@ -35,16 +35,14 @@ public interface Users {
    * @param login the user login
    * @return the user
    */
-  @NonNull
-  User get(@NonNull final String login);
+  @NonNull User get(final @NonNull String login);
 
   final class Impl implements Users {
     Impl() {
     }
 
-    @NonNull
     @Override
-    public User get(@NonNull final String login) {
+    public @NonNull User get(final @NonNull String login) {
       return new User.Impl(login);
     }
   }

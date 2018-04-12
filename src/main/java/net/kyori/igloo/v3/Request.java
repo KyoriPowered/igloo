@@ -36,8 +36,8 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Suppliers;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import net.kyori.blizzard.NonNull;
 import net.kyori.lunar.exception.Exceptions;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -65,8 +65,7 @@ public interface Request {
    * @param path the path components
    * @return a new request
    */
-  @NonNull
-  Request path(@NonNull final String... path);
+  @NonNull Request path(final @NonNull String... path);
 
   /**
    * Remove {@code n} components from the end of the path.
@@ -74,8 +73,7 @@ public interface Request {
    * @param n the levels to go up
    * @return a new request
    */
-  @NonNull
-  Request up(final int n);
+  @NonNull Request up(final int n);
 
   /**
    * GET.
@@ -235,15 +233,13 @@ public interface Request {
       this.url = url;
     }
 
-    @NonNull
     @Override
-    public Request path(@NonNull final String... path) {
+    public @NonNull Request path(final @NonNull String... path) {
       return new Impl(this.gson, this.factory, new Url(this.url, path));
     }
 
-    @NonNull
     @Override
-    public Request up(final int n) {
+    public @NonNull Request up(final int n) {
       return new Impl(this.gson, this.factory, new Url(this.url, n));
     }
 

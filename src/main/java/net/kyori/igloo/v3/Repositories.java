@@ -23,7 +23,7 @@
  */
 package net.kyori.igloo.v3;
 
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Repositories.
@@ -35,8 +35,7 @@ public interface Repositories {
    * @param id the id
    * @return the repository
    */
-  @NonNull
-  Repository get(@NonNull final RepositoryId id);
+  @NonNull Repository get(final @NonNull RepositoryId id);
 
   final class Impl implements Repositories {
     private final Request request;
@@ -45,9 +44,8 @@ public interface Repositories {
       this.request = request;
     }
 
-    @NonNull
     @Override
-    public Repository get(@NonNull final RepositoryId id) {
+    public @NonNull Repository get(final @NonNull RepositoryId id) {
       return new Repository.Impl(this.request, id);
     }
   }

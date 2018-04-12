@@ -26,9 +26,9 @@ package net.kyori.igloo.v3;
 import com.google.api.client.http.EmptyContent;
 import com.google.api.client.json.GenericJson;
 import com.google.gson.annotations.SerializedName;
-import net.kyori.blizzard.NonNull;
-import net.kyori.blizzard.Nullable;
 import net.kyori.cereal.Document;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -50,8 +50,7 @@ public interface Issue {
    *
    * @return the html url
    */
-  @NonNull
-  String html_url();
+  @NonNull String html_url();
 
   /**
    * Submits an edit to the issue.
@@ -60,23 +59,21 @@ public interface Issue {
    * @param <E> the edit type
    * @throws IOException if an exception occurs during edit
    */
-  <E extends Edit> void edit(@NonNull final E edit) throws IOException;
+  <E extends Edit> void edit(final @NonNull E edit) throws IOException;
 
   /**
    * Gets the labels.
    *
    * @return the labels
    */
-  @NonNull
-  Labels.Issue labels();
+  Labels.@NonNull Issue labels();
 
   /**
    * Gets the comments.
    *
    * @return the comments
    */
-  @NonNull
-  Comments comments();
+  @NonNull Comments comments();
 
   /**
    * Locks the issue.
@@ -127,8 +124,7 @@ public interface Issue {
        *
        * @return the issue title
        */
-      @Nullable
-      String title();
+      @Nullable String title();
     }
 
     /**
@@ -140,8 +136,7 @@ public interface Issue {
        *
        * @return the issue body
        */
-      @Nullable
-      String body();
+      @Nullable String body();
     }
 
     /**
@@ -153,8 +148,7 @@ public interface Issue {
        *
        * @return the issue state
        */
-      @Nullable
-      Issue.State state();
+      Issue.@Nullable State state();
     }
 
     /**
@@ -178,8 +172,7 @@ public interface Issue {
        *
        * @return the issue's labels
        */
-      @Nullable
-      Collection<String> labels();
+      @Nullable Collection<String> labels();
     }
 
     /**
@@ -191,8 +184,7 @@ public interface Issue {
        *
        * @return the issue's assignees
        */
-      @Nullable
-      Collection<String> assignees();
+      @Nullable Collection<String> assignees();
     }
   }
 
@@ -221,19 +213,17 @@ public interface Issue {
     }
 
     @Override
-    public <E extends Edit> void edit(@NonNull final E edit) throws IOException {
+    public <E extends Edit> void edit(final @NonNull E edit) throws IOException {
       this.request.patch(edit);
     }
 
-    @NonNull
     @Override
-    public Labels.Issue labels() {
+    public Labels.@NonNull Issue labels() {
       return new Labels.Issue.Impl(this.request);
     }
 
-    @NonNull
     @Override
-    public Comments comments() {
+    public @NonNull Comments comments() {
       return new Comments.Impl(this.request);
     }
 
@@ -256,9 +246,8 @@ public interface Issue {
       this.json = Request.getAsJson(this.request);
     }
 
-    @NonNull
     @Override
-    public String html_url() {
+    public @NonNull String html_url() {
       return (String) this.json.get().get("html_url");
     }
 
@@ -270,9 +259,8 @@ public interface Issue {
         this.html_url = html_url;
       }
 
-      @NonNull
       @Override
-      public String html_url() {
+      public @NonNull String html_url() {
         return this.html_url;
       }
     }

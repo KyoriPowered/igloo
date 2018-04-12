@@ -24,7 +24,7 @@
 package net.kyori.igloo.v3;
 
 import com.google.gson.annotations.SerializedName;
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 
@@ -38,8 +38,7 @@ public interface Collaborator {
    * @return the permission
    * @throws IOException if an exception occurs while getting the permission
    */
-  @NonNull
-  Permission permission() throws IOException;
+  @NonNull Permission permission() throws IOException;
 
   /**
    * The permission levels that are possible for a collaborator to have.
@@ -71,9 +70,8 @@ public interface Collaborator {
       this.request = request.path(user.login());
     }
 
-    @NonNull
     @Override
-    public Permission permission() throws IOException {
+    public @NonNull Permission permission() throws IOException {
       return this.request.path("permission").get(Partial.Permission.class).permission;
     }
   }

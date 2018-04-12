@@ -23,7 +23,7 @@
  */
 package net.kyori.igloo.v3;
 
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A user.
@@ -34,8 +34,7 @@ public interface User {
    *
    * @return the login
    */
-  @NonNull
-  String login();
+  @NonNull String login();
 
   final class Impl implements User {
     private final String login;
@@ -44,9 +43,8 @@ public interface User {
       this.login = login;
     }
 
-    @NonNull
     @Override
-    public String login() {
+    public @NonNull String login() {
       return this.login;
     }
   }

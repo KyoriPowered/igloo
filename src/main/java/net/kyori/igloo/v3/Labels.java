@@ -23,7 +23,7 @@
  */
 package net.kyori.igloo.v3;
 
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -40,8 +40,7 @@ public interface Labels {
    * @return all the labels
    * @throws IOException if an exception occured while getting the labels
    */
-  @NonNull
-  Iterable<Label> all() throws IOException;
+  @NonNull Iterable<Label> all() throws IOException;
 
   /**
    * A repository's labels.
@@ -55,8 +54,7 @@ public interface Labels {
      * @return the new label
      * @throws IOException if an exception occurs while creating a new issue
      */
-    @NonNull
-    <C extends Label.Create & Label.Partial.Name & Label.Partial.Color> Label create(@NonNull final C create) throws IOException;
+    <C extends Label.Create & Label.Partial.Name & Label.Partial.Color> @NonNull Label create(final @NonNull C create) throws IOException;
 
     final class Impl implements Repository {
       private final Request request;
@@ -65,17 +63,15 @@ public interface Labels {
         this.request = request.path("labels");
       }
 
-      @NonNull
       @Override
-      public Iterable<Label> all() throws IOException {
+      public @NonNull Iterable<Label> all() throws IOException {
         return Arrays.stream(this.request.get(Partial.Label[].class))
           .map(label -> new Label.Impl(this.request, label.url, label.name, label.color))
           .collect(Collectors.toSet());
       }
 
-      @NonNull
       @Override
-      public <C extends Label.Create & Label.Partial.Name & Label.Partial.Color> Label create(@NonNull final C create) throws IOException {
+      public <C extends Label.Create & Label.Partial.Name & Label.Partial.Color> @NonNull Label create(final @NonNull C create) throws IOException {
         final Partial.Label label = this.request.post(create, Partial.Label.class);
         return new Label.Impl(this.request, label.url, label.name, label.color);
       }
@@ -92,7 +88,7 @@ public interface Labels {
      * @param name the label name
      * @throws IOException if an exception occurs while adding the label
      */
-    default void add(@NonNull final String name) throws IOException {
+    default void add(final @NonNull String name) throws IOException {
       this.add(Collections.singleton(name));
     }
 
@@ -102,7 +98,7 @@ public interface Labels {
      * @param names the label names
      * @throws IOException if an exception occurs while adding the labels
      */
-    void add(@NonNull final Iterable<String> names) throws IOException;
+    void add(final @NonNull Iterable<String> names) throws IOException;
 
     /**
      * Set an issues labels.
@@ -110,7 +106,7 @@ public interface Labels {
      * @param names the label names
      * @throws IOException if an exception occurs while setting the labels
      */
-    void set(@NonNull final Iterable<String> names) throws IOException;
+    void set(final @NonNull Iterable<String> names) throws IOException;
 
     /**
      * Remove a label from the issue.
@@ -118,7 +114,7 @@ public interface Labels {
      * @param name the label name
      * @throws IOException if an exception occurs while removing the label
      */
-    void remove(@NonNull final String name) throws IOException;
+    void remove(final @NonNull String name) throws IOException;
 
     final class Impl implements Issue {
       private final Request request;
@@ -127,26 +123,25 @@ public interface Labels {
         this.request = request.path("labels");
       }
 
-      @NonNull
       @Override
-      public Iterable<Label> all() throws IOException {
+      public @NonNull Iterable<Label> all() throws IOException {
         return Arrays.stream(this.request.get(Partial.Label[].class))
           .map(label -> new Label.Impl(this.request.up(3), label.url, label.name, label.color))
           .collect(Collectors.toSet());
       }
 
       @Override
-      public void add(@NonNull final Iterable<String> names) throws IOException {
+      public void add(final @NonNull Iterable<String> names) throws IOException {
         this.request.post(names);
       }
 
       @Override
-      public void set(@NonNull final Iterable<String> names) throws IOException {
+      public void set(final @NonNull Iterable<String> names) throws IOException {
         this.request.put(names);
       }
 
       @Override
-      public void remove(@NonNull final String name) throws IOException {
+      public void remove(final @NonNull String name) throws IOException {
         this.request.delete();
       }
     }

@@ -23,7 +23,7 @@
  */
 package net.kyori.igloo.v3;
 
-import net.kyori.blizzard.NonNull;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 
@@ -37,8 +37,7 @@ public interface Issues {
    * @param number the issue number
    * @return the issue
    */
-  @NonNull
-  Issue get(final int number);
+  @NonNull Issue get(final int number);
 
   /**
    * Creates a new issue.
@@ -48,8 +47,7 @@ public interface Issues {
    * @return the new issue
    * @throws IOException if an exception occurs while creating a new issue
    */
-  @NonNull
-  <C extends Issue.Create> Issue create(@NonNull final C create) throws IOException;
+  <C extends Issue.Create> @NonNull Issue create(final @NonNull C create) throws IOException;
 
   final class Impl implements Issues {
     private final Request request;
@@ -58,15 +56,13 @@ public interface Issues {
       this.request = request.path("issues");
     }
 
-    @NonNull
     @Override
-    public Issue get(final int id) {
+    public @NonNull Issue get(final int id) {
       return new Issue.Impl(this.request, id);
     }
 
-    @NonNull
     @Override
-    public <C extends Issue.Create> Issue create(@NonNull final C create) throws IOException {
+    public <C extends Issue.Create> @NonNull Issue create(final @NonNull C create) throws IOException {
       final Partial.Issue issue = this.request.post(create, Partial.Issue.class);
       return new Issue.Impl.Created(this.request, issue.number, issue.html_url);
     }
