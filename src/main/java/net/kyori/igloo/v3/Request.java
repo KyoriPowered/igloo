@@ -34,8 +34,8 @@ import com.google.api.client.json.Json;
 import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Suppliers;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import net.kyori.lunar.exception.Exceptions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -84,7 +84,7 @@ public interface Request {
    * @throws IOException if an exception occurred while getting
    */
   default <O> O get(final Class<O> type) throws IOException {
-    return this.get(TypeToken.get(type));
+    return this.get(TypeToken.of(type));
   }
 
   /**
@@ -115,7 +115,7 @@ public interface Request {
    * @throws IOException if an exception occurred while posting
    */
   default <O> O post(final Object content, final Class<O> type) throws IOException {
-    return this.post(content, TypeToken.get(type));
+    return this.post(content, TypeToken.of(type));
   }
 
   /**
@@ -147,7 +147,7 @@ public interface Request {
    * @throws IOException if an exception occurred while patching
    */
   default <O> O patch(final Object content, final Class<O> type) throws IOException {
-    return this.patch(content, TypeToken.get(type));
+    return this.patch(content, TypeToken.of(type));
   }
 
   /**
@@ -179,7 +179,7 @@ public interface Request {
    * @throws IOException if an exception occurred while putting
    */
   default <O> O put(final Object content, final Class<O> type) throws IOException {
-    return this.put(content, TypeToken.get(type));
+    return this.put(content, TypeToken.of(type));
   }
 
   /**
@@ -209,7 +209,7 @@ public interface Request {
    * @throws IOException if an exception occurred while deleting
    */
   default <O> O delete(final Class<O> type) throws IOException {
-    return this.delete(TypeToken.get(type));
+    return this.delete(TypeToken.of(type));
   }
 
   /**
