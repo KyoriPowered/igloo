@@ -62,17 +62,4 @@ public interface Collaborator {
       return this == ADMIN || this == WRITE;
     }
   }
-
-  final class Impl implements Collaborator {
-    private final Request request;
-
-    Impl(final Request request, final User user) {
-      this.request = request.path(user.login());
-    }
-
-    @Override
-    public @NonNull Permission permission() throws IOException {
-      return this.request.path("permission").get(Partial.Permission.class).permission;
-    }
-  }
 }

@@ -23,30 +23,47 @@
  */
 package net.kyori.igloo.v3;
 
+import com.google.api.client.http.EmptyContent;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * A repository.
- */
-public interface Repository {
-  /**
-   * Gets collaborators.
-   *
-   * @return collaborators
-   */
-  @NonNull Collaborators collaborators();
+import java.io.IOException;
 
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
+abstract class AbstractIssue implements Issue {
+  final Request request;
+  private final int number;
 
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  AbstractIssue(final Request request, final int number) {
+    this.request = request.path(Integer.toString(number));
+    this.number = number;
+  }
+
+  @Override
+  public int number() {
+    return this.number;
+  }
+
+  @Override
+  public <E extends Edit> void edit(final @NonNull E edit) throws IOException {
+    this.request.patch(edit).close();
+  }
+
+  @Override
+  public @NonNull IssueLabels labels() {
+    return new IssueLabelsImpl(this.request);
+  }
+
+  @Override
+  public @NonNull Comments comments() {
+    return new CommentsImpl(this.request);
+  }
+
+  @Override
+  public void lock() throws IOException {
+    this.request.path("lock").put(new EmptyContent()).close();
+  }
+
+  @Override
+  public void unlock() throws IOException {
+    this.request.path("lock").delete().close();
+  }
 }

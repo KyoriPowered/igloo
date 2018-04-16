@@ -23,12 +23,10 @@
  */
 package net.kyori.igloo.v3;
 
-import com.google.common.base.MoreObjects;
 import net.kyori.cereal.Document;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
-import java.util.Objects;
 
 /**
  * A label that may be applied to an {@link Issue}.
@@ -74,118 +72,22 @@ public interface Label {
   /**
    * A document that can be submitted during label creation.
    */
-  interface Create extends Document, Partial {
+  interface Create extends Document, LabelPartial.NamePartial, LabelPartial.ColorPartial {
     /**
      * A document containing all information that may be submitted during creation.
      */
-    interface Full extends Create, Partial.Name, Partial.Color {
+    interface Full extends Create {
     }
   }
 
   /**
    * A document that can be submitted during a label edit.
    */
-  interface Edit extends Document, Partial {
+  interface Edit extends Document, LabelPartial {
     /**
      * A document containing all information that may be submitted during an edit.
      */
-    interface Full extends Edit, Partial.Name, Partial.Color {
-    }
-  }
-
-  /**
-   * Partial documents used during label creation and edits.
-   */
-  interface Partial {
-    /**
-     * A document representing a label's name.
-     */
-    interface Name extends Edit {
-      /**
-       * Gets the label's name.
-       *
-       * @return the label name
-       */
-      @NonNull String name();
-    }
-
-    /**
-     * A document representing a label's color.
-     */
-    interface Color extends Edit {
-      /**
-       * Gets the issue's color.
-       *
-       * @return the label color
-       */
-      @NonNull String color();
-    }
-  }
-
-  final class Impl implements Label {
-    private final Request request;
-    private final String url;
-    private final String name;
-    private final String color;
-
-    Impl(final Request request, final String url, final String name, final String color) {
-      this.request = request.path(name);
-      this.url = url;
-      this.name = name;
-      this.color = color;
-    }
-
-    @Override
-    public @NonNull String url() {
-      return this.url;
-    }
-
-    @Override
-    public @NonNull String name() {
-      return this.name;
-    }
-
-    @Override
-    public @NonNull String color() {
-      return this.color;
-    }
-
-    @Override
-    public <E extends Edit> void edit(final @NonNull E edit) throws IOException {
-      this.request.patch(edit);
-    }
-
-    @Override
-    public void delete() throws IOException {
-      this.request.delete();
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-      if(this == other) {
-        return true;
-      }
-      if(other == null || this.getClass() != other.getClass()) {
-        return false;
-      }
-      final Impl that = (Impl) other;
-      return Objects.equals(this.url, that.url)
-        && Objects.equals(this.name, that.name)
-        && Objects.equals(this.color, that.color);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.url, this.name, this.color);
-    }
-
-    @Override
-    public String toString() {
-      return MoreObjects.toStringHelper(this)
-        .add("url", this.url)
-        .add("name", this.name)
-        .add("color", this.color)
-        .toString();
+    interface Full extends Edit, NamePartial, ColorPartial {
     }
   }
 }

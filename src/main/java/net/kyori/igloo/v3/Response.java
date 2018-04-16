@@ -23,30 +23,26 @@
  */
 package net.kyori.igloo.v3;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import com.google.common.reflect.TypeToken;
 
-/**
- * A repository.
- */
-public interface Repository {
-  /**
-   * Gets collaborators.
-   *
-   * @return collaborators
-   */
-  @NonNull Collaborators collaborators();
+import java.io.IOException;
+import java.util.Optional;
 
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
+public interface Response extends AutoCloseable {
+  default <R> R as(final Class<R> type) throws IOException {
+    return this.as(TypeToken.of(type));
+  }
 
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  <R> R as(final TypeToken<R> type) throws IOException;
+
+  Link link();
+
+  @Override
+  void close() throws IOException;
+
+  interface Link {
+    Optional<Request> previous();
+
+    Optional<Request> next();
+  }
 }

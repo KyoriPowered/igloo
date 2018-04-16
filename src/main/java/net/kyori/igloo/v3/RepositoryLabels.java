@@ -25,28 +25,19 @@ package net.kyori.igloo.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.io.IOException;
+
 /**
- * A repository.
+ * A repository's labels.
  */
-public interface Repository {
+public interface RepositoryLabels extends Labels {
   /**
-   * Gets collaborators.
+   * Creates a new label.
    *
-   * @return collaborators
+   * @param create the creation data
+   * @param <C> the creation data type
+   * @return the new label
+   * @throws IOException if an exception occurs while creating a new issue
    */
-  @NonNull Collaborators collaborators();
-
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
-
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  <C extends Label.Create> @NonNull Label create(final @NonNull C create) throws IOException;
 }

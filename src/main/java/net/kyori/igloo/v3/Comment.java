@@ -23,8 +23,6 @@
  */
 package net.kyori.igloo.v3;
 
-import net.kyori.cereal.Document;
-
 /**
  * A comment in an {@link Issue issue}.
  */
@@ -35,34 +33,4 @@ public interface Comment {
    * @return the id
    */
   int id();
-
-  /**
-   * Partial documents used during comment creation.
-   */
-  interface Partial {
-    /**
-     * A document representing a comment's body.
-     */
-    interface Body extends Document {
-      /**
-       * Gets the body.
-       *
-       * @return the body
-       */
-      String body();
-    }
-  }
-
-  final class Impl implements Comment {
-    private final int id;
-
-    Impl(final int id) {
-      this.id = id;
-    }
-
-    @Override
-    public int id() {
-      return this.id;
-    }
-  }
 }

@@ -25,28 +25,17 @@ package net.kyori.igloo.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * A repository.
- */
-public interface Repository {
-  /**
-   * Gets collaborators.
-   *
-   * @return collaborators
-   */
-  @NonNull Collaborators collaborators();
+import java.io.IOException;
 
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
+final class CommentsImpl implements Comments {
+  private final Request request;
 
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  CommentsImpl(final Request request) {
+    this.request = request.path("comments");
+  }
+
+  @Override
+  public @NonNull Comment post(final CommentPartial.@NonNull BodyPartial body) throws IOException {
+    return new CommentImpl(this.request.post(body).as(Partial.Id.class).id);
+  }
 }

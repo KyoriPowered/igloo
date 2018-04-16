@@ -25,28 +25,16 @@ package net.kyori.igloo.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * A repository.
- */
-public interface Repository {
-  /**
-   * Gets collaborators.
-   *
-   * @return collaborators
-   */
-  @NonNull Collaborators collaborators();
+final class IssueImpl extends AbstractIssue {
+  private final Lazy<Partial.Issue> lazy;
 
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
+  IssueImpl(final Request request, final int number) {
+    super(request, number);
+    this.lazy = new Lazy<>(this.request, Partial.Issue.class);
+  }
 
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  @Override
+  public @NonNull String html_url() {
+    return this.lazy.get().html_url;
+  }
 }

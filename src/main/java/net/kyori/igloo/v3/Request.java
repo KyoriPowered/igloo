@@ -23,42 +23,18 @@
  */
 package net.kyori.igloo.v3;
 
-import com.google.api.client.http.ByteArrayContent;
 import com.google.api.client.http.GenericUrl;
-import com.google.api.client.http.HttpContent;
 import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestFactory;
-import com.google.api.client.http.HttpResponse;
-import com.google.api.client.json.GenericJson;
-import com.google.api.client.json.Json;
 import com.google.common.base.Joiner;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Suppliers;
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
-import net.kyori.lunar.exception.Exceptions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.function.Supplier;
 
 /**
  * A wrapper around an {@link HttpRequest http request}.
  */
 public interface Request {
-  /**
-   * GET as JSON.
-   *
-   * @param request the request
-   * @return the response, as json
-   */
-  static Supplier<GenericJson> getAsJson(final Request request) {
-    return Suppliers.memoize(Exceptions.rethrowSupplier(() -> request.get(GenericJson.class))::get);
-  }
-
   /**
    * Append components to the path of the request.
    *
@@ -78,239 +54,45 @@ public interface Request {
   /**
    * GET.
    *
-   * @param type the response type
-   * @param <O> the response type
    * @return the response
    * @throws IOException if an exception occurred while getting
    */
-  default <O> O get(final Class<O> type) throws IOException {
-    return this.get(TypeToken.of(type));
-  }
-
-  /**
-   * GET.
-   *
-   * @param type the response type
-   * @param <O> the response type
-   * @return the response
-   * @throws IOException if an exception occurred while getting
-   */
-  <O> O get(final TypeToken<O> type) throws IOException;
+  Response get() throws IOException;
 
   /**
    * POST.
    *
    * @param content the content
-   * @throws IOException if an exception occurred while posting
-   */
-  void post(final Object content) throws IOException;
-
-  /**
-   * POST.
-   *
-   * @param content the content
-   * @param type the response type
-   * @param <O> the response type
    * @return the response
    * @throws IOException if an exception occurred while posting
    */
-  default <O> O post(final Object content, final Class<O> type) throws IOException {
-    return this.post(content, TypeToken.of(type));
-  }
-
-  /**
-   * POST.
-   *
-   * @param content the content
-   * @param type the response type
-   * @param <O> the response type
-   * @return the response
-   * @throws IOException if an exception occurred while posting
-   */
-  <O> O post(final Object content, final TypeToken<O> type) throws IOException;
+  Response post(final Object content) throws IOException;
 
   /**
    * PATCH.
    *
    * @param content the content
-   * @throws IOException if an exception occurred while patching
-   */
-  void patch(final Object content) throws IOException;
-
-  /**
-   * PATCH.
-   *
-   * @param content the content
-   * @param type the response type
-   * @param <O> the response type
    * @return the response
    * @throws IOException if an exception occurred while patching
    */
-  default <O> O patch(final Object content, final Class<O> type) throws IOException {
-    return this.patch(content, TypeToken.of(type));
-  }
-
-  /**
-   * PATCH.
-   *
-   * @param content the content
-   * @param type the response type
-   * @param <O> the response type
-   * @return the response
-   * @throws IOException if an exception occurred while patching
-   */
-  <O> O patch(final Object content, final TypeToken<O> type) throws IOException;
+  Response patch(final Object content) throws IOException;
 
   /**
    * PUT.
    *
    * @param content the content
-   * @throws IOException if an exception occurred while putting
-   */
-  void put(final Object content) throws IOException;
-
-  /**
-   * PUT.
-   *
-   * @param content the content
-   * @param type the response type
-   * @param <O> the response type
    * @return the response
    * @throws IOException if an exception occurred while putting
    */
-  default <O> O put(final Object content, final Class<O> type) throws IOException {
-    return this.put(content, TypeToken.of(type));
-  }
-
-  /**
-   * PUT.
-   *
-   * @param content the content
-   * @param type the response type
-   * @param <O> the response type
-   * @return the response
-   * @throws IOException if an exception occurred while putting
-   */
-  <O> O put(final Object content, final TypeToken<O> type) throws IOException;
+  Response put(final Object content) throws IOException;
 
   /**
    * DELETE.
    *
-   * @throws IOException if an exception occurred while deleting
-   */
-  void delete() throws IOException;
-
-  /**
-   * DELETE.
-   *
-   * @param type the response type
-   * @param <O> the response type
    * @return the response
    * @throws IOException if an exception occurred while deleting
    */
-  default <O> O delete(final Class<O> type) throws IOException {
-    return this.delete(TypeToken.of(type));
-  }
-
-  /**
-   * DELETE.
-   *
-   * @param type the response type
-   * @param <O> the response type
-   * @return the response
-   * @throws IOException if an exception occurred while deleting
-   */
-  <O> O delete(final TypeToken<O> type) throws IOException;
-
-  final class Impl implements Request {
-    private final Gson gson;
-    private final HttpRequestFactory factory;
-    private final Url url;
-
-    Impl(final Gson gson, final HttpRequestFactory factory, final Url url) {
-      this.gson = gson;
-      this.factory = factory;
-      this.url = url;
-    }
-
-    @Override
-    public @NonNull Request path(final @NonNull String... path) {
-      return new Impl(this.gson, this.factory, new Url(this.url, path));
-    }
-
-    @Override
-    public @NonNull Request up(final int n) {
-      return new Impl(this.gson, this.factory, new Url(this.url, n));
-    }
-
-    @Override
-    public <O> O get(final TypeToken<O> type) throws IOException {
-      return this.response(this.factory.buildGetRequest(this.url), type.getType());
-    }
-
-    @Override
-    public void post(final Object content) throws IOException {
-      this.factory.buildPostRequest(this.url, this.content(content)).execute().disconnect();
-    }
-
-    @Override
-    public <O> O post(final Object content, final TypeToken<O> type) throws IOException {
-      return this.response(this.factory.buildPostRequest(this.url, this.content(content)), type.getType());
-    }
-
-    @Override
-    public void patch(final Object content) throws IOException {
-      this.factory.buildPatchRequest(this.url, this.content(content)).execute().disconnect();
-    }
-
-    @Override
-    public <O> O patch(final Object content, final TypeToken<O> type) throws IOException {
-      return this.response(this.factory.buildPatchRequest(this.url, this.content(content)), type.getType());
-    }
-
-    @Override
-    public void put(final Object content) throws IOException {
-      this.factory.buildPutRequest(this.url, this.content(content)).execute().disconnect();
-    }
-
-    @Override
-    public <O> O put(final Object content, final TypeToken<O> type) throws IOException {
-      return this.response(this.factory.buildPutRequest(this.url, this.content(content)), type.getType());
-    }
-
-    @Override
-    public void delete() throws IOException {
-      this.factory.buildDeleteRequest(this.url).execute().disconnect();
-    }
-
-    @Override
-    public <O> O delete(final TypeToken<O> type) throws IOException {
-      return this.response(this.factory.buildDeleteRequest(this.url), type.getType());
-    }
-
-    private HttpContent content(final Object object) {
-      if(object instanceof HttpContent) {
-        return (HttpContent) object;
-      }
-      return new ByteArrayContent(Json.MEDIA_TYPE, this.gson.toJson(object).getBytes(StandardCharsets.UTF_8));
-    }
-
-    private <T> T response(final HttpRequest request, final Type responseType) throws IOException {
-      final HttpResponse response = request.execute();
-      try {
-        return (T) this.gson.fromJson(response.parseAsString(), responseType);
-      } finally {
-        response.disconnect();
-      }
-    }
-
-    @Override
-    public String toString() {
-      return MoreObjects.toStringHelper(this)
-        .add("url", this.url)
-        .toString();
-    }
-  }
+  Response delete() throws IOException;
 
   final class Url extends GenericUrl {
     private static final Joiner JOINER = Joiner.on('/');

@@ -23,30 +23,21 @@
  */
 package net.kyori.igloo.v3;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import net.kyori.cereal.Document;
 
 /**
- * A repository.
+ * Partial documents used during comment creation.
  */
-public interface Repository {
+public interface CommentPartial {
   /**
-   * Gets collaborators.
-   *
-   * @return collaborators
+   * A document representing a comment's body.
    */
-  @NonNull Collaborators collaborators();
-
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
-
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  interface BodyPartial extends CommentPartial, Document {
+    /**
+     * Gets the body.
+     *
+     * @return the body
+     */
+    String body();
+  }
 }

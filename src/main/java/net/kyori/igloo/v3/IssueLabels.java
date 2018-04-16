@@ -25,28 +25,44 @@ package net.kyori.igloo.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.io.IOException;
+import java.util.Collections;
+
 /**
- * A repository.
+ * An issue's labels.
  */
-public interface Repository {
+public interface IssueLabels extends Labels {
   /**
-   * Gets collaborators.
+   * Add a label to the issue.
    *
-   * @return collaborators
+   * @param name the label name
+   * @throws IOException if an exception occurs while adding the label
    */
-  @NonNull Collaborators collaborators();
+  default void add(final @NonNull String name) throws IOException {
+    this.add(Collections.singleton(name));
+  }
 
   /**
-   * Gets issues.
+   * Add labels to the issue.
    *
-   * @return issues
+   * @param names the label names
+   * @throws IOException if an exception occurs while adding the labels
    */
-  @NonNull Issues issues();
+  void add(final @NonNull Iterable<String> names) throws IOException;
 
   /**
-   * Gets labels.
+   * Set an issues labels.
    *
-   * @return labels
+   * @param names the label names
+   * @throws IOException if an exception occurs while setting the labels
    */
-  @NonNull RepositoryLabels labels();
+  void set(final @NonNull Iterable<String> names) throws IOException;
+
+  /**
+   * Remove a label from the issue.
+   *
+   * @param name the label name
+   * @throws IOException if an exception occurs while removing the label
+   */
+  void remove(final @NonNull String name) throws IOException;
 }

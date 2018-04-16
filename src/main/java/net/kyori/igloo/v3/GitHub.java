@@ -23,12 +23,6 @@
  */
 package net.kyori.igloo.v3;
 
-import com.google.api.client.http.HttpBackOffIOExceptionHandler;
-import com.google.api.client.http.HttpHeaders;
-import com.google.api.client.http.HttpRequestFactory;
-import com.google.api.client.http.apache.ApacheHttpTransport;
-import com.google.api.client.json.Json;
-import com.google.api.client.util.ExponentialBackOff;
 import com.google.gson.Gson;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -109,35 +103,8 @@ public interface GitHub {
 
       @Override
       public @NonNull GitHub build() {
-        return new GitHub.Impl(this.gson, this.token);
+        return new GitHubImpl(this.gson, this.token);
       }
-    }
-  }
-
-  final class Impl implements GitHub {
-    private final Request request;
-
-    private Impl(final Gson gson, final String authentication) {
-      final HttpRequestFactory factory = new ApacheHttpTransport().createRequestFactory((request) -> {
-        request.setIOExceptionHandler(new HttpBackOffIOExceptionHandler(new ExponentialBackOff()));
-        request.setNumberOfRetries(10);
-        final HttpHeaders headers = request.getHeaders();
-        headers.setAccept("application/vnd.github.v3+json");
-        headers.setContentType(Json.MEDIA_TYPE);
-        headers.setAuthorization("token " + authentication);
-        headers.setUserAgent("igloo");
-      });
-      this.request = new Request.Impl(gson, factory, new Request.Url(API_ENDPOINT));
-    }
-
-    @Override
-    public @NonNull Repositories repositories() {
-      return new Repositories.Impl(this.request);
-    }
-
-    @Override
-    public @NonNull Users users() {
-      return new Users.Impl();
     }
   }
 }

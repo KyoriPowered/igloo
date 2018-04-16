@@ -36,14 +36,4 @@ public interface Users {
    * @return the user
    */
   @NonNull User get(final @NonNull String login);
-
-  final class Impl implements Users {
-    Impl() {
-    }
-
-    @Override
-    public @NonNull User get(final @NonNull String login) {
-      return new User.Impl(login);
-    }
-  }
 }

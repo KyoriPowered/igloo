@@ -23,10 +23,7 @@
  */
 package net.kyori.igloo.v3;
 
-import com.google.common.base.MoreObjects;
 import org.checkerframework.checker.nullness.qual.NonNull;
-
-import java.util.Objects;
 
 /**
  * An id for accessing a repository.
@@ -40,7 +37,7 @@ public interface RepositoryId {
    * @return the repository id
    */
   static @NonNull RepositoryId of(final @NonNull String user, final @NonNull String repo) {
-    return new Impl(user, repo);
+    return new RepositoryIdImpl(user, repo);
   }
 
   /**
@@ -64,51 +61,5 @@ public interface RepositoryId {
    */
   default @NonNull String asString() {
     return this.user() + '/' + this.repo();
-  }
-
-  final class Impl implements RepositoryId {
-    private final String user;
-    private final String repo;
-
-    Impl(final String user, final String repo) {
-      this.user = user;
-      this.repo = repo;
-    }
-
-    @Override
-    public @NonNull String user() {
-      return this.user;
-    }
-
-    @Override
-    public @NonNull String repo() {
-      return this.repo;
-    }
-
-    @Override
-    public boolean equals(final Object other) {
-      if(this == other) {
-        return true;
-      }
-      if(other == null || !(other instanceof RepositoryId)) {
-        return false;
-      }
-      final RepositoryId that = (RepositoryId) other;
-      return Objects.equals(this.user, that.user())
-        && Objects.equals(this.repo, that.repo());
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hash(this.user, this.repo);
-    }
-
-    @Override
-    public String toString() {
-      return MoreObjects.toStringHelper(this)
-        .add("user", this.user)
-        .add("repo", this.repo)
-        .toString();
-    }
   }
 }

@@ -36,17 +36,4 @@ public interface Collaborators {
    * @return the collaborator
    */
   @NonNull Collaborator get(final @NonNull User user);
-
-  final class Impl implements Collaborators {
-    private final Request request;
-
-    Impl(final Request request) {
-      this.request = request.path("collaborators");
-    }
-
-    @Override
-    public @NonNull Collaborator get(final @NonNull User user) {
-      return new Collaborator.Impl(this.request, user);
-    }
-  }
 }

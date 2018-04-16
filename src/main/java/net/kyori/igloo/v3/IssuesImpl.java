@@ -25,28 +25,23 @@ package net.kyori.igloo.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * A repository.
- */
-public interface Repository {
-  /**
-   * Gets collaborators.
-   *
-   * @return collaborators
-   */
-  @NonNull Collaborators collaborators();
+import java.io.IOException;
 
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
+final class IssuesImpl implements Issues {
+  private final Request request;
 
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  IssuesImpl(final Request request) {
+    this.request = request.path("issues");
+  }
+
+  @Override
+  public @NonNull Issue get(final int id) {
+    return new IssueImpl(this.request, id);
+  }
+
+  @Override
+  public <C extends Issue.AbstractCreate> @NonNull Issue create(final @NonNull C create) throws IOException {
+    final Partial.Issue issue = this.request.post(create).as(Partial.Issue.class);
+    return new CreatedIssue(this.request, issue.number, issue.html_url);
+  }
 }

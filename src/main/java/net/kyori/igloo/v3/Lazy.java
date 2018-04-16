@@ -23,30 +23,24 @@
  */
 package net.kyori.igloo.v3;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import com.google.common.base.Suppliers;
+import com.google.common.reflect.TypeToken;
+import net.kyori.lunar.exception.Exceptions;
 
-/**
- * A repository.
- */
-public interface Repository {
-  /**
-   * Gets collaborators.
-   *
-   * @return collaborators
-   */
-  @NonNull Collaborators collaborators();
+import java.util.function.Supplier;
 
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
+final class Lazy<T> {
+  private final Supplier<T> json;
 
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  Lazy(final Request request, final Class<T> type) {
+    this(request, TypeToken.of(type));
+  }
+
+  Lazy(final Request request, final TypeToken<T> type) {
+    this.json = Suppliers.memoize(Exceptions.rethrowSupplier(() -> request.get().as(type))::get);
+  }
+
+  T get() {
+    return this.json.get();
+  }
 }

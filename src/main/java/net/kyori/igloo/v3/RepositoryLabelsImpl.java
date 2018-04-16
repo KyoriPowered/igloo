@@ -23,30 +23,32 @@
  */
 package net.kyori.igloo.v3;
 
+import net.kyori.lunar.exception.Exceptions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * A repository.
- */
-public interface Repository {
-  /**
-   * Gets collaborators.
-   *
-   * @return collaborators
-   */
-  @NonNull Collaborators collaborators();
+import java.io.IOException;
+import java.util.Arrays;
 
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
+final class RepositoryLabelsImpl implements RepositoryLabels {
+  private final Request request;
 
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  RepositoryLabelsImpl(final Request request) {
+    this.request = request.path("labels");
+  }
+
+  @Override
+  @SuppressWarnings("RedundantThrows")
+  public @NonNull Iterable<Label> all() throws IOException {
+    return new Paginated<>(
+      this.request,
+      Exceptions.rethrowFunction(Request::get),
+      Exceptions.rethrowFunction(response -> Arrays.stream(response.as(Partial.Label[].class)).map(label -> new LabelImpl(this.request, label.url, label.name, label.color)))
+    );
+  }
+
+  @Override
+  public <C extends Label.Create> @NonNull Label create(final @NonNull C create) throws IOException {
+    final Partial.Label label = this.request.post(create).as(Partial.Label.class);
+    return new LabelImpl(this.request, label.url, label.name, label.color);
+  }
 }

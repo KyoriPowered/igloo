@@ -35,17 +35,4 @@ public interface User {
    * @return the login
    */
   @NonNull String login();
-
-  final class Impl implements User {
-    private final String login;
-
-    Impl(final String login) {
-      this.login = login;
-    }
-
-    @Override
-    public @NonNull String login() {
-      return this.login;
-    }
-  }
 }

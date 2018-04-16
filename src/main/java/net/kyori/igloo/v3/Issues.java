@@ -48,23 +48,4 @@ public interface Issues {
    * @throws IOException if an exception occurs while creating a new issue
    */
   <C extends Issue.AbstractCreate> @NonNull Issue create(final @NonNull C create) throws IOException;
-
-  final class Impl implements Issues {
-    private final Request request;
-
-    Impl(final Request request) {
-      this.request = request.path("issues");
-    }
-
-    @Override
-    public @NonNull Issue get(final int id) {
-      return new Issue.Impl(this.request, id);
-    }
-
-    @Override
-    public <C extends Issue.AbstractCreate> @NonNull Issue create(final @NonNull C create) throws IOException {
-      final Partial.Issue issue = this.request.post(create, Partial.Issue.class);
-      return new Issue.Impl.Created(this.request, issue.number, issue.html_url);
-    }
-  }
 }

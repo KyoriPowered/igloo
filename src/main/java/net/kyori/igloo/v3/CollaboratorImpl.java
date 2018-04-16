@@ -25,28 +25,17 @@ package net.kyori.igloo.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * A repository.
- */
-public interface Repository {
-  /**
-   * Gets collaborators.
-   *
-   * @return collaborators
-   */
-  @NonNull Collaborators collaborators();
+import java.io.IOException;
 
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
+final class CollaboratorImpl implements Collaborator {
+  private final Request request;
 
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  CollaboratorImpl(final Request request, final User user) {
+    this.request = request.path(user.login());
+  }
+
+  @Override
+  public @NonNull Permission permission() throws IOException {
+    return this.request.path("permission").get().as(Partial.Permission.class).permission;
+  }
 }

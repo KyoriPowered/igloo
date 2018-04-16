@@ -23,30 +23,15 @@
  */
 package net.kyori.igloo.v3;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+final class CommentImpl implements Comment {
+  private final int id;
 
-/**
- * A repository.
- */
-public interface Repository {
-  /**
-   * Gets collaborators.
-   *
-   * @return collaborators
-   */
-  @NonNull Collaborators collaborators();
+  CommentImpl(final int id) {
+    this.id = id;
+  }
 
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
-
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  @Override
+  public int id() {
+    return this.id;
+  }
 }

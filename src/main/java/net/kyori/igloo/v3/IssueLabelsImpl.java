@@ -23,30 +23,41 @@
  */
 package net.kyori.igloo.v3;
 
+import net.kyori.lunar.exception.Exceptions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * A repository.
- */
-public interface Repository {
-  /**
-   * Gets collaborators.
-   *
-   * @return collaborators
-   */
-  @NonNull Collaborators collaborators();
+import java.io.IOException;
+import java.util.Arrays;
 
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
+final class IssueLabelsImpl implements IssueLabels {
+  private final Request request;
 
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  IssueLabelsImpl(final Request request) {
+    this.request = request.path("labels");
+  }
+
+  @Override
+  @SuppressWarnings("RedundantThrows")
+  public @NonNull Iterable<Label> all() throws IOException {
+    return new Paginated<>(
+      this.request,
+      Exceptions.rethrowFunction(Request::get),
+      Exceptions.rethrowFunction(response -> Arrays.stream(response.as(Partial.Label[].class)).map(label -> new LabelImpl(this.request.up(3), label.url, label.name, label.color)))
+    );
+  }
+
+  @Override
+  public void add(final @NonNull Iterable<String> names) throws IOException {
+    this.request.post(names).close();
+  }
+
+  @Override
+  public void set(final @NonNull Iterable<String> names) throws IOException {
+    this.request.put(names).close();
+  }
+
+  @Override
+  public void remove(final @NonNull String name) throws IOException {
+    this.request.delete().close();
+  }
 }

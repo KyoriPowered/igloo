@@ -38,18 +38,5 @@ public interface Comments {
    * @return the comment that was posted
    * @throws IOException if an exception occurs while posting the comment
    */
-  @NonNull Comment post(final Comment.Partial.@NonNull Body body) throws IOException;
-
-  final class Impl implements Comments {
-    private final Request request;
-
-    Impl(final Request request) {
-      this.request = request.path("comments");
-    }
-
-    @Override
-    public @NonNull Comment post(final Comment.Partial.@NonNull Body body) throws IOException {
-      return new Comment.Impl(this.request.post(body, Partial.Id.class).id);
-    }
-  }
+  @NonNull Comment post(final CommentPartial.@NonNull BodyPartial body) throws IOException;
 }

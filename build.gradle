@@ -28,7 +28,7 @@ repositories {
 dependencies {
   compile 'com.google.guava:guava:21.0'
   compile 'com.google.http-client:google-http-client:1.23.0'
-  compile 'net.kyori:cereal:1.0.4'
+  compile 'net.kyori:cereal:1.0.5-SNAPSHOT'
   compile 'org.checkerframework:checker-qual:2.4.0'
 }
 

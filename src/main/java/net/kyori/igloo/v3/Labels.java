@@ -26,9 +26,6 @@ package net.kyori.igloo.v3;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.stream.Collectors;
 
 /**
  * Labels.
@@ -41,109 +38,4 @@ public interface Labels {
    * @throws IOException if an exception occured while getting the labels
    */
   @NonNull Iterable<Label> all() throws IOException;
-
-  /**
-   * A repository's labels.
-   */
-  interface Repository extends Labels {
-    /**
-     * Creates a new label.
-     *
-     * @param create the creation data
-     * @param <C> the creation data type
-     * @return the new label
-     * @throws IOException if an exception occurs while creating a new issue
-     */
-    <C extends Label.Create & Label.Partial.Name & Label.Partial.Color> @NonNull Label create(final @NonNull C create) throws IOException;
-
-    final class Impl implements Repository {
-      private final Request request;
-
-      Impl(final Request request) {
-        this.request = request.path("labels");
-      }
-
-      @Override
-      public @NonNull Iterable<Label> all() throws IOException {
-        return Arrays.stream(this.request.get(Partial.Label[].class))
-          .map(label -> new Label.Impl(this.request, label.url, label.name, label.color))
-          .collect(Collectors.toSet());
-      }
-
-      @Override
-      public <C extends Label.Create & Label.Partial.Name & Label.Partial.Color> @NonNull Label create(final @NonNull C create) throws IOException {
-        final Partial.Label label = this.request.post(create, Partial.Label.class);
-        return new Label.Impl(this.request, label.url, label.name, label.color);
-      }
-    }
-  }
-
-  /**
-   * An issue's labels.
-   */
-  interface Issue extends Labels {
-    /**
-     * Add a label to the issue.
-     *
-     * @param name the label name
-     * @throws IOException if an exception occurs while adding the label
-     */
-    default void add(final @NonNull String name) throws IOException {
-      this.add(Collections.singleton(name));
-    }
-
-    /**
-     * Add labels to the issue.
-     *
-     * @param names the label names
-     * @throws IOException if an exception occurs while adding the labels
-     */
-    void add(final @NonNull Iterable<String> names) throws IOException;
-
-    /**
-     * Set an issues labels.
-     *
-     * @param names the label names
-     * @throws IOException if an exception occurs while setting the labels
-     */
-    void set(final @NonNull Iterable<String> names) throws IOException;
-
-    /**
-     * Remove a label from the issue.
-     *
-     * @param name the label name
-     * @throws IOException if an exception occurs while removing the label
-     */
-    void remove(final @NonNull String name) throws IOException;
-
-    final class Impl implements Issue {
-      private final Request request;
-
-      Impl(final Request request) {
-        this.request = request.path("labels");
-      }
-
-      @Override
-      public @NonNull Iterable<Label> all() throws IOException {
-        return Arrays.stream(this.request.get(Partial.Label[].class))
-          .map(label -> new Label.Impl(this.request.up(3), label.url, label.name, label.color))
-          .collect(Collectors.toSet());
-      }
-
-      @Override
-      public void add(final @NonNull Iterable<String> names) throws IOException {
-        this.request.post(names);
-      }
-
-      @Override
-      public void set(final @NonNull Iterable<String> names) throws IOException {
-        this.request.put(names);
-      }
-
-      @Override
-      public void remove(final @NonNull String name) throws IOException {
-        this.request.delete();
-      }
-    }
-  }
 }

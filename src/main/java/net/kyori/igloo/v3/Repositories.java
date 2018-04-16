@@ -36,17 +36,4 @@ public interface Repositories {
    * @return the repository
    */
   @NonNull Repository get(final @NonNull RepositoryId id);
-
-  final class Impl implements Repositories {
-    private final Request request;
-
-    public Impl(final Request request) {
-      this.request = request;
-    }
-
-    @Override
-    public @NonNull Repository get(final @NonNull RepositoryId id) {
-      return new Repository.Impl(this.request, id);
-    }
-  }
 }

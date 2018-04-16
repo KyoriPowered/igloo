@@ -23,30 +23,49 @@
  */
 package net.kyori.igloo.v3;
 
+import com.google.common.base.MoreObjects;
+import net.kyori.lunar.EvenMoreObjects;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * A repository.
- */
-public interface Repository {
-  /**
-   * Gets collaborators.
-   *
-   * @return collaborators
-   */
-  @NonNull Collaborators collaborators();
+import java.util.Objects;
 
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
+final class RepositoryIdImpl implements RepositoryId {
+  private final String user;
+  private final String repo;
 
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  RepositoryIdImpl(final String user, final String repo) {
+    this.user = user;
+    this.repo = repo;
+  }
+
+  @Override
+  public @NonNull String user() {
+    return this.user;
+  }
+
+  @Override
+  public @NonNull String repo() {
+    return this.repo;
+  }
+
+  @Override
+  public boolean equals(final Object other) {
+    return EvenMoreObjects.equals(RepositoryId.class, this, other, that -> {
+      return Objects.equals(this.user, that.user())
+        && Objects.equals(this.repo, that.repo());
+    });
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.user, this.repo);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+      .add("user", this.user)
+      .add("repo", this.repo)
+      .toString();
+  }
 }

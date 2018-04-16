@@ -26,27 +26,30 @@ package net.kyori.igloo.v3;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
- * A repository.
+ * Partial documents used during label creation and edits.
  */
-public interface Repository {
+public interface LabelPartial {
   /**
-   * Gets collaborators.
-   *
-   * @return collaborators
+   * A document representing a label's name.
    */
-  @NonNull Collaborators collaborators();
+  interface NamePartial extends Label.Edit, LabelPartial {
+    /**
+     * Gets the label's name.
+     *
+     * @return the label name
+     */
+    @NonNull String name();
+  }
 
   /**
-   * Gets issues.
-   *
-   * @return issues
+   * A document representing a label's color.
    */
-  @NonNull Issues issues();
-
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  interface ColorPartial extends Label.Edit, LabelPartial {
+    /**
+     * Gets the issue's color.
+     *
+     * @return the label color
+     */
+    @NonNull String color();
+  }
 }
