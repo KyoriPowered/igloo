@@ -33,17 +33,13 @@ interface Partial {
     String html_url;
   }
 
-  class Number {
-    int number;
-  }
-
-  class Permission {
-    Collaborator.Permission permission;
-  }
-
   class Label {
     String url;
     String name;
     String color;
+  }
+
+  class Permission {
+    Collaborator.Permission permission;
   }
 }

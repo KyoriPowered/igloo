@@ -89,10 +89,14 @@ public interface Issue {
    */
   void unlock() throws IOException;
 
+  // Inheritance hack
+  interface AbstractCreate extends Document, Partial {
+  }
+
   /**
    * A document that can be submitted during issue creation.
    */
-  interface Create extends Document, Partial {
+  interface Create extends AbstractCreate, Partial.Title {
     /**
      * A document containing all information that may be submitted during creation.
      */
@@ -118,7 +122,7 @@ public interface Issue {
     /**
      * A document representing an issue's title.
      */
-    interface Title extends Create, Edit {
+    interface Title extends AbstractCreate, Edit {
       /**
        * Gets the issue's title.
        *
