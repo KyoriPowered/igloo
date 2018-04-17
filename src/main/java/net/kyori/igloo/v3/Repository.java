@@ -49,4 +49,11 @@ public interface Repository {
    * @return labels
    */
   @NonNull RepositoryLabels labels();
+
+  /**
+   * Gets statuses.
+   *
+   * @return statuses
+   */
+  @NonNull Statuses statuses();
 }

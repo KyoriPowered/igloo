@@ -23,32 +23,57 @@
  */
 package net.kyori.igloo.v3;
 
-import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
-final class RepositoryImpl implements Repository {
-  private final Request request;
-
-  RepositoryImpl(final Request request, final RepositoryId id) {
-    this.request = request.path("repos", id.user(), id.repo());
+/**
+ * Partial documents used during status creation.
+ */
+public interface StatusPartial {
+  /**
+   * A document representing a status's state.
+   */
+  interface StatePartial extends Status.AbstractCreate {
+    /**
+     * Gets the status's state.
+     *
+     * @return the status state
+     */
+    Status.@Nullable State state();
   }
 
-  @Override
-  public @NonNull Collaborators collaborators() {
-    return new CollaboratorsImpl(this.request);
+  /**
+   * A document representing an status's target url.
+   */
+  interface TargetUrlPartial extends Status.Create {
+    /**
+     * Gets the status's target url.
+     *
+     * @return the status target url
+     */
+    @Nullable String target_url();
   }
 
-  @Override
-  public @NonNull Issues issues() {
-    return new IssuesImpl(this.request);
+  /**
+   * A document representing an status's description.
+   */
+  interface DescriptionPartial extends Status.Create {
+    /**
+     * Gets the status's description.
+     *
+     * @return the status description
+     */
+    @Nullable String description();
   }
 
-  @Override
-  public @NonNull RepositoryLabels labels() {
-    return new RepositoryLabelsImpl(this.request);
-  }
-
-  @Override
-  public @NonNull Statuses statuses() {
-    return new StatusesImpl(this.request);
+  /**
+   * A document representing an issue's context.
+   */
+  interface ContextPartial extends Status.Create {
+    /**
+     * Gets the status's context.
+     *
+     * @return the status context
+     */
+    @Nullable String context();
   }
 }

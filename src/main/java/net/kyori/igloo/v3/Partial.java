@@ -42,4 +42,11 @@ interface Partial {
   class Permission {
     Collaborator.Permission permission;
   }
+
+  class Status {
+    net.kyori.igloo.v3.Status.State state;
+    String target_url;
+    String description;
+    String context;
+  }
 }

@@ -23,32 +23,65 @@
  */
 package net.kyori.igloo.v3;
 
+import com.google.gson.annotations.SerializedName;
+import net.kyori.cereal.Document;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class RepositoryImpl implements Repository {
-  private final Request request;
+public interface Status {
+  /**
+   * Gets the state.
+   *
+   * @return the state
+   */
+  @NonNull State state();
 
-  RepositoryImpl(final Request request, final RepositoryId id) {
-    this.request = request.path("repos", id.user(), id.repo());
+  /**
+   * Gets the target url.
+   *
+   * @return the target url.
+   */
+  String target_url();
+
+  /**
+   * Gets the description.
+   *
+   * @return the description
+   */
+  String description();
+
+  /**
+   * Gets the context.
+   *
+   * @return the context
+   */
+  String context();
+
+  // Inheritance hack
+  interface AbstractCreate extends Document, StatusPartial {
   }
 
-  @Override
-  public @NonNull Collaborators collaborators() {
-    return new CollaboratorsImpl(this.request);
+  /**
+   * A document that can be submitted during status creation.
+   */
+  interface Create extends AbstractCreate, StatusPartial.StatePartial {
+    /**
+     * A document containing all information that may be submitted during creation.
+     */
+    interface Full extends Create, TargetUrlPartial, DescriptionPartial, ContextPartial {
+    }
   }
 
-  @Override
-  public @NonNull Issues issues() {
-    return new IssuesImpl(this.request);
-  }
-
-  @Override
-  public @NonNull RepositoryLabels labels() {
-    return new RepositoryLabelsImpl(this.request);
-  }
-
-  @Override
-  public @NonNull Statuses statuses() {
-    return new StatusesImpl(this.request);
+  /**
+   * The state of a status.
+   */
+  enum State {
+    @SerializedName("error")
+    ERROR,
+    @SerializedName("failure")
+    FAILURE,
+    @SerializedName("pending")
+    PENDING,
+    @SerializedName("success")
+    SUCCESS;
   }
 }

@@ -25,30 +25,36 @@ package net.kyori.igloo.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class RepositoryImpl implements Repository {
-  private final Request request;
+final class CreatedStatus implements Status {
+  private final State state;
+  private final String target_url;
+  private final String description;
+  private final String context;
 
-  RepositoryImpl(final Request request, final RepositoryId id) {
-    this.request = request.path("repos", id.user(), id.repo());
+  CreatedStatus(final State state, final String target_url, final String description, final String context) {
+    this.state = state;
+    this.target_url = target_url;
+    this.description = description;
+    this.context = context;
   }
 
   @Override
-  public @NonNull Collaborators collaborators() {
-    return new CollaboratorsImpl(this.request);
+  public @NonNull State state() {
+    return this.state;
   }
 
   @Override
-  public @NonNull Issues issues() {
-    return new IssuesImpl(this.request);
+  public String target_url() {
+    return this.target_url;
   }
 
   @Override
-  public @NonNull RepositoryLabels labels() {
-    return new RepositoryLabelsImpl(this.request);
+  public String description() {
+    return this.description;
   }
 
   @Override
-  public @NonNull Statuses statuses() {
-    return new StatusesImpl(this.request);
+  public String context() {
+    return this.context;
   }
 }

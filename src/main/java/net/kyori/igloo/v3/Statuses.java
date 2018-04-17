@@ -25,30 +25,21 @@ package net.kyori.igloo.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class RepositoryImpl implements Repository {
-  private final Request request;
+import java.io.IOException;
 
-  RepositoryImpl(final Request request, final RepositoryId id) {
-    this.request = request.path("repos", id.user(), id.repo());
-  }
+/**
+ * Statuses.
+ */
+public interface Statuses {
+  /**
+   * Creates a new status.
+   *
+   * @param create the creation data
+   * @param <C> the creation data type
+   * @param sha the sha
+   * @return the new status
+   * @throws IOException if an exception occurs while creating a new status
+   */
+  <C extends Status.AbstractCreate> @NonNull Status create(final @NonNull String sha, final @NonNull C create) throws IOException;
 
-  @Override
-  public @NonNull Collaborators collaborators() {
-    return new CollaboratorsImpl(this.request);
-  }
-
-  @Override
-  public @NonNull Issues issues() {
-    return new IssuesImpl(this.request);
-  }
-
-  @Override
-  public @NonNull RepositoryLabels labels() {
-    return new RepositoryLabelsImpl(this.request);
-  }
-
-  @Override
-  public @NonNull Statuses statuses() {
-    return new StatusesImpl(this.request);
-  }
 }
