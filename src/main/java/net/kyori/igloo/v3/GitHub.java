@@ -25,6 +25,9 @@ package net.kyori.igloo.v3;
 
 import com.google.gson.Gson;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Provides access to v3 of the GitHub API.
@@ -71,6 +74,14 @@ public interface GitHub {
     @NonNull Builder gson(final @NonNull Gson gson);
 
     /**
+     * Sets the api endpoint.
+     *
+     * @param endpoint the api endpoint
+     * @return the builder
+     */
+    @NonNull Builder endpoint(final @NonNull String endpoint);
+
+    /**
      * Sets the api authentication token.
      *
      * @param token the api authentication token
@@ -87,11 +98,18 @@ public interface GitHub {
 
     final class Impl implements Builder {
       private Gson gson;
-      private String token;
+      private String endpoint = API_ENDPOINT;
+      private @Nullable String token;
 
       @Override
       public @NonNull Builder gson(final @NonNull Gson gson) {
         this.gson = gson;
+        return this;
+      }
+
+      @Override
+      public @NonNull Builder endpoint(final @NonNull String endpoint) {
+        this.endpoint = endpoint;
         return this;
       }
 
@@ -103,7 +121,8 @@ public interface GitHub {
 
       @Override
       public @NonNull GitHub build() {
-        return new GitHubImpl(this.gson, this.token);
+        requireNonNull(this.gson, "gson");
+        return new GitHubImpl(this.gson, this.endpoint, this.token);
       }
     }
   }

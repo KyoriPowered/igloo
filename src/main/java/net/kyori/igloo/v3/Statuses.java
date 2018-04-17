@@ -41,5 +41,4 @@ public interface Statuses {
    * @throws IOException if an exception occurs while creating a new status
    */
   <C extends Status.AbstractCreate> @NonNull Status create(final @NonNull String sha, final @NonNull C create) throws IOException;
-
 }

@@ -31,21 +31,24 @@ import com.google.api.client.json.Json;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.gson.Gson;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 final class GitHubImpl implements GitHub {
   private final Request request;
 
-  GitHubImpl(final Gson gson, final String authentication) {
+  GitHubImpl(final Gson gson, final String endpoint, final @Nullable String authentication) {
     final HttpRequestFactory factory = new ApacheHttpTransport().createRequestFactory((request) -> {
       request.setIOExceptionHandler(new HttpBackOffIOExceptionHandler(new ExponentialBackOff()));
       request.setNumberOfRetries(10);
       final HttpHeaders headers = request.getHeaders();
       headers.setAccept("application/vnd.github.v3+json");
       headers.setContentType(Json.MEDIA_TYPE);
-      if(authentication != null)headers.setAuthorization("token " + authentication);
+      if(authentication != null) {
+        headers.setAuthorization("token " + authentication);
+      }
       headers.setUserAgent("igloo");
     });
-    this.request = new RequestImpl(gson, factory, new Request.Url(API_ENDPOINT));
+    this.request = new RequestImpl(gson, factory, new Request.Url(endpoint));
   }
 
   @Override
