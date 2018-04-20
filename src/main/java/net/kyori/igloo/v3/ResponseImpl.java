@@ -59,12 +59,30 @@ final class ResponseImpl implements Response {
 
   @Override
   public Link link() {
-    return new LinkImpl(this.response.getHeaders().getFirstHeaderStringValue("Link"));
+    final String header = this.response.getHeaders().getFirstHeaderStringValue("Link");
+    if(header == null) {
+      return EmptyLink.INSTANCE;
+    }
+    return new LinkImpl(header);
   }
 
   @Override
   public void close() throws IOException {
     this.response.disconnect();
+  }
+
+  enum EmptyLink implements Link {
+    INSTANCE;
+
+    @Override
+    public Optional<Request> previous() {
+      return Optional.empty();
+    }
+
+    @Override
+    public Optional<Request> next() {
+      return Optional.empty();
+    }
   }
 
   final class LinkImpl implements Link {
