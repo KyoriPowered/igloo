@@ -39,7 +39,7 @@ final class RepositoryImpl implements Repository {
 
   @Override
   public @NonNull Issues issues() {
-    return new IssuesImpl(this.request);
+    return new IssuesImpl(this, this.request);
   }
 
   @Override

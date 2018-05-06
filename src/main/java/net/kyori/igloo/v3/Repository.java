@@ -53,7 +53,7 @@ public interface Repository {
   /**
    * Gets pull requests.
    *
-   * @deprecated pull requests
+   * @return pull requests
    */
   @NonNull PullRequests pullRequests();
 

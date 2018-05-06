@@ -25,6 +25,8 @@ package net.kyori.igloo.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.util.Optional;
+
 final class CreatedIssue extends AbstractIssue {
   private final String html_url;
 
@@ -36,5 +38,10 @@ final class CreatedIssue extends AbstractIssue {
   @Override
   public @NonNull String html_url() {
     return this.html_url;
+  }
+
+  @Override
+  public @NonNull Optional<PullRequest> pullRequest() {
+    return Optional.empty();
   }
 }

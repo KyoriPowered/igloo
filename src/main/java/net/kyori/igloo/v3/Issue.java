@@ -28,6 +28,7 @@ import net.kyori.cereal.Document;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * An issue in a {@link Repository repository}.
@@ -83,6 +84,13 @@ public interface Issue {
    * @throws IOException if an exception occurs during unlock
    */
   void unlock() throws IOException;
+
+  /**
+   * Gets the pull request.
+   *
+   * @return the pull request
+   */
+  @NonNull Optional<PullRequest> pullRequest();
 
   // Inheritance hack
   interface AbstractCreate extends Document, IssuePartial {

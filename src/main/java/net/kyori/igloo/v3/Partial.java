@@ -23,6 +23,8 @@
  */
 package net.kyori.igloo.v3;
 
+import org.checkerframework.checker.nullness.qual.Nullable;
+
 interface Partial {
   class Id {
     int id;
@@ -31,6 +33,7 @@ interface Partial {
   class Issue {
     int number;
     String html_url;
+    @Nullable Object pull_request;
   }
 
   class Label {

@@ -28,15 +28,17 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.io.IOException;
 
 final class IssuesImpl implements Issues {
+  private final Repository repository;
   private final Request request;
 
-  IssuesImpl(final Request request) {
+  IssuesImpl(final Repository repository, final Request request) {
+    this.repository = repository;
     this.request = request.path("issues");
   }
 
   @Override
   public @NonNull Issue get(final int number) {
-    return new IssueImpl(this.request, number);
+    return new IssueImpl(this.repository, this.request, number);
   }
 
   @Override
