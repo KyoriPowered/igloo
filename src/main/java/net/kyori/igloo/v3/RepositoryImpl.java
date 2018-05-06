@@ -48,6 +48,11 @@ final class RepositoryImpl implements Repository {
   }
 
   @Override
+  public @NonNull PullRequests pullRequests() {
+    return new PullRequestsImpl(this.request);
+  }
+
+  @Override
   public @NonNull Statuses statuses() {
     return new StatusesImpl(this.request);
   }

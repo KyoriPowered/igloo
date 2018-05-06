@@ -26,41 +26,27 @@ package net.kyori.igloo.v3;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
- * A repository.
+ * A pull request in a {@link Repository repository}.
  */
-public interface Repository {
+public interface PullRequest {
   /**
-   * Gets collaborators.
+   * Gets the number.
    *
-   * @return collaborators
+   * @return the number
    */
-  @NonNull Collaborators collaborators();
+  int number();
 
   /**
-   * Gets issues.
+   * Gets the html url.
    *
-   * @return issues
+   * @return the html url
    */
-  @NonNull Issues issues();
+  @NonNull String html_url();
 
   /**
-   * Gets labels.
+   * Checks if the pull request is merged.
    *
-   * @return labels
+   * @return {@code true} if the pull request is merged, {@code false} otherwise
    */
-  @NonNull RepositoryLabels labels();
-
-  /**
-   * Gets pull requests.
-   *
-   * @deprecated pull requests
-   */
-  @NonNull PullRequests pullRequests();
-
-  /**
-   * Gets statuses.
-   *
-   * @return statuses
-   */
-  @NonNull Statuses statuses();
+  boolean merged();
 }

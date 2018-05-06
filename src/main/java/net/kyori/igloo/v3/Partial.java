@@ -43,6 +43,11 @@ interface Partial {
     Collaborator.Permission permission;
   }
 
+  class PullRequest {
+    String html_url;
+    boolean merged;
+  }
+
   class Status {
     net.kyori.igloo.v3.Status.State state;
     String target_url;

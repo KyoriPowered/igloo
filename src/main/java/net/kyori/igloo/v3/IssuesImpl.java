@@ -35,8 +35,8 @@ final class IssuesImpl implements Issues {
   }
 
   @Override
-  public @NonNull Issue get(final int id) {
-    return new IssueImpl(this.request, id);
+  public @NonNull Issue get(final int number) {
+    return new IssueImpl(this.request, number);
   }
 
   @Override

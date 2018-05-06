@@ -25,42 +25,29 @@ package net.kyori.igloo.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * A repository.
- */
-public interface Repository {
-  /**
-   * Gets collaborators.
-   *
-   * @return collaborators
-   */
-  @NonNull Collaborators collaborators();
+final class PullRequestImpl implements PullRequest {
+  final Request request;
+  private final int number;
+  private final Lazy<Partial.PullRequest> lazy;
 
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
+  PullRequestImpl(final Request request, final int number) {
+    this.request = request.path(Integer.toString(number));
+    this.number = number;
+    this.lazy = new Lazy<>(this.request, Partial.PullRequest.class);
+  }
 
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
+  @Override
+  public int number() {
+    return this.number;
+  }
 
-  /**
-   * Gets pull requests.
-   *
-   * @deprecated pull requests
-   */
-  @NonNull PullRequests pullRequests();
+  @Override
+  public @NonNull String html_url() {
+    return this.lazy.get().html_url;
+  }
 
-  /**
-   * Gets statuses.
-   *
-   * @return statuses
-   */
-  @NonNull Statuses statuses();
+  @Override
+  public boolean merged() {
+    return this.lazy.get().merged;
+  }
 }

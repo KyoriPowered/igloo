@@ -26,41 +26,14 @@ package net.kyori.igloo.v3;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
- * A repository.
+ * A repository's pull requests.
  */
-public interface Repository {
+public interface PullRequests {
   /**
-   * Gets collaborators.
+   * Gets a pull request.
    *
-   * @return collaborators
+   * @param number the pull request number
+   * @return the pull request
    */
-  @NonNull Collaborators collaborators();
-
-  /**
-   * Gets issues.
-   *
-   * @return issues
-   */
-  @NonNull Issues issues();
-
-  /**
-   * Gets labels.
-   *
-   * @return labels
-   */
-  @NonNull RepositoryLabels labels();
-
-  /**
-   * Gets pull requests.
-   *
-   * @deprecated pull requests
-   */
-  @NonNull PullRequests pullRequests();
-
-  /**
-   * Gets statuses.
-   *
-   * @return statuses
-   */
-  @NonNull Statuses statuses();
+  @NonNull PullRequest get(final int number);
 }
