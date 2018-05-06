@@ -44,6 +44,6 @@ final class IssuesImpl implements Issues {
   @Override
   public <C extends Issue.AbstractCreate> @NonNull Issue create(final @NonNull C create) throws IOException {
     final Partial.Issue issue = this.request.post(create).as(Partial.Issue.class);
-    return new CreatedIssue(this.request, issue.number, issue.html_url);
+    return new CreatedIssue(this.request, issue);
   }
 }

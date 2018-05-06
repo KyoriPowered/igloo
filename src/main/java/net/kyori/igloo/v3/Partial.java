@@ -31,9 +31,12 @@ interface Partial {
   }
 
   class Issue {
+    String body;
     int number;
     String html_url;
     @Nullable Object pull_request;
+    net.kyori.igloo.v3.Issue.State state;
+    String title;
   }
 
   class Label {

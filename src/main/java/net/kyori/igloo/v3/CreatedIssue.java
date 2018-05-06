@@ -29,15 +29,36 @@ import java.util.Optional;
 
 final class CreatedIssue extends AbstractIssue {
   private final String html_url;
+  private final String title;
+  private final String body;
+  private final State state;
 
-  CreatedIssue(final Request request, final int number, final String html_url) {
-    super(request, number);
-    this.html_url = html_url;
+  CreatedIssue(final Request request, final Partial.Issue partial) {
+    super(request, partial.number);
+    this.html_url = partial.html_url;
+    this.title = partial.title;
+    this.body = partial.body;
+    this.state = partial.state;
   }
 
   @Override
   public @NonNull String html_url() {
     return this.html_url;
+  }
+
+  @Override
+  public @NonNull String title() {
+    return this.title;
+  }
+
+  @Override
+  public @NonNull String body() {
+    return this.body;
+  }
+
+  @Override
+  public Issue.@NonNull State state() {
+    return this.state;
   }
 
   @Override

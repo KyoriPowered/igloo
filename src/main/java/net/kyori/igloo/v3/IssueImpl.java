@@ -43,6 +43,21 @@ final class IssueImpl extends AbstractIssue {
   }
 
   @Override
+  public @NonNull String title() {
+    return this.lazy.get().title;
+  }
+
+  @Override
+  public @NonNull String body() {
+    return this.lazy.get().body;
+  }
+
+  @Override
+  public Issue.@NonNull State state() {
+    return this.lazy.get().state;
+  }
+
+  @Override
   public @NonNull Optional<PullRequest> pullRequest() {
     if(this.lazy.get().pull_request == null) {
       return Optional.empty();

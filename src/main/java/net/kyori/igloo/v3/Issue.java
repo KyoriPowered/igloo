@@ -49,6 +49,27 @@ public interface Issue {
   @NonNull String html_url();
 
   /**
+   * Gets the title.
+   *
+   * @return the title
+   */
+  @NonNull String title();
+
+  /**
+   * Gets the body.
+   *
+   * @return the body
+   */
+  @NonNull String body();
+
+  /**
+   * Gets the state.
+   *
+   * @return the state
+   */
+  @NonNull State state();
+
+  /**
    * Submits an edit to the issue.
    *
    * @param edit the edit
