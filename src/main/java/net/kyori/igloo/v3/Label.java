@@ -47,6 +47,13 @@ public interface Label {
   @NonNull String name();
 
   /**
+   * Gets the description.
+   *
+   * @return the description
+   */
+  @NonNull String description();
+
+  /**
    * Gets the color.
    *
    * @return the color

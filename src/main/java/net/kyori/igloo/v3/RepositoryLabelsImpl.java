@@ -42,13 +42,13 @@ final class RepositoryLabelsImpl implements RepositoryLabels {
     return new Paginated<>(
       this.request,
       Exceptions.rethrowFunction(Request::get),
-      Exceptions.rethrowFunction(response -> Arrays.stream(response.as(Partial.Label[].class)).map(label -> new LabelImpl(this.request, label.url, label.name, label.color)))
+      Exceptions.rethrowFunction(response -> Arrays.stream(response.as(Partial.Label[].class)).map(label -> new LabelImpl(this.request, label.url, label.name, label.description, label.color)))
     );
   }
 
   @Override
   public <C extends Label.Create> @NonNull Label create(final @NonNull C create) throws IOException {
     final Partial.Label label = this.request.post(create).as(Partial.Label.class);
-    return new LabelImpl(this.request, label.url, label.name, label.color);
+    return new LabelImpl(this.request, label.url, label.name, label.description, label.color);
   }
 }

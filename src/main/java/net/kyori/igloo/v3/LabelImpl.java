@@ -34,12 +34,14 @@ final class LabelImpl implements Label {
   private final Request request;
   private final String url;
   private final String name;
+  private final String description;
   private final String color;
 
-  LabelImpl(final Request request, final String url, final String name, final String color) {
+  LabelImpl(final Request request, final String url, final String name, final String description, final String color) {
     this.request = request.path(name);
     this.url = url;
     this.name = name;
+    this.description = description;
     this.color = color;
   }
 
@@ -51,6 +53,11 @@ final class LabelImpl implements Label {
   @Override
   public @NonNull String name() {
     return this.name;
+  }
+
+  @Override
+  public @NonNull String description() {
+    return this.description;
   }
 
   @Override
@@ -87,6 +94,7 @@ final class LabelImpl implements Label {
     return MoreObjects.toStringHelper(this)
       .add("url", this.url)
       .add("name", this.name)
+      .add("description", this.description)
       .add("color", this.color)
       .toString();
   }

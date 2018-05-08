@@ -33,7 +33,15 @@ import com.google.gson.Gson;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.util.Arrays;
+import java.util.List;
+
 final class GitHubImpl implements GitHub {
+  private static final List<String> ACCEPT_HEADERS = Arrays.asList(
+    "application/vnd.github.jean-grey-preview+json",
+    "application/vnd.github.symmetra-preview+json",
+    "application/vnd.github.v3+json"
+  );
   private final Request request;
 
   GitHubImpl(final Gson gson, final String endpoint, final @Nullable String authentication) {
@@ -41,7 +49,7 @@ final class GitHubImpl implements GitHub {
       request.setIOExceptionHandler(new HttpBackOffIOExceptionHandler(new ExponentialBackOff()));
       request.setNumberOfRetries(10);
       final HttpHeaders headers = request.getHeaders();
-      headers.setAccept("application/vnd.github.v3+json");
+      headers.put("Accept", ACCEPT_HEADERS);
       headers.setContentType(Json.MEDIA_TYPE);
       if(authentication != null) {
         headers.setAuthorization("token " + authentication);

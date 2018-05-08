@@ -42,7 +42,7 @@ final class IssueLabelsImpl implements IssueLabels {
     return new Paginated<>(
       this.request,
       Exceptions.rethrowFunction(Request::get),
-      Exceptions.rethrowFunction(response -> Arrays.stream(response.as(Partial.Label[].class)).map(label -> new LabelImpl(this.request.up(3), label.url, label.name, label.color)))
+      Exceptions.rethrowFunction(response -> Arrays.stream(response.as(Partial.Label[].class)).map(label -> new LabelImpl(this.request.up(3), label.url, label.name, label.description, label.color)))
     );
   }
 

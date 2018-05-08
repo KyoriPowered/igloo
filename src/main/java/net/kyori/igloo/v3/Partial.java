@@ -42,6 +42,7 @@ interface Partial {
   class Label {
     String url;
     String name;
+    String description;
     String color;
   }
 
