@@ -51,6 +51,7 @@ public interface Label {
    *
    * @return the description
    */
+  @Preview("symmetra")
   @NonNull String description();
 
   /**
