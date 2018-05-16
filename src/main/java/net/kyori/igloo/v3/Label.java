@@ -84,7 +84,7 @@ public interface Label {
     /**
      * A document containing all information that may be submitted during creation.
      */
-    interface Full extends Create {
+    interface Full extends Create, LabelPartial.DescriptionPartial {
     }
   }
 
@@ -95,7 +95,7 @@ public interface Label {
     /**
      * A document containing all information that may be submitted during an edit.
      */
-    interface Full extends Edit, NamePartial, ColorPartial {
+    interface Full extends Edit, NamePartial, ColorPartial, DescriptionPartial {
     }
   }
 }

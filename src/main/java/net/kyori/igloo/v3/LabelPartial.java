@@ -52,4 +52,16 @@ public interface LabelPartial {
      */
     @NonNull String color();
   }
+
+  /**
+   * A document representing a label's description.
+   */
+  interface DescriptionPartial extends Label.Edit, LabelPartial {
+    /**
+     * Gets the issue's description.
+     *
+     * @return the label description
+     */
+    @NonNull String description();
+  }
 }
