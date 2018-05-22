@@ -23,6 +23,7 @@
  */
 package net.kyori.igloo.v3;
 
+import com.google.gson.annotations.SerializedName;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
@@ -44,9 +45,40 @@ public interface PullRequest {
   @NonNull String html_url();
 
   /**
+   * Gets the title.
+   *
+   * @return the title
+   */
+  @NonNull String title();
+
+  /**
+   * Gets the body.
+   *
+   * @return the body
+   */
+  @NonNull String body();
+
+  /**
+   * Gets the state.
+   *
+   * @return the state
+   */
+  @NonNull State state();
+
+  /**
    * Checks if the pull request is merged.
    *
    * @return {@code true} if the pull request is merged, {@code false} otherwise
    */
   boolean merged();
+
+  /**
+   * The state of a pull request.
+   */
+  enum State {
+    @SerializedName("open")
+    OPEN,
+    @SerializedName("closed")
+    CLOSED;
+  }
 }

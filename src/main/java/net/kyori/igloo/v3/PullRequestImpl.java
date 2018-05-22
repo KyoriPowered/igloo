@@ -47,6 +47,21 @@ final class PullRequestImpl implements PullRequest {
   }
 
   @Override
+  public @NonNull String title() {
+    return this.lazy.get().title;
+  }
+
+  @Override
+  public @NonNull String body() {
+    return this.lazy.get().body;
+  }
+
+  @Override
+  public @NonNull State state() {
+    return this.lazy.get().state;
+  }
+
+  @Override
   public boolean merged() {
     return this.lazy.get().merged;
   }

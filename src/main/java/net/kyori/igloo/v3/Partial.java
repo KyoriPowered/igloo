@@ -52,6 +52,9 @@ interface Partial {
 
   class PullRequest {
     String html_url;
+    net.kyori.igloo.v3.PullRequest.State state;
+    String title;
+    String body;
     boolean merged;
   }
 

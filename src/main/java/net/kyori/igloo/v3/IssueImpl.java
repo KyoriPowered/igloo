@@ -53,7 +53,7 @@ final class IssueImpl extends AbstractIssue {
   }
 
   @Override
-  public Issue.@NonNull State state() {
+  public @NonNull State state() {
     return this.lazy.get().state;
   }
 

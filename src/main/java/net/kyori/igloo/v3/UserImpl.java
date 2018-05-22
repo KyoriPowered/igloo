@@ -23,7 +23,11 @@
  */
 package net.kyori.igloo.v3;
 
+import com.google.common.base.MoreObjects;
+import net.kyori.lunar.EvenMoreObjects;
 import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.Objects;
 
 final class UserImpl implements User {
   private final String login;
@@ -35,5 +39,24 @@ final class UserImpl implements User {
   @Override
   public @NonNull String login() {
     return this.login;
+  }
+
+  @Override
+  public boolean equals(final Object other) {
+    return EvenMoreObjects.equals(User.class, this, other, that -> {
+      return Objects.equals(this.login, that.login());
+    });
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.login);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+      .add("login", this.login)
+      .toString();
   }
 }
