@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.igloo.v3;
+package net.kyori.igloo.http;
 
 import com.google.api.client.http.ByteArrayContent;
 import com.google.api.client.http.HttpContent;
@@ -35,12 +35,12 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-final class RequestImpl implements Request {
+public final class RequestImpl implements Request {
   final Gson gson;
   final HttpRequestFactory factory;
   private final Url url;
 
-  RequestImpl(final Gson gson, final HttpRequestFactory factory, final Url url) {
+  public RequestImpl(final Gson gson, final HttpRequestFactory factory, final Url url) {
     this.gson = gson;
     this.factory = factory;
     this.url = url;

@@ -23,6 +23,7 @@
  */
 package net.kyori.igloo.v3;
 
+import net.kyori.igloo.http.Request;
 import net.kyori.lunar.exception.Exceptions;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

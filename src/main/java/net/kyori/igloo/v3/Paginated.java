@@ -23,6 +23,8 @@
  */
 package net.kyori.igloo.v3;
 
+import net.kyori.igloo.http.Request;
+import net.kyori.igloo.http.Response;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Iterator;

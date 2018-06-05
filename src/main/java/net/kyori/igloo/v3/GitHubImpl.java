@@ -29,11 +29,31 @@ import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.json.Json;
 import com.google.api.client.util.ExponentialBackOff;
+import com.google.common.collect.Streams;
 import com.google.gson.Gson;
+import net.kyori.igloo.http.Accept;
+import net.kyori.igloo.http.Request;
+import net.kyori.igloo.http.RequestImpl;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 final class GitHubImpl implements GitHub {
+  /**
+   * The standard values.
+   */
+  private static final List<String> HEADER_VALUES = Streams.concat(
+    Stream.of(
+      // GraphQL Global Relay IDs
+      "application/vnd.github.jean-grey-preview+json",
+      // Label emoji, search, and descriptions
+      "application/vnd.github.symmetra-preview+json"
+    ),
+    Stream.of("application/vnd.github.v3+json")
+  ).collect(Collectors.toList());
   private final Request request;
 
   GitHubImpl(final Gson gson, final String endpoint, final @Nullable String authentication) {
@@ -41,7 +61,7 @@ final class GitHubImpl implements GitHub {
       request.setIOExceptionHandler(new HttpBackOffIOExceptionHandler(new ExponentialBackOff()));
       request.setNumberOfRetries(10);
       final HttpHeaders headers = request.getHeaders();
-      headers.put(Accept.HEADER_NAME, Accept.HEADER_VALUES);
+      headers.put(Accept.HEADER_NAME, HEADER_VALUES);
       headers.setContentType(Json.MEDIA_TYPE);
       if(authentication != null) {
         headers.setAuthorization("token " + authentication);

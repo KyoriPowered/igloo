@@ -23,6 +23,7 @@
  */
 package net.kyori.igloo.v3;
 
+import net.kyori.igloo.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class RepositoryImpl implements Repository {

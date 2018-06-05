@@ -21,25 +21,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.igloo.v3;
+package net.kyori.igloo.http;
 
 import com.google.api.client.http.HttpResponse;
 import com.google.common.reflect.TypeToken;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
-import static com.google.common.base.Preconditions.checkState;
-
-final class ResponseImpl implements Response {
-  private static final Pattern LINK_PATTERN = Pattern.compile("<([^>]+)>\\s*;(.*)");
-  private static final Pattern COMMA_PATTERN = Pattern.compile(",");
-  private static final Pattern EQUALS_PATTERN = Pattern.compile("=");
+public final class ResponseImpl implements Response {
   private final RequestImpl request;
   private final HttpResponse response;
 
@@ -58,66 +48,16 @@ final class ResponseImpl implements Response {
   }
 
   @Override
-  public Link link() {
+  public @NonNull Link link() {
     final String header = this.response.getHeaders().getFirstHeaderStringValue("Link");
     if(header == null) {
       return EmptyLink.INSTANCE;
     }
-    return new LinkImpl(header);
+    return new LinkImpl(this.request, header);
   }
 
   @Override
   public void close() throws IOException {
     this.response.disconnect();
-  }
-
-  enum EmptyLink implements Link {
-    INSTANCE;
-
-    @Override
-    public Optional<Request> previous() {
-      return Optional.empty();
-    }
-
-    @Override
-    public Optional<Request> next() {
-      return Optional.empty();
-    }
-  }
-
-  final class LinkImpl implements Link {
-    private final Request previous;
-    private final Request next;
-
-    LinkImpl(final String header) {
-      final Map<String, Request> parts = Arrays.stream(COMMA_PATTERN.split(header))
-        .map(String::trim)
-        .map(LINK_PATTERN::matcher)
-        .map(Part::new)
-        .collect(Collectors.toMap(part -> part.rel, part -> part.request));
-      this.previous = parts.get("prev");
-      this.next = parts.get("next");
-    }
-
-    @Override
-    public Optional<Request> previous() {
-      return Optional.ofNullable(this.previous);
-    }
-
-    @Override
-    public Optional<Request> next() {
-      return Optional.ofNullable(this.next);
-    }
-
-    final class Part {
-      final String rel;
-      final Request request;
-
-      Part(final Matcher matcher) {
-        checkState(matcher.matches());
-        this.request = new RequestImpl(ResponseImpl.this.request.gson, ResponseImpl.this.request.factory, new Request.Url(matcher.group(1)));
-        this.rel = EQUALS_PATTERN.split(matcher.group(2))[1].trim().replace("\"", "");
-      }
-    }
   }
 }

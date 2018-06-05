@@ -21,20 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.igloo.v3;
+package net.kyori.igloo.http;
 
-import net.kyori.igloo.http.Request;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import java.util.Optional;
 
-final class RepositoriesImpl implements Repositories {
-  private final Request request;
+enum EmptyLink implements Link {
+  INSTANCE;
 
-  RepositoriesImpl(final Request request) {
-    this.request = request;
+  @Override
+  public Optional<Request> previous() {
+    return Optional.empty();
   }
 
   @Override
-  public @NonNull Repository get(final @NonNull RepositoryId id) {
-    return new RepositoryImpl(this.request, id);
+  public Optional<Request> next() {
+    return Optional.empty();
   }
 }

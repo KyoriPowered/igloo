@@ -30,16 +30,17 @@ import java.util.Collection;
 /**
  * Partial documents used during issue creation and edits.
  */
-public interface IssuePartial {
+public interface IssuePartial extends net.kyori.igloo.IssuePartial {
   /**
    * A document representing an issue's title.
    */
-  interface TitlePartial extends Issue.AbstractCreate, Issue.Edit, IssuePartial {
+  interface TitlePartial extends Issue.AbstractCreate, Issue.Edit, IssuePartial, net.kyori.igloo.IssuePartial.TitlePartial {
     /**
      * Gets the issue's title.
      *
      * @return the issue title
      */
+    @Override
     @Nullable String title();
   }
 

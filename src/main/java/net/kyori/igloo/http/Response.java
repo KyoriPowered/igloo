@@ -21,20 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.igloo.v3;
+package net.kyori.igloo.http;
 
-import net.kyori.igloo.http.Request;
+import com.google.common.reflect.TypeToken;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class RepositoriesImpl implements Repositories {
-  private final Request request;
+import java.io.IOException;
 
-  RepositoriesImpl(final Request request) {
-    this.request = request;
+public interface Response extends AutoCloseable {
+  default <R> R as(final Class<R> type) throws IOException {
+    return this.as(TypeToken.of(type));
   }
+
+  <R> R as(final TypeToken<R> type) throws IOException;
+
+  @NonNull Link link();
 
   @Override
-  public @NonNull Repository get(final @NonNull RepositoryId id) {
-    return new RepositoryImpl(this.request, id);
-  }
+  void close() throws IOException;
 }

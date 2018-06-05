@@ -24,6 +24,7 @@
 package net.kyori.igloo.v3;
 
 import com.google.common.base.MoreObjects;
+import net.kyori.igloo.http.Request;
 import net.kyori.lunar.EvenMoreObjects;
 import org.checkerframework.checker.nullness.qual.NonNull;
 

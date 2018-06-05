@@ -25,6 +25,7 @@ package net.kyori.igloo.v3;
 
 import com.google.common.base.Suppliers;
 import com.google.common.reflect.TypeToken;
+import net.kyori.igloo.http.Request;
 import net.kyori.lunar.exception.Exceptions;
 
 import java.util.function.Supplier;

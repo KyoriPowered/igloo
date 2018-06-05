@@ -21,20 +21,24 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.igloo.v3;
+package net.kyori.igloo;
 
-import net.kyori.igloo.http.Request;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import net.kyori.cereal.Document;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
-final class RepositoriesImpl implements Repositories {
-  private final Request request;
-
-  RepositoriesImpl(final Request request) {
-    this.request = request;
-  }
-
-  @Override
-  public @NonNull Repository get(final @NonNull RepositoryId id) {
-    return new RepositoryImpl(this.request, id);
+/**
+ * Partials that make up a full issue.
+ */
+public interface IssuePartial extends Document {
+  /**
+   * The title of an issue.
+   */
+  interface TitlePartial extends IssuePartial {
+    /**
+     * Gets the issue's title.
+     *
+     * @return the issue title
+     */
+    @Nullable String title();
   }
 }

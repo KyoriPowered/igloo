@@ -21,36 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.igloo.v3;
+package net.kyori.igloo.http;
 
 import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
-import com.google.common.collect.Streams;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-interface Accept {
+public interface Accept {
   /**
    * The header name.
    */
   String HEADER_NAME = "Accept";
-
-  /**
-   * The standard values.
-   */
-  List<String> HEADER_VALUES = Streams.concat(
-    Stream.of(
-      // GraphQL Global Relay IDs
-      "application/vnd.github.jean-grey-preview+json",
-      // Label emoji, search, and descriptions
-      "application/vnd.github.symmetra-preview+json"
-    ),
-    Stream.of("application/vnd.github.v3+json")
-  ).collect(Collectors.toList());
 
   static void add(final HttpRequest request, final String accept) {
     add(request, Collections.singletonList(accept));

@@ -21,28 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.igloo.v3;
+package net.kyori.igloo;
 
-import com.google.common.reflect.TypeToken;
+import net.kyori.cereal.Document;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
-import java.io.IOException;
-import java.util.Optional;
-
-public interface Response extends AutoCloseable {
-  default <R> R as(final Class<R> type) throws IOException {
-    return this.as(TypeToken.of(type));
+/**
+ * Partials that make up a full label.
+ */
+public interface LabelPartial extends Document {
+  /**
+   * The name of a label.
+   */
+  interface NamePartial extends LabelPartial {
+    /**
+     * Gets the label's name.
+     *
+     * @return the label name
+     */
+    @NonNull String name();
   }
 
-  <R> R as(final TypeToken<R> type) throws IOException;
+  /**
+   * The color of a label.
+   */
+  interface ColorPartial extends LabelPartial {
+    /**
+     * Gets the issue's color.
+     *
+     * @return the label color
+     */
+    @NonNull String color();
+  }
 
-  Link link();
-
-  @Override
-  void close() throws IOException;
-
-  interface Link {
-    Optional<Request> previous();
-
-    Optional<Request> next();
+  /**
+   * The description of a label.
+   */
+  interface DescriptionPartial extends LabelPartial {
+    /**
+     * Gets the issue's description.
+     *
+     * @return the label description
+     */
+    @Nullable String description();
   }
 }

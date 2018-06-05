@@ -24,6 +24,7 @@
 package net.kyori.igloo.v3;
 
 import com.google.api.client.http.EmptyContent;
+import net.kyori.igloo.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.igloo.v3;
+package net.kyori.igloo.http;
 
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.http.HttpRequest;
@@ -97,7 +97,7 @@ public interface Request {
   final class Url extends GenericUrl {
     private static final Joiner JOINER = Joiner.on('/');
 
-    Url(final String url) {
+    public Url(final String url) {
       super(url);
     }
 

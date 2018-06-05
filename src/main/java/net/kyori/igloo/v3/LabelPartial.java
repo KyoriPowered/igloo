@@ -26,42 +26,31 @@ package net.kyori.igloo.v3;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
- * Partial documents used during label creation and edits.
+ * Partials that make up a full label.
  */
-public interface LabelPartial {
+public interface LabelPartial extends net.kyori.igloo.LabelPartial {
   /**
-   * A document representing a label's name.
+   * The name of a label.
    */
-  interface NamePartial extends Label.Edit, LabelPartial {
-    /**
-     * Gets the label's name.
-     *
-     * @return the label name
-     */
-    @NonNull String name();
+  interface NamePartial extends Label.Edit, LabelPartial, net.kyori.igloo.LabelPartial.NamePartial {
   }
 
   /**
-   * A document representing a label's color.
+   * The color of a label.
    */
-  interface ColorPartial extends Label.Edit, LabelPartial {
-    /**
-     * Gets the issue's color.
-     *
-     * @return the label color
-     */
-    @NonNull String color();
+  interface ColorPartial extends Label.Edit, LabelPartial, net.kyori.igloo.LabelPartial.ColorPartial {
   }
 
   /**
-   * A document representing a label's description.
+   * The description of a label.
    */
-  interface DescriptionPartial extends Label.Edit, LabelPartial {
+  interface DescriptionPartial extends Label.Edit, LabelPartial, net.kyori.igloo.LabelPartial.DescriptionPartial {
     /**
      * Gets the issue's description.
      *
      * @return the label description
      */
+    @Override
     @NonNull String description();
   }
 }
