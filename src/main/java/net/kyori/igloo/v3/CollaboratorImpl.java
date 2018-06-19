@@ -28,10 +28,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 
-final class CollaboratorImpl implements Collaborator {
+/* package */ final class CollaboratorImpl implements Collaborator {
   private final Request request;
 
-  CollaboratorImpl(final Request request, final User user) {
+  /* package */ CollaboratorImpl(final Request request, final User user) {
     this.request = request.path(user.login());
   }
 

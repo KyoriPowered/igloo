@@ -25,7 +25,7 @@ package net.kyori.igloo.v3;
 
 import org.checkerframework.checker.nullness.qual.Nullable;
 
-interface Partial {
+/* package */ interface Partial {
   class Id {
     int id;
   }

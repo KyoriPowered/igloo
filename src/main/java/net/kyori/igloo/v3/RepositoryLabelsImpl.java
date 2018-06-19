@@ -30,10 +30,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.io.IOException;
 import java.util.Arrays;
 
-final class RepositoryLabelsImpl implements RepositoryLabels {
+/* package */ final class RepositoryLabelsImpl implements RepositoryLabels {
   private final Request request;
 
-  RepositoryLabelsImpl(final Request request) {
+  /* package */ RepositoryLabelsImpl(final Request request) {
     this.request = request.path("labels");
   }
 

@@ -28,11 +28,11 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Optional;
 
-final class IssueImpl extends AbstractIssue {
+/* package */ final class IssueImpl extends AbstractIssue {
   private final Repository repository;
   private final Lazy<Partial.Issue> lazy;
 
-  IssueImpl(final Repository repository, final Request request, final int number) {
+  /* package */ IssueImpl(final Repository repository, final Request request, final int number) {
     super(request, number);
     this.repository = repository;
     this.lazy = new Lazy<>(this.request, Partial.Issue.class);

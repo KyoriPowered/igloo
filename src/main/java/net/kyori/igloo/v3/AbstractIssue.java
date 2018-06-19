@@ -29,11 +29,11 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 
-abstract class AbstractIssue implements Issue {
+/* package */ abstract class AbstractIssue implements Issue {
   final Request request;
   private final int number;
 
-  AbstractIssue(final Request request, final int number) {
+  /* package */ AbstractIssue(final Request request, final int number) {
     this.request = request.path(Integer.toString(number));
     this.number = number;
   }

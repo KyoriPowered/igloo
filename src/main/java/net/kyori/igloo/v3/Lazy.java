@@ -30,18 +30,18 @@ import net.kyori.lunar.exception.Exceptions;
 
 import java.util.function.Supplier;
 
-final class Lazy<T> {
+/* package */ final class Lazy<T> {
   private final Supplier<T> json;
 
-  Lazy(final Request request, final Class<T> type) {
+  /* package */ Lazy(final Request request, final Class<T> type) {
     this(request, TypeToken.of(type));
   }
 
-  Lazy(final Request request, final TypeToken<T> type) {
+  /* package */ Lazy(final Request request, final TypeToken<T> type) {
     this.json = Suppliers.memoize(Exceptions.rethrowSupplier(() -> request.get().as(type))::get);
   }
 
-  T get() {
+  /* package */ T get() {
     return this.json.get();
   }
 }

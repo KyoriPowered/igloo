@@ -28,11 +28,11 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 
-final class IssuesImpl implements Issues {
+/* package */ final class IssuesImpl implements Issues {
   private final Repository repository;
   private final Request request;
 
-  IssuesImpl(final Repository repository, final Request request) {
+  /* package */ IssuesImpl(final Repository repository, final Request request) {
     this.repository = repository;
     this.request = request.path("issues");
   }

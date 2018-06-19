@@ -28,13 +28,13 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Optional;
 
-final class CreatedIssue extends AbstractIssue {
+/* package */ final class CreatedIssue extends AbstractIssue {
   private final String html_url;
   private final String title;
   private final String body;
   private final State state;
 
-  CreatedIssue(final Request request, final Partial.Issue partial) {
+  /* package */ CreatedIssue(final Request request, final Partial.Issue partial) {
     super(request, partial.number);
     this.html_url = partial.html_url;
     this.title = partial.title;

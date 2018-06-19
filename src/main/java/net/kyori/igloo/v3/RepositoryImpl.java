@@ -26,10 +26,10 @@ package net.kyori.igloo.v3;
 import net.kyori.igloo.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class RepositoryImpl implements Repository {
+/* package */ final class RepositoryImpl implements Repository {
   private final Request request;
 
-  RepositoryImpl(final Request request, final RepositoryId id) {
+  /* package */ RepositoryImpl(final Request request, final RepositoryId id) {
     this.request = request.path("repos", id.user(), id.repo());
   }
 

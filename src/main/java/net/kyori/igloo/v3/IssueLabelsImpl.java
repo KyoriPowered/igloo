@@ -30,10 +30,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.io.IOException;
 import java.util.Arrays;
 
-final class IssueLabelsImpl implements IssueLabels {
+/* package */ final class IssueLabelsImpl implements IssueLabels {
   private final Request request;
 
-  IssueLabelsImpl(final Request request) {
+  /* package */ IssueLabelsImpl(final Request request) {
     this.request = request.path("labels");
   }
 

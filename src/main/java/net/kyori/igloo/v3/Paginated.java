@@ -34,12 +34,12 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-final class Paginated<T> implements Iterable<T> {
+/* package */ final class Paginated<T> implements Iterable<T> {
   private final Function<Request, Response> requestFunction;
   private final Function<Response, Stream<T>> responseFunction;
   private final Pager pager = new Pager();
 
-  Paginated(final Request request, final Function<Request, Response> requestFunction, final Function<Response, Stream<T>> responseFunction) {
+  /* package */ Paginated(final Request request, final Function<Request, Response> requestFunction, final Function<Response, Stream<T>> responseFunction) {
     this.pager.next = request;
     this.requestFunction = requestFunction;
     this.responseFunction = responseFunction;
@@ -50,11 +50,11 @@ final class Paginated<T> implements Iterable<T> {
     return this.pager;
   }
 
-  class Pager implements Iterator<T> {
+  /* package */ class Pager implements Iterator<T> {
     private LinkedList<T> current;
-    private Request next;
+    /* package */ Request next;
 
-    LinkedList<T> current() {
+    private LinkedList<T> current() {
       if(this.current == null) {
         if(this.next != null) {
           final Response response = Paginated.this.requestFunction.apply(this.next);

@@ -25,7 +25,7 @@ package net.kyori.igloo.http;
 
 import java.util.Optional;
 
-enum EmptyLink implements Link {
+/* package */ enum EmptyLink implements Link {
   INSTANCE;
 
   @Override

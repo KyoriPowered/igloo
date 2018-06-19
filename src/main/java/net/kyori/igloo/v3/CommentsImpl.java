@@ -28,10 +28,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 
-final class CommentsImpl implements Comments {
+/* package */ final class CommentsImpl implements Comments {
   private final Request request;
 
-  CommentsImpl(final Request request) {
+  /* package */ CommentsImpl(final Request request) {
     this.request = request.path("comments");
   }
 

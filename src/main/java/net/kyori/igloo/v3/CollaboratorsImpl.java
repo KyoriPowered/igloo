@@ -26,10 +26,10 @@ package net.kyori.igloo.v3;
 import net.kyori.igloo.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class CollaboratorsImpl implements Collaborators {
+/* package */ final class CollaboratorsImpl implements Collaborators {
   private final Request request;
 
-  CollaboratorsImpl(final Request request) {
+  /* package */ CollaboratorsImpl(final Request request) {
     this.request = request.path("collaborators");
   }
 

@@ -23,10 +23,10 @@
  */
 package net.kyori.igloo.v3;
 
-final class CommentImpl implements Comment {
+/* package */ final class CommentImpl implements Comment {
   private final int id;
 
-  CommentImpl(final int id) {
+  /* package */ CommentImpl(final int id) {
     this.id = id;
   }
 

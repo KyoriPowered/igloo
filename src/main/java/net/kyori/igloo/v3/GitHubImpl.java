@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-final class GitHubImpl implements GitHub {
+/* package */ final class GitHubImpl implements GitHub {
   /**
    * The standard values.
    */
@@ -56,15 +56,15 @@ final class GitHubImpl implements GitHub {
   ).collect(Collectors.toList());
   private final Request request;
 
-  GitHubImpl(final Gson gson, final String endpoint, final @Nullable String authentication) {
+  /* package */ GitHubImpl(final Gson gson, final String endpoint, final @Nullable String auth) {
     final HttpRequestFactory factory = new ApacheHttpTransport().createRequestFactory((request) -> {
       request.setIOExceptionHandler(new HttpBackOffIOExceptionHandler(new ExponentialBackOff()));
       request.setNumberOfRetries(10);
       final HttpHeaders headers = request.getHeaders();
       headers.put(Accept.HEADER_NAME, HEADER_VALUES);
       headers.setContentType(Json.MEDIA_TYPE);
-      if(authentication != null) {
-        headers.setAuthorization("token " + authentication);
+      if(auth != null) {
+        headers.setAuthorization(auth);
       }
       headers.setUserAgent("igloo");
     });

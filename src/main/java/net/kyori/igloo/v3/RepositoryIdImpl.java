@@ -29,11 +29,11 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
 
-final class RepositoryIdImpl implements RepositoryId {
+/* package */ final class RepositoryIdImpl implements RepositoryId {
   private final String user;
   private final String repo;
 
-  RepositoryIdImpl(final String user, final String repo) {
+  /* package */ RepositoryIdImpl(final String user, final String repo) {
     this.user = user;
     this.repo = repo;
   }

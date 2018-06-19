@@ -33,7 +33,7 @@ public final class ResponseImpl implements Response {
   private final RequestImpl request;
   private final HttpResponse response;
 
-  ResponseImpl(final RequestImpl request, final HttpResponse response) {
+  /* package */ ResponseImpl(final RequestImpl request, final HttpResponse response) {
     this.request = request;
     this.response = response;
   }

@@ -31,14 +31,14 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import java.io.IOException;
 import java.util.Objects;
 
-final class LabelImpl implements Label {
+/* package */ final class LabelImpl implements Label {
   private final Request request;
   private final String url;
   private final String name;
   private final String description;
   private final String color;
 
-  LabelImpl(final Request request, final String url, final String name, final String description, final String color) {
+  /* package */ LabelImpl(final Request request, final String url, final String name, final String description, final String color) {
     this.request = request.path(name);
     this.url = url;
     this.name = name;

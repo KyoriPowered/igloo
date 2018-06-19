@@ -25,8 +25,8 @@ package net.kyori.igloo.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class UsersImpl implements Users {
-  UsersImpl() {
+/* package */ final class UsersImpl implements Users {
+  /* package */ UsersImpl() {
   }
 
   @Override

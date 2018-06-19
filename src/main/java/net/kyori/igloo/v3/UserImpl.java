@@ -29,10 +29,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.Objects;
 
-final class UserImpl implements User {
+/* package */ final class UserImpl implements User {
   private final String login;
 
-  UserImpl(final String login) {
+  /* package */ UserImpl(final String login) {
     this.login = login;
   }
 

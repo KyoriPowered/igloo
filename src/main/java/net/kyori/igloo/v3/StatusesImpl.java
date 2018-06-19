@@ -28,10 +28,10 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
 
-final class StatusesImpl implements Statuses {
+/* package */ final class StatusesImpl implements Statuses {
   private final Request request;
 
-  StatusesImpl(final Request request) {
+  /* package */ StatusesImpl(final Request request) {
     this.request = request.path("statuses");
   }
 

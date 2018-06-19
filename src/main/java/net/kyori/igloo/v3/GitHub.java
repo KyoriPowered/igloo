@@ -82,12 +82,22 @@ public interface GitHub {
     @NonNull Builder endpoint(final @NonNull String endpoint);
 
     /**
+     * Sets the api authentication string.
+     *
+     * @param auth the api authentication string
+     * @return the builder
+     */
+    @NonNull Builder auth(final @NonNull String auth);
+
+    /**
      * Sets the api authentication token.
      *
      * @param token the api authentication token
      * @return the builder
      */
-    @NonNull Builder token(final @NonNull String token);
+    default @NonNull Builder token(final @NonNull String token) {
+      return this.auth("token " + token);
+    }
 
     /**
      * Builds.
@@ -99,7 +109,7 @@ public interface GitHub {
     final class Impl implements Builder {
       private Gson gson;
       private String endpoint = API_ENDPOINT;
-      private @Nullable String token;
+      private @Nullable String auth;
 
       @Override
       public @NonNull Builder gson(final @NonNull Gson gson) {
@@ -114,15 +124,15 @@ public interface GitHub {
       }
 
       @Override
-      public @NonNull Builder token(final @NonNull String token) {
-        this.token = token;
+      public @NonNull Builder auth(final @NonNull String auth) {
+        this.auth = auth;
         return this;
       }
 
       @Override
       public @NonNull GitHub build() {
         requireNonNull(this.gson, "gson");
-        return new GitHubImpl(this.gson, this.endpoint, this.token);
+        return new GitHubImpl(this.gson, this.endpoint, this.auth);
       }
     }
   }

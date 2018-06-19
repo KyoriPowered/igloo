@@ -25,13 +25,13 @@ package net.kyori.igloo.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class CreatedStatus implements Status {
+/* package */ final class CreatedStatus implements Status {
   private final State state;
   private final String target_url;
   private final String description;
   private final String context;
 
-  CreatedStatus(final State state, final String target_url, final String description, final String context) {
+  /* package */ CreatedStatus(final State state, final String target_url, final String description, final String context) {
     this.state = state;
     this.target_url = target_url;
     this.description = description;

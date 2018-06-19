@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkState;
 
-final class LinkImpl implements Link {
+/* package */ final class LinkImpl implements Link {
   private static final Pattern LINK_PATTERN = Pattern.compile("<([^>]+)>\\s*;(.*)");
   private static final Pattern COMMA_PATTERN = Pattern.compile(",");
   private static final Pattern EQUALS_PATTERN = Pattern.compile("=");

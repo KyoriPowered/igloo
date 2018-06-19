@@ -26,12 +26,12 @@ package net.kyori.igloo.v3;
 import net.kyori.igloo.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class PullRequestImpl implements PullRequest {
+/* package */ final class PullRequestImpl implements PullRequest {
   final Request request;
   private final int number;
   private final Lazy<Partial.PullRequest> lazy;
 
-  PullRequestImpl(final Request request, final int number) {
+  /* package */ PullRequestImpl(final Request request, final int number) {
     this.request = request.path(Integer.toString(number));
     this.number = number;
     this.lazy = new Lazy<>(this.request, Partial.PullRequest.class);

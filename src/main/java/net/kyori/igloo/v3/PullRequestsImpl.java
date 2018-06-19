@@ -26,10 +26,10 @@ package net.kyori.igloo.v3;
 import net.kyori.igloo.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class PullRequestsImpl implements PullRequests {
+/* package */ final class PullRequestsImpl implements PullRequests {
   private final Request request;
 
-  PullRequestsImpl(final Request request) {
+  /* package */ PullRequestsImpl(final Request request) {
     this.request = request.path("pulls");
   }
 
