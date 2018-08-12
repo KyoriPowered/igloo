@@ -30,6 +30,7 @@ import java.util.Optional;
 
 /* package */ final class CreatedIssue extends AbstractIssue {
   private final String html_url;
+  private final User user;
   private final String title;
   private final String body;
   private final State state;
@@ -37,6 +38,7 @@ import java.util.Optional;
   /* package */ CreatedIssue(final Request request, final Partial.Issue partial) {
     super(request, partial.number);
     this.html_url = partial.html_url;
+    this.user = new UserImpl(partial.user.login);
     this.title = partial.title;
     this.body = partial.body;
     this.state = partial.state;
@@ -45,6 +47,11 @@ import java.util.Optional;
   @Override
   public @NonNull String html_url() {
     return this.html_url;
+  }
+
+  @Override
+  public @NonNull User user() {
+    return this.user;
   }
 
   @Override

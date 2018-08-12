@@ -45,6 +45,13 @@ public interface PullRequest {
   @NonNull String html_url();
 
   /**
+   * Gets the user.
+   *
+   * @return the user
+   */
+  @NonNull User user();
+
+  /**
    * Gets the title.
    *
    * @return the title

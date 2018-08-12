@@ -31,6 +31,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
   }
 
   class Issue {
+    User user;
     String body;
     int number;
     String html_url;
@@ -55,6 +56,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
     net.kyori.igloo.v3.PullRequest.State state;
     String title;
     String body;
+    User user;
     boolean merged;
   }
 
@@ -63,5 +65,9 @@ import org.checkerframework.checker.nullness.qual.Nullable;
     String target_url;
     String description;
     String context;
+  }
+
+  class User {
+    String login;
   }
 }

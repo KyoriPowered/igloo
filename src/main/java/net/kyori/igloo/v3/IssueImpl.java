@@ -44,6 +44,11 @@ import java.util.Optional;
   }
 
   @Override
+  public @NonNull User user() {
+    return new UserImpl(this.lazy.get().user.login);
+  }
+
+  @Override
   public @NonNull String title() {
     return this.lazy.get().title;
   }
