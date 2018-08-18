@@ -35,4 +35,18 @@ public interface User {
    * @return the login
    */
   @NonNull String login();
+
+  /**
+   * Gets the name.
+   *
+   * @return the name
+   */
+  @NonNull String name();
+
+  /**
+   * Gets the avatar url.
+   *
+   * @return The avatar url
+   */
+  @NonNull String avatarUrl();
 }

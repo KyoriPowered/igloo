@@ -23,14 +23,19 @@
  */
 package net.kyori.igloo.v3;
 
+import net.kyori.igloo.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /* package */ final class UsersImpl implements Users {
-  /* package */ UsersImpl() {
+  private final Request request;
+
+  /* package */ UsersImpl(final Request request) {
+    this.request = request;
   }
 
   @Override
   public @NonNull User get(final @NonNull String login) {
-    return new UserImpl(login);
+    final Lazy<Partial.User> lazy = new Lazy<>(this.request.path("users", login), Partial.User.class);
+    return new UserImpl(lazy.get().login, lazy.get().name, lazy.get().avatar_url);
   }
 }

@@ -38,7 +38,7 @@ import java.util.Optional;
   /* package */ CreatedIssue(final Request request, final Partial.Issue partial) {
     super(request, partial.number);
     this.html_url = partial.html_url;
-    this.user = new UserImpl(partial.user.login);
+    this.user = new UserImpl(partial.user.login, partial.user.name, partial.user.avatar_url);
     this.title = partial.title;
     this.body = partial.body;
     this.state = partial.state;

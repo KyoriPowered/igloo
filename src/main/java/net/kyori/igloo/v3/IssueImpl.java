@@ -45,7 +45,7 @@ import java.util.Optional;
 
   @Override
   public @NonNull User user() {
-    return new UserImpl(this.lazy.get().user.login);
+    return new UserImpl(this.lazy.get().user.login, this.lazy.get().user.name, this.lazy.get().user.avatar_url);
   }
 
   @Override
