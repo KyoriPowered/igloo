@@ -69,5 +69,7 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
   class User {
     String login;
+    String name;
+    String avatar_url;
   }
 }

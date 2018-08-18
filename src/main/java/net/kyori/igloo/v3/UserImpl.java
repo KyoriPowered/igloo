@@ -31,14 +31,28 @@ import java.util.Objects;
 
 /* package */ final class UserImpl implements User {
   private final String login;
+  private final String name;
+  private final String avatarUrl;
 
-  /* package */ UserImpl(final String login) {
+  /* package */ UserImpl(final String login, final String name, final String avatarUrl) {
     this.login = login;
+    this.name = name;
+    this.avatarUrl = avatarUrl;
   }
 
   @Override
   public @NonNull String login() {
     return this.login;
+  }
+
+  @Override
+  public @NonNull String name() {
+    return this.name;
+  }
+
+  @Override
+  public @NonNull String avatarUrl() {
+    return this.avatarUrl;
   }
 
   @Override

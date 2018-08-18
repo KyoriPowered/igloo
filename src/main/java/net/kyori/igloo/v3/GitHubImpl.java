@@ -78,6 +78,6 @@ import java.util.stream.Stream;
 
   @Override
   public @NonNull Users users() {
-    return new UsersImpl();
+    return new UsersImpl(this.request);
   }
 }
