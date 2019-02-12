@@ -23,9 +23,12 @@
  */
 package net.kyori.igloo.v3;
 
+import com.google.api.client.http.HttpRequest;
 import com.google.gson.Gson;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
+
+import java.util.function.Consumer;
 
 import static java.util.Objects.requireNonNull;
 
@@ -90,6 +93,14 @@ public interface GitHub {
     @NonNull Builder auth(final @NonNull String auth);
 
     /**
+     * Sets the HTTP request configurer.
+     *
+     * @param configurer the configurer
+     * @return the builder
+     */
+    @NonNull Builder http(final @NonNull Consumer<HttpRequest> configurer);
+
+    /**
      * Sets the api authentication token.
      *
      * @param token the api authentication token
@@ -110,6 +121,7 @@ public interface GitHub {
       private Gson gson;
       private String endpoint = API_ENDPOINT;
       private @Nullable String auth;
+      private @Nullable Consumer<HttpRequest> httpRequestConfigurer;
 
       @Override
       public @NonNull Builder gson(final @NonNull Gson gson) {
@@ -130,9 +142,15 @@ public interface GitHub {
       }
 
       @Override
+      public @NonNull Builder http(final @NonNull Consumer<HttpRequest> configurer) {
+        this.httpRequestConfigurer = configurer;
+        return this;
+      }
+
+      @Override
       public @NonNull GitHub build() {
         requireNonNull(this.gson, "gson");
-        return new GitHubImpl(this.gson, this.endpoint, this.auth);
+        return new GitHubImpl(this.gson, this.endpoint, this.auth, this.httpRequestConfigurer);
       }
     }
   }

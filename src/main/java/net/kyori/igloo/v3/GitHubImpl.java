@@ -25,6 +25,7 @@ package net.kyori.igloo.v3;
 
 import com.google.api.client.http.HttpBackOffIOExceptionHandler;
 import com.google.api.client.http.HttpHeaders;
+import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestFactory;
 import com.google.api.client.http.apache.ApacheHttpTransport;
 import com.google.api.client.json.Json;
@@ -38,6 +39,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -56,10 +58,13 @@ import java.util.stream.Stream;
   ).collect(Collectors.toList());
   private final Request request;
 
-  /* package */ GitHubImpl(final Gson gson, final String endpoint, final @Nullable String auth) {
+  /* package */ GitHubImpl(final Gson gson, final String endpoint, final @Nullable String auth, final @Nullable Consumer<HttpRequest> httpRequestConfigurer) {
     final HttpRequestFactory factory = new ApacheHttpTransport().createRequestFactory((request) -> {
       request.setIOExceptionHandler(new HttpBackOffIOExceptionHandler(new ExponentialBackOff()));
       request.setNumberOfRetries(10);
+      if(httpRequestConfigurer != null) {
+        httpRequestConfigurer.accept(request);
+      }
       final HttpHeaders headers = request.getHeaders();
       headers.put(Accept.HEADER_NAME, HEADER_VALUES);
       headers.setContentType(Json.MEDIA_TYPE);
