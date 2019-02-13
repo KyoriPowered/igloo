@@ -24,7 +24,7 @@
 package net.kyori.igloo.v3;
 
 import net.kyori.igloo.http.Request;
-import net.kyori.lunar.exception.Exceptions;
+import net.kyori.lambda.function.ThrowingFunction;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
@@ -42,8 +42,8 @@ import java.util.Arrays;
   public @NonNull Iterable<Label> all() throws IOException {
     return new Paginated<>(
       this.request,
-      Exceptions.rethrowFunction(Request::get),
-      Exceptions.rethrowFunction(response -> Arrays.stream(response.as(Partial.Label[].class)).map(label -> new LabelImpl(this.request.up(3), label.url, label.name, label.description, label.color)))
+      ThrowingFunction.of(Request::get),
+      ThrowingFunction.of(response -> Arrays.stream(response.as(Partial.Label[].class)).map(label -> new LabelImpl(this.request.up(3), label.url, label.name, label.description, label.color)))
     );
   }
 

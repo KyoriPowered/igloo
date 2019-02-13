@@ -26,7 +26,7 @@ package net.kyori.igloo.v3;
 import com.google.common.base.Suppliers;
 import com.google.common.reflect.TypeToken;
 import net.kyori.igloo.http.Request;
-import net.kyori.lunar.exception.Exceptions;
+import net.kyori.lambda.function.ThrowingSupplier;
 
 import java.util.function.Supplier;
 
@@ -38,7 +38,7 @@ import java.util.function.Supplier;
   }
 
   /* package */ Lazy(final Request request, final TypeToken<T> type) {
-    this.json = Suppliers.memoize(Exceptions.rethrowSupplier(() -> request.get().as(type))::get);
+    this.json = Suppliers.memoize(ThrowingSupplier.of(() -> request.get().as(type))::get);
   }
 
   /* package */ T get() {
