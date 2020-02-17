@@ -25,7 +25,6 @@ package net.kyori.igloo.v3;
 
 import com.google.common.base.MoreObjects;
 import net.kyori.igloo.http.Request;
-import net.kyori.lunar.EvenMoreObjects;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;
@@ -78,11 +77,10 @@ import java.util.Objects;
 
   @Override
   public boolean equals(final Object other) {
-    return EvenMoreObjects.equals(Label.class, this, other, that -> {
-      return Objects.equals(this.url, that.url())
-        && Objects.equals(this.name, that.name())
-        && Objects.equals(this.color, that.color());
-    });
+    if(this == other) return true;
+    if(!(other instanceof Label)) return false;
+    final Label that = (Label) other;
+    return this.url.equals(that.url()) && this.name.equals(that.name()) && this.color.equals(that.color());
   }
 
   @Override

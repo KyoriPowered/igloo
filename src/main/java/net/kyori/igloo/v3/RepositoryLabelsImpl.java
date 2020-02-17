@@ -24,7 +24,7 @@
 package net.kyori.igloo.v3;
 
 import net.kyori.igloo.http.Request;
-import net.kyori.lambda.function.ThrowingFunction;
+import net.kyori.mu.function.ThrowingFunction;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.IOException;

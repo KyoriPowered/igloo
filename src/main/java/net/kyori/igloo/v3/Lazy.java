@@ -26,9 +26,9 @@ package net.kyori.igloo.v3;
 import com.google.common.base.Suppliers;
 import com.google.common.reflect.TypeToken;
 import net.kyori.igloo.http.Request;
-import net.kyori.lambda.function.ThrowingSupplier;
 
 import java.util.function.Supplier;
+import net.kyori.mu.function.ThrowingSupplier;
 
 /* package */ final class Lazy<T> {
   private final Supplier<T> json;
