@@ -32,6 +32,7 @@ import com.google.api.client.json.Json;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.common.collect.Streams;
 import com.google.gson.Gson;
+import java.util.function.Supplier;
 import net.kyori.igloo.http.Accept;
 import net.kyori.igloo.http.Request;
 import net.kyori.igloo.http.RequestImpl;
@@ -58,7 +59,7 @@ import java.util.stream.Stream;
   ).collect(Collectors.toList());
   private final Request request;
 
-  /* package */ GitHubImpl(final Gson gson, final String endpoint, final @Nullable String auth, final @Nullable Consumer<HttpRequest> httpRequestConfigurer) {
+  /* package */ GitHubImpl(final Gson gson, final String endpoint, final @Nullable Supplier<String> auth, final @Nullable Consumer<HttpRequest> httpRequestConfigurer) {
     final HttpRequestFactory factory = new ApacheHttpTransport().createRequestFactory((request) -> {
       request.setIOExceptionHandler(new HttpBackOffIOExceptionHandler(new ExponentialBackOff()));
       request.setNumberOfRetries(10);
@@ -69,7 +70,7 @@ import java.util.stream.Stream;
       headers.put(Accept.HEADER_NAME, HEADER_VALUES);
       headers.setContentType(Json.MEDIA_TYPE);
       if(auth != null) {
-        headers.setAuthorization(auth);
+        headers.setAuthorization(auth.get());
       }
       headers.setUserAgent("igloo");
     });

@@ -25,6 +25,7 @@ package net.kyori.igloo.v3;
 
 import com.google.api.client.http.HttpRequest;
 import com.google.gson.Gson;
+import java.util.function.Supplier;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -90,15 +91,27 @@ public interface GitHub {
      * @param auth the api authentication string
      * @return the builder
      */
-    @NonNull Builder auth(final @NonNull String auth);
+    default @NonNull Builder auth(final @NonNull String auth) {
+      return this.auth(() -> auth);
+    }
 
     /**
-     * Sets the HTTP request configurer.
+     * Sets the api authentication string.
      *
-     * @param configurer the configurer
+     * @param auth the api authentication string
      * @return the builder
      */
-    @NonNull Builder http(final @NonNull Consumer<HttpRequest> configurer);
+    @NonNull Builder auth(final @NonNull Supplier<String> auth);
+
+    /**
+     * Sets the api authentication token.
+     *
+     * @param token the api authentication token
+     * @return the builder
+     */
+    default @NonNull Builder token(final @NonNull Supplier<String> token) {
+      return this.auth(() -> "token " + token.get());
+    }
 
     /**
      * Sets the api authentication token.
@@ -107,8 +120,16 @@ public interface GitHub {
      * @return the builder
      */
     default @NonNull Builder token(final @NonNull String token) {
-      return this.auth("token " + token);
+      return this.token(() -> token);
     }
+
+    /**
+     * Sets the HTTP request configurer.
+     *
+     * @param configurer the configurer
+     * @return the builder
+     */
+    @NonNull Builder http(final @NonNull Consumer<HttpRequest> configurer);
 
     /**
      * Builds.
@@ -120,7 +141,7 @@ public interface GitHub {
     final class Impl implements Builder {
       private Gson gson;
       private String endpoint = API_ENDPOINT;
-      private @Nullable String auth;
+      private @Nullable Supplier<String> auth;
       private @Nullable Consumer<HttpRequest> httpRequestConfigurer;
 
       @Override
@@ -136,7 +157,7 @@ public interface GitHub {
       }
 
       @Override
-      public @NonNull Builder auth(final @NonNull String auth) {
+      public @NonNull Builder auth(final @NonNull Supplier<String> auth) {
         this.auth = auth;
         return this;
       }
