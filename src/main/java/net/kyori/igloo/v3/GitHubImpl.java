@@ -86,4 +86,9 @@ import java.util.stream.Stream;
   public @NonNull Users users() {
     return new UsersImpl(this.request);
   }
+
+  @Override
+  public @NonNull Organizations orgs() {
+    return new OrganizationsImpl(this.request);
+  }
 }

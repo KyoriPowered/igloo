@@ -30,7 +30,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
   private final Request request;
 
   /* package */ RepositoryImpl(final Request request, final RepositoryId id) {
-    this.request = request.path("repos", id.user(), id.repo());
+    this.request = request.path(id.user(), id.repo());
   }
 
   @Override

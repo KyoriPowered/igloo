@@ -47,6 +47,11 @@ public final class RequestImpl implements Request {
   }
 
   @Override
+  public @NonNull Request path(final @NonNull String path) {
+    return new RequestImpl(this.gson, this.factory, new Url(this.url, path));
+  }
+
+  @Override
   public @NonNull Request path(final @NonNull String... path) {
     return new RequestImpl(this.gson, this.factory, new Url(this.url, path));
   }

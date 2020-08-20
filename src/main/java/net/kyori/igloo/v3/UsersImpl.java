@@ -30,12 +30,12 @@ import org.checkerframework.checker.nullness.qual.NonNull;
   private final Request request;
 
   /* package */ UsersImpl(final Request request) {
-    this.request = request;
+    this.request = request.path("users");
   }
 
   @Override
   public @NonNull User get(final @NonNull String login) {
-    final Lazy<Partial.User> lazy = new Lazy<>(this.request.path("users", login), Partial.User.class);
+    final Lazy<Partial.User> lazy = new Lazy<>(this.request.path(login), Partial.User.class);
     return new UserImpl(lazy.get().login, lazy.get().name, lazy.get().avatar_url);
   }
 }

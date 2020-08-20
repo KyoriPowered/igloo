@@ -23,18 +23,14 @@
  */
 package net.kyori.igloo.v3;
 
-import net.kyori.igloo.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/* package */ final class RepositoriesImpl implements Repositories {
-  private final Request request;
-
-  /* package */ RepositoriesImpl(final Request request) {
-    this.request = request.path("repos");
-  }
-
-  @Override
-  public @NonNull Repository get(final @NonNull RepositoryId id) {
-    return new RepositoryImpl(this.request, id);
-  }
+public interface Teams {
+  /**
+   * Gets a team.
+   *
+   * @param slug the slug
+   * @return the team
+   */
+  @NonNull Team get(final @NonNull String slug);
 }

@@ -66,6 +66,13 @@ public interface GitHub {
   @NonNull Users users();
 
   /**
+   * Gets organizations.
+   *
+   * @return organizations
+   */
+  @NonNull Organizations orgs();
+
+  /**
    * A builder for creating instances of the GitHub API.
    */
   interface Builder {

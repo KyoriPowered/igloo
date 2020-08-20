@@ -23,18 +23,19 @@
  */
 package net.kyori.igloo.v3;
 
-import net.kyori.igloo.http.Request;
+import java.io.IOException;
+import java.util.List;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/* package */ final class RepositoriesImpl implements Repositories {
-  private final Request request;
-
-  /* package */ RepositoriesImpl(final Request request) {
-    this.request = request.path("repos");
-  }
-
-  @Override
-  public @NonNull Repository get(final @NonNull RepositoryId id) {
-    return new RepositoryImpl(this.request, id);
-  }
+/**
+ * A team.
+ */
+public interface Team {
+  /**
+   * Gets the team members.
+   *
+   * @return the members
+   * @throws IOException if an exception occured while retrieving team members
+   */
+  @NonNull List<User> members() throws IOException;
 }

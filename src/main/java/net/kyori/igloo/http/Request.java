@@ -41,6 +41,14 @@ public interface Request {
    * @param path the path components
    * @return a new request
    */
+  @NonNull Request path(final @NonNull String path);
+
+  /**
+   * Append components to the path of the request.
+   *
+   * @param path the path components
+   * @return a new request
+   */
   @NonNull Request path(final @NonNull String... path);
 
   /**
@@ -99,6 +107,10 @@ public interface Request {
 
     public Url(final String url) {
       super(url);
+    }
+
+    Url(final Url url, final String path) {
+      super(url.toString() + '/' + path);
     }
 
     Url(final Url url, final String... path) {

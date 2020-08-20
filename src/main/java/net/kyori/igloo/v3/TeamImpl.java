@@ -23,18 +23,29 @@
  */
 package net.kyori.igloo.v3;
 
+import com.google.common.reflect.TypeToken;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import net.kyori.igloo.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/* package */ final class RepositoriesImpl implements Repositories {
+final class TeamImpl implements Team {
+  @SuppressWarnings("UnstableApiUsage")
+  private static final TypeToken<List<Partial.User>> MEMBERS_TYPE = new TypeToken<List<Partial.User>>() {};
   private final Request request;
 
-  /* package */ RepositoriesImpl(final Request request) {
-    this.request = request.path("repos");
+  TeamImpl(final Request request, final String slug) {
+    this.request = request.path(slug);
   }
 
   @Override
-  public @NonNull Repository get(final @NonNull RepositoryId id) {
-    return new RepositoryImpl(this.request, id);
+  public @NonNull List<User> members() throws IOException {
+    final List<Partial.User> partials = this.request.path("members").get().as(MEMBERS_TYPE);
+    final List<User> reviews = new ArrayList<>(partials.size());
+    for(final Partial.User partial : partials) {
+      reviews.add(new UserImpl(partial.login, partial.name, partial.avatar_url));
+    }
+    return reviews;
   }
 }
