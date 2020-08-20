@@ -26,6 +26,7 @@ package net.kyori.igloo.v3;
 import com.google.gson.annotations.SerializedName;
 import net.kyori.cereal.Document;
 import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 public interface PullRequestReview {
   /**
@@ -59,13 +60,18 @@ public interface PullRequestReview {
      * @return the event
      */
     @NonNull Event event();
+  }
 
+  /**
+   * A document used to create a pull request review.
+   */
+  interface CreateWithBody extends Create {
     /**
      * Gets the body.
      *
      * @return the body
      */
-    @NonNull String body();
+    @Nullable String body();
   }
 
   /**
