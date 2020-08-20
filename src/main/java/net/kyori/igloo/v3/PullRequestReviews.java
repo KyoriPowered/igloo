@@ -23,76 +23,25 @@
  */
 package net.kyori.igloo.v3;
 
-import com.google.gson.annotations.SerializedName;
+import java.io.IOException;
+import java.util.List;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * A pull request in a {@link Repository repository}.
- */
-public interface PullRequest {
+public interface PullRequestReviews {
   /**
-   * Gets the number.
+   * Gets a list of the current pull request reviews.
    *
-   * @return the number
+   * @return a list of the current pull request reviews
+   * @throws IOException if an exception occurs during retrieval
    */
-  int number();
+  @NonNull List<PullRequestReview> get() throws IOException;
 
   /**
-   * Gets the html url.
+   * Creates a new pull request review.
    *
-   * @return the html url
+   * @param create the creation data
+   * @return a pull request review
+   * @throws IOException if an exception occurs during creation
    */
-  @NonNull String html_url();
-
-  /**
-   * Gets the user.
-   *
-   * @return the user
-   */
-  @NonNull User user();
-
-  /**
-   * Gets the title.
-   *
-   * @return the title
-   */
-  @NonNull String title();
-
-  /**
-   * Gets the body.
-   *
-   * @return the body
-   */
-  @NonNull String body();
-
-  /**
-   * Gets the state.
-   *
-   * @return the state
-   */
-  @NonNull State state();
-
-  /**
-   * Checks if the pull request is merged.
-   *
-   * @return {@code true} if the pull request is merged, {@code false} otherwise
-   */
-  boolean merged();
-
-  /**
-   * Pull request reviews.
-   *
-   * @return pull request reviews
-   */
-  @NonNull PullRequestReviews reviews();
-
-  /**
-   * The state of a pull request.
-   */
-  enum State {
-    @SerializedName("open")
-    OPEN,
-    @SerializedName("closed")
-    CLOSED;
-  }
+  @NonNull PullRequestReview create(final PullRequestReview.@NonNull Create create) throws IOException;
 }

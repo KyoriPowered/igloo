@@ -60,6 +60,13 @@ import org.checkerframework.checker.nullness.qual.Nullable;
     boolean merged;
   }
 
+  class PullRequestReview {
+    User user;
+    net.kyori.igloo.v3.PullRequestReview.State state;
+    String body;
+    String commit_id;
+  }
+
   class Status {
     net.kyori.igloo.v3.Status.State state;
     String target_url;

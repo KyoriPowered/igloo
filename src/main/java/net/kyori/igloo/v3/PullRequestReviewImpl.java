@@ -23,76 +23,31 @@
  */
 package net.kyori.igloo.v3;
 
-import com.google.gson.annotations.SerializedName;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * A pull request in a {@link Repository repository}.
- */
-public interface PullRequest {
-  /**
-   * Gets the number.
-   *
-   * @return the number
-   */
-  int number();
+final class PullRequestReviewImpl implements PullRequestReview {
+  private final User user;
+  private final State state;
+  private final String body;
 
-  /**
-   * Gets the html url.
-   *
-   * @return the html url
-   */
-  @NonNull String html_url();
+  PullRequestReviewImpl(final User user, final State state, final String body) {
+    this.user = user;
+    this.state = state;
+    this.body = body;
+  }
 
-  /**
-   * Gets the user.
-   *
-   * @return the user
-   */
-  @NonNull User user();
+  @Override
+  public @NonNull User user() {
+    return this.user;
+  }
 
-  /**
-   * Gets the title.
-   *
-   * @return the title
-   */
-  @NonNull String title();
+  @Override
+  public @NonNull State state() {
+    return this.state;
+  }
 
-  /**
-   * Gets the body.
-   *
-   * @return the body
-   */
-  @NonNull String body();
-
-  /**
-   * Gets the state.
-   *
-   * @return the state
-   */
-  @NonNull State state();
-
-  /**
-   * Checks if the pull request is merged.
-   *
-   * @return {@code true} if the pull request is merged, {@code false} otherwise
-   */
-  boolean merged();
-
-  /**
-   * Pull request reviews.
-   *
-   * @return pull request reviews
-   */
-  @NonNull PullRequestReviews reviews();
-
-  /**
-   * The state of a pull request.
-   */
-  enum State {
-    @SerializedName("open")
-    OPEN,
-    @SerializedName("closed")
-    CLOSED;
+  @Override
+  public @NonNull String body() {
+    return this.body;
   }
 }

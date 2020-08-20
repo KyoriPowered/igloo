@@ -23,57 +23,35 @@
  */
 package net.kyori.igloo.v3;
 
+import com.google.common.reflect.TypeToken;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import net.kyori.igloo.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/* package */ final class PullRequestImpl implements PullRequest {
+final class PullRequestReviewsImpl implements PullRequestReviews {
+  @SuppressWarnings("UnstableApiUsage")
+  private static final TypeToken<List<Partial.PullRequestReview>> GET_TYPE = new TypeToken<List<Partial.PullRequestReview>>() {};
   final Request request;
-  private final int number;
-  private final Lazy<Partial.PullRequest> lazy;
 
-  /* package */ PullRequestImpl(final Request request, final int number) {
-    this.request = request.path(Integer.toString(number));
-    this.number = number;
-    this.lazy = new Lazy<>(this.request, Partial.PullRequest.class);
+  PullRequestReviewsImpl(final Request request) {
+    this.request = request;
   }
 
   @Override
-  public int number() {
-    return this.number;
+  public @NonNull List<PullRequestReview> get() throws IOException {
+    final List<Partial.PullRequestReview> partials = this.request.get().as(GET_TYPE);
+    final List<PullRequestReview> reviews = new ArrayList<>(partials.size());
+    for(final Partial.PullRequestReview partial : partials) {
+      reviews.add(new PullRequestReviewImpl(new UserImpl(partial.user.login, partial.user.name, partial.user.avatar_url), partial.state, partial.body));
+    }
+    return reviews;
   }
 
   @Override
-  public @NonNull String html_url() {
-    return this.lazy.get().html_url;
-  }
-
-  @Override
-  public @NonNull User user() {
-    return new UserImpl(this.lazy.get().user.login, this.lazy.get().user.name, this.lazy.get().user.avatar_url);
-  }
-
-  @Override
-  public @NonNull String title() {
-    return this.lazy.get().title;
-  }
-
-  @Override
-  public @NonNull String body() {
-    return this.lazy.get().body;
-  }
-
-  @Override
-  public @NonNull State state() {
-    return this.lazy.get().state;
-  }
-
-  @Override
-  public boolean merged() {
-    return this.lazy.get().merged;
-  }
-
-  @Override
-  public @NonNull PullRequestReviews reviews() {
-    return new PullRequestReviewsImpl(this.request.path("reviews"));
+  public @NonNull PullRequestReview create(final PullRequestReview.@NonNull Create create) throws IOException {
+    final Partial.PullRequestReview partial = this.request.post(create).as(Partial.PullRequestReview.class);
+    return new PullRequestReviewImpl(new UserImpl(partial.user.login, partial.user.name, partial.user.avatar_url), partial.state, partial.body);
   }
 }

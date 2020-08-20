@@ -24,75 +24,71 @@
 package net.kyori.igloo.v3;
 
 import com.google.gson.annotations.SerializedName;
+import net.kyori.cereal.Document;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * A pull request in a {@link Repository repository}.
- */
-public interface PullRequest {
+public interface PullRequestReview {
   /**
-   * Gets the number.
+   * Gets the user who submitted the review.
    *
-   * @return the number
-   */
-  int number();
-
-  /**
-   * Gets the html url.
-   *
-   * @return the html url
-   */
-  @NonNull String html_url();
-
-  /**
-   * Gets the user.
-   *
-   * @return the user
+   * @return the user who submitted the review
    */
   @NonNull User user();
 
   /**
-   * Gets the title.
+   * Gets the state of the review.
    *
-   * @return the title
-   */
-  @NonNull String title();
-
-  /**
-   * Gets the body.
-   *
-   * @return the body
-   */
-  @NonNull String body();
-
-  /**
-   * Gets the state.
-   *
-   * @return the state
+   * @return the state of the review
    */
   @NonNull State state();
 
   /**
-   * Checks if the pull request is merged.
+   * Gets the body of the review.
    *
-   * @return {@code true} if the pull request is merged, {@code false} otherwise
+   * @return the body of the review
    */
-  boolean merged();
+  @NonNull String body();
 
   /**
-   * Pull request reviews.
-   *
-   * @return pull request reviews
+   * A document used to create a pull request review.
    */
-  @NonNull PullRequestReviews reviews();
+  interface Create extends Document {
+    /**
+     * Gets the event.
+     *
+     * @return the event
+     */
+    @NonNull Event event();
+
+    /**
+     * Gets the body.
+     *
+     * @return the body
+     */
+    @NonNull String body();
+  }
 
   /**
-   * The state of a pull request.
+   * The type of a review, when creating.
+   */
+  enum Event {
+    /*@SerializedName("PENDING")
+    PENDING,*/ // We do not support sending PENDING reviews currently
+    @SerializedName("APPROVE")
+    APPROVE,
+    @SerializedName("REQUEST_CHANGES")
+    REQUEST_CHANGES,
+    @SerializedName("COMMENT")
+    COMMENT;
+  }
+
+  /**
+   * The state of a review.
    */
   enum State {
-    @SerializedName("open")
-    OPEN,
-    @SerializedName("closed")
-    CLOSED;
+    @SerializedName("APPROVED")
+    APPROVED,
+    @SerializedName("CHANGES_REQUESTED")
+    CHANGES_REQUESTED,
   }
 }
