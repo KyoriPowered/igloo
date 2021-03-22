@@ -23,6 +23,7 @@
  */
 package net.kyori.github.api.v3;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
@@ -30,13 +31,21 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  *
  * @since 2.0.0
  */
-public interface LabelPartial extends net.kyori.github.api.LabelPartial {
+public interface LabelPartial {
   /**
    * The name of a label.
    *
    * @since 2.0.0
    */
-  interface NamePartial extends Label.Edit, LabelPartial, net.kyori.github.api.LabelPartial.NamePartial {
+  interface NamePartial extends Label.Edit, LabelPartial {
+    /**
+     * Gets the label's name.
+     *
+     * @return the label name
+     * @since 2.0.0
+     */
+    @JsonProperty
+    @NonNull String name();
   }
 
   /**
@@ -44,7 +53,15 @@ public interface LabelPartial extends net.kyori.github.api.LabelPartial {
    *
    * @since 2.0.0
    */
-  interface ColorPartial extends Label.Edit, LabelPartial, net.kyori.github.api.LabelPartial.ColorPartial {
+  interface ColorPartial extends Label.Edit, LabelPartial {
+    /**
+     * Gets the issue's color.
+     *
+     * @return the label color
+     * @since 2.0.0
+     */
+    @JsonProperty
+    @NonNull String color();
   }
 
   /**
@@ -52,14 +69,14 @@ public interface LabelPartial extends net.kyori.github.api.LabelPartial {
    *
    * @since 2.0.0
    */
-  interface DescriptionPartial extends Label.Edit, LabelPartial, net.kyori.github.api.LabelPartial.DescriptionPartial {
+  interface DescriptionPartial extends Label.Edit, LabelPartial {
     /**
      * Gets the issue's description.
      *
      * @return the label description
      * @since 2.0.0
      */
-    @Override
+    @JsonProperty
     @NonNull String description();
   }
 }

@@ -23,6 +23,7 @@
  */
 package net.kyori.github.api.v3;
 
+import net.kyori.github.api.RepositoryIdentifier;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
@@ -38,5 +39,5 @@ public interface Repositories {
    * @return the repository
    * @since 2.0.0
    */
-  @NonNull Repository get(final @NonNull RepositoryId id);
+  @NonNull Repository get(final @NonNull RepositoryIdentifier id);
 }

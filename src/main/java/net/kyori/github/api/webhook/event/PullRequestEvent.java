@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import net.kyori.github.api.webhook.model.PullRequest;
 import net.kyori.github.api.webhook.model.Repository;
+import net.kyori.github.api.webhook.model.User;
 
 /**
  * PullRequestEvent.
@@ -39,6 +40,7 @@ public class PullRequestEvent {
   public PullRequest pull_request;
   public int number;
   public Repository repository;
+  public User sender;
 
   /**
    * Action.

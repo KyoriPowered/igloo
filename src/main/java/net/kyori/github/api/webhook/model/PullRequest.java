@@ -51,6 +51,8 @@ public class PullRequest {
    * @since 2.0.0
    */
   public enum State {
+    @JsonProperty("closed")
+    CLOSED,
     @JsonProperty("open")
     OPEN;
   }

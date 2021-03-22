@@ -28,6 +28,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import net.kyori.github.api.webhook.model.Issue;
 import net.kyori.github.api.webhook.model.Label;
 import net.kyori.github.api.webhook.model.Repository;
+import net.kyori.github.api.webhook.model.User;
 
 /**
  * IssuesEvent.
@@ -40,7 +41,7 @@ public class IssuesEvent {
   public Issue issue;
   public Label label;
   public Repository repository;
-  // sender?
+  public User sender;
 
   /**
    * Action.

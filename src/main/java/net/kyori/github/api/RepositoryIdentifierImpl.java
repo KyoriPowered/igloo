@@ -23,28 +23,47 @@
  */
 package net.kyori.github.api;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import org.checkerframework.checker.nullness.qual.Nullable;
+import com.google.common.base.MoreObjects;
+import java.util.Objects;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-/**
- * Partials that make up a full issue.
- *
- * @since 2.0.0
- */
-public interface IssuePartial {
-  /**
-   * The title of an issue.
-   *
-   * @since 2.0.0
-   */
-  interface TitlePartial extends IssuePartial {
-    /**
-     * Gets the issue's title.
-     *
-     * @return the issue title
-     * @since 2.0.0
-     */
-    @JsonProperty
-    @Nullable String title();
+final class RepositoryIdentifierImpl implements RepositoryIdentifier {
+  private final String user;
+  private final String repo;
+
+  RepositoryIdentifierImpl(final String user, final String repo) {
+    this.user = user;
+    this.repo = repo;
+  }
+
+  @Override
+  public @NonNull String user() {
+    return this.user;
+  }
+
+  @Override
+  public @NonNull String repo() {
+    return this.repo;
+  }
+
+  @Override
+  public boolean equals(final Object other) {
+    if(this == other) return true;
+    if(!(other instanceof RepositoryIdentifier)) return false;
+    final RepositoryIdentifier that = (RepositoryIdentifier) other;
+    return this.user.equals(that.user()) && this.repo.equals(that.repo());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.user, this.repo);
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+      .add("user", this.user)
+      .add("repo", this.repo)
+      .toString();
   }
 }

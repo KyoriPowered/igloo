@@ -24,6 +24,8 @@
 package net.kyori.github.api.webhook.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import net.kyori.github.api.RepositoryIdentifier;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A repository.
@@ -31,7 +33,33 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
  * @since 2.0.0
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Repository {
+public class Repository implements RepositoryIdentifier {
   public String name;
   public User owner;
+
+  @Override
+  public @NonNull String user() {
+    return this.owner.login;
+  }
+
+  @Override
+  public @NonNull String repo() {
+    return this.name;
+  }
+
+  @Override
+  public boolean equals(final Object other) {
+    if(this == other) return true;
+    if(other == null || this.getClass() != other.getClass()) return false;
+    final Repository that = (Repository) other;
+    if(!this.name.equals(that.name)) return false;
+    return this.owner.equals(that.owner);
+  }
+
+  @Override
+  public int hashCode() {
+    int result = this.name.hashCode();
+    result = 31 * result + this.owner.hashCode();
+    return result;
+  }
 }

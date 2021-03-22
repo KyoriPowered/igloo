@@ -21,49 +21,51 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.github.api.v3;
+package net.kyori.github.api;
 
-import com.google.common.base.MoreObjects;
-import java.util.Objects;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class RepositoryIdImpl implements RepositoryId {
-  private final String user;
-  private final String repo;
-
-  RepositoryIdImpl(final String user, final String repo) {
-    this.user = user;
-    this.repo = repo;
+/**
+ * An id for accessing a repository.
+ *
+ * @since 2.0.0
+ */
+public interface RepositoryIdentifier {
+  /**
+   * Creates a new repository id.
+   *
+   * @param user the user name
+   * @param repo the repository name
+   * @return the repository id
+   * @since 2.0.0
+   */
+  static @NonNull RepositoryIdentifier of(final @NonNull String user, final @NonNull String repo) {
+    return new RepositoryIdentifierImpl(user, repo);
   }
 
-  @Override
-  public @NonNull String user() {
-    return this.user;
-  }
+  /**
+   * Gets the user name.
+   *
+   * @return the user name
+   * @since 2.0.0
+   */
+  @NonNull String user();
 
-  @Override
-  public @NonNull String repo() {
-    return this.repo;
-  }
+  /**
+   * Gets the repository name.
+   *
+   * @return the repository name
+   * @since 2.0.0
+   */
+  @NonNull String repo();
 
-  @Override
-  public boolean equals(final Object other) {
-    if(this == other) return true;
-    if(!(other instanceof RepositoryId)) return false;
-    final RepositoryId that = (RepositoryId) other;
-    return this.user.equals(that.user()) && this.repo.equals(that.repo());
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(this.user, this.repo);
-  }
-
-  @Override
-  public String toString() {
-    return MoreObjects.toStringHelper(this)
-      .add("user", this.user)
-      .add("repo", this.repo)
-      .toString();
+  /**
+   * Gets the repository id as a string.
+   *
+   * @return string
+   * @since 2.0.0
+   */
+  default @NonNull String asString() {
+    return this.user() + '/' + this.repo();
   }
 }

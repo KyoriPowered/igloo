@@ -33,4 +33,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
   public String login;
+
+  @Override
+  public boolean equals(final Object other) {
+    if(this == other) return true;
+    if(other == null || this.getClass() != other.getClass()) return false;
+    final User user = (User) other;
+    return this.login.equals(user.login);
+  }
+
+  @Override
+  public int hashCode() {
+    return this.login.hashCode();
+  }
 }

@@ -32,20 +32,20 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  *
  * @since 2.0.0
  */
-public interface IssuePartial extends net.kyori.github.api.IssuePartial {
+public interface IssuePartial {
   /**
    * A document representing an issue's title.
    *
    * @since 2.0.0
    */
-  interface TitlePartial extends Issue.AbstractCreate, Issue.Edit, IssuePartial, net.kyori.github.api.IssuePartial.TitlePartial {
+  interface TitlePartial extends Issue.AbstractCreate, Issue.Edit, IssuePartial {
     /**
      * Gets the issue's title.
      *
      * @return the issue title
      * @since 2.0.0
      */
-    @Override
+    @JsonProperty
     @Nullable String title();
   }
 

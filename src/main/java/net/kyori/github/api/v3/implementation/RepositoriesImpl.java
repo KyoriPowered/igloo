@@ -25,7 +25,7 @@ package net.kyori.github.api.v3.implementation;
 
 import net.kyori.github.api.v3.Repositories;
 import net.kyori.github.api.v3.Repository;
-import net.kyori.github.api.v3.RepositoryId;
+import net.kyori.github.api.RepositoryIdentifier;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class RepositoriesImpl implements Repositories {
@@ -36,7 +36,7 @@ final class RepositoriesImpl implements Repositories {
   }
 
   @Override
-  public @NonNull Repository get(final @NonNull RepositoryId id) {
+  public @NonNull Repository get(final @NonNull RepositoryIdentifier id) {
     return new RepositoryImpl(this.request, id);
   }
 }

@@ -27,7 +27,7 @@ import net.kyori.github.api.v3.Collaborators;
 import net.kyori.github.api.v3.Issues;
 import net.kyori.github.api.v3.PullRequests;
 import net.kyori.github.api.v3.Repository;
-import net.kyori.github.api.v3.RepositoryId;
+import net.kyori.github.api.RepositoryIdentifier;
 import net.kyori.github.api.v3.RepositoryLabels;
 import net.kyori.github.api.v3.Statuses;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -35,7 +35,7 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 final class RepositoryImpl implements Repository {
   private final HTTP.RequestTemplate request;
 
-  RepositoryImpl(final HTTP.RequestTemplate request, final RepositoryId id) {
+  RepositoryImpl(final HTTP.RequestTemplate request, final RepositoryIdentifier id) {
     this.request = request.path(id.user(), id.repo());
   }
 

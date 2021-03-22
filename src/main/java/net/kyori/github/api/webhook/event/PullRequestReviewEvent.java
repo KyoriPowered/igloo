@@ -40,7 +40,7 @@ public class PullRequestReviewEvent {
   public Review review;
   public PullRequest pull_request;
   public Repository repository;
-  // sender?
+  public User sender;
 
   /**
    * A pull request review.

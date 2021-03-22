@@ -26,6 +26,7 @@ package net.kyori.github.api.webhook.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * An issue.
@@ -34,6 +35,7 @@ import java.util.List;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Issue {
+  public String html_url;
   public int number;
   public String title;
   public User user;
@@ -43,6 +45,9 @@ public class Issue {
   public List<User> assignees;
   public Milestone milestone;
   public String body;
+
+  // It's possible for PullRequest data to be provided in an Issue payload.
+  public @Nullable PullRequest pull_request;
 
   /**
    * An issue comment.
@@ -61,6 +66,8 @@ public class Issue {
    * @since 2.0.0
    */
   public enum State {
+    @JsonProperty("closed")
+    CLOSED,
     @JsonProperty("open")
     OPEN;
   }
