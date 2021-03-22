@@ -25,13 +25,12 @@ package net.kyori.github.api.v3.implementation;
 
 import net.kyori.github.api.v3.Team;
 import net.kyori.github.api.v3.Teams;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class TeamsImpl implements Teams {
-  private final Request request;
+  private final HTTP.RequestTemplate request;
 
-  TeamsImpl(final Request request) {
+  TeamsImpl(final HTTP.RequestTemplate request) {
     this.request = request.path("teams");
   }
 

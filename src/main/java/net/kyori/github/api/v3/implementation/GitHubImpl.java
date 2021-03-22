@@ -41,14 +41,17 @@ import net.kyori.github.api.v3.GitHub;
 import net.kyori.github.api.v3.Organizations;
 import net.kyori.github.api.v3.Repositories;
 import net.kyori.github.api.v3.Users;
-import net.kyori.github.util.http.Accept;
-import net.kyori.github.util.http.Request;
-import net.kyori.github.util.http.RequestImpl;
+import net.kyori.github.util.Accept;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 import static java.util.Objects.requireNonNull;
 
+/**
+ * GitHub API.
+ *
+ * @since 2.0.0
+ */
 public final class GitHubImpl implements GitHub {
   /**
    * The standard values.
@@ -62,10 +65,10 @@ public final class GitHubImpl implements GitHub {
     ),
     Stream.of("application/vnd.github.v3+json")
   ).collect(Collectors.toList());
-  private final Request request;
+  private final HTTP.RequestTemplate request;
 
   GitHubImpl(final ObjectMapper json, final String endpoint, final @Nullable Supplier<String> auth, final @Nullable Consumer<HttpRequest> httpRequestConfigurer) {
-    final HttpRequestFactory factory = new ApacheHttpTransport().createRequestFactory((request) -> {
+    final HttpRequestFactory factory = new ApacheHttpTransport().createRequestFactory(request -> {
       request.setIOExceptionHandler(new HttpBackOffIOExceptionHandler(new ExponentialBackOff()));
       request.setNumberOfRetries(10);
       if(httpRequestConfigurer != null) {
@@ -81,7 +84,7 @@ public final class GitHubImpl implements GitHub {
         headers.setUserAgent("igloo");
       }
     });
-    this.request = new RequestImpl(json, factory, new Request.Url(endpoint));
+    this.request = new HTTP.RequestTemplate(json, factory, new HTTP.Url(endpoint));
   }
 
   @Override
@@ -99,6 +102,11 @@ public final class GitHubImpl implements GitHub {
     return new OrganizationsImpl(this.request);
   }
 
+  /**
+   * GitHub API builder.
+   *
+   * @since 2.0.0
+   */
   public static final class BuilderImpl implements Builder {
     private ObjectMapper json;
     private String endpoint = API_ENDPOINT;

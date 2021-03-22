@@ -25,12 +25,18 @@ package net.kyori.github.api.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+/**
+ * Organizations.
+ *
+ * @since 2.0.0
+ */
 public interface Organizations {
   /**
    * Gets an organization.
    *
    * @param name the name
    * @return the organization
+   * @since 2.0.0
    */
   @NonNull Organization get(final String name);
 }

@@ -27,6 +27,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Repositories.
+ *
+ * @since 2.0.0
  */
 public interface Repositories {
   /**
@@ -34,6 +36,7 @@ public interface Repositories {
    *
    * @param id the id
    * @return the repository
+   * @since 2.0.0
    */
   @NonNull Repository get(final @NonNull RepositoryId id);
 }

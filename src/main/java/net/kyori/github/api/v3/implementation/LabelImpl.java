@@ -27,17 +27,16 @@ import com.google.common.base.MoreObjects;
 import java.io.IOException;
 import java.util.Objects;
 import net.kyori.github.api.v3.Label;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class LabelImpl implements Label {
-  private final Request request;
+  private final HTTP.RequestTemplate request;
   private final String url;
   private final String name;
   private final String description;
   private final String color;
 
-  LabelImpl(final Request request, final String url, final String name, final String description, final String color) {
+  LabelImpl(final HTTP.RequestTemplate request, final String url, final String name, final String description, final String color) {
     this.request = request.path(name);
     this.url = url;
     this.name = name;

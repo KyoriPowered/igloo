@@ -29,16 +29,14 @@ import java.util.NoSuchElementException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import net.kyori.github.util.http.Request;
-import net.kyori.github.util.http.Response;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class Paginated<T> implements Iterable<T> {
-  private final Function<Request, Response> requestFunction;
-  private final Function<Response, Stream<T>> responseFunction;
+  private final Function<HTTP.RequestTemplate, HTTP.Response> requestFunction;
+  private final Function<HTTP.Response, Stream<T>> responseFunction;
   private final Pager pager = new Pager();
 
-  Paginated(final Request request, final Function<Request, Response> requestFunction, final Function<Response, Stream<T>> responseFunction) {
+  Paginated(final HTTP.RequestTemplate request, final Function<HTTP.RequestTemplate, HTTP.Response> requestFunction, final Function<HTTP.Response, Stream<T>> responseFunction) {
     this.pager.next = request;
     this.requestFunction = requestFunction;
     this.responseFunction = responseFunction;
@@ -51,12 +49,12 @@ final class Paginated<T> implements Iterable<T> {
 
   class Pager implements Iterator<T> {
     private LinkedList<T> current;
-    Request next;
+    HTTP.RequestTemplate next;
 
     private LinkedList<T> current() {
       if(this.current == null) {
         if(this.next != null) {
-          final Response response = Paginated.this.requestFunction.apply(this.next);
+          final HTTP.Response response = Paginated.this.requestFunction.apply(this.next);
           this.next = response.link().next().orElse(null);
           this.current = Paginated.this.responseFunction.apply(response).collect(Collectors.toCollection(LinkedList::new));
         } else {

@@ -30,12 +30,15 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * An issue in a {@link Repository repository}.
+ *
+ * @since 2.0.0
  */
 public interface Issue {
   /**
    * Gets the number.
    *
    * @return the number
+   * @since 2.0.0
    */
   int number();
 
@@ -43,6 +46,7 @@ public interface Issue {
    * Gets the html url.
    *
    * @return the html url
+   * @since 2.0.0
    */
   @NonNull String html_url();
 
@@ -50,6 +54,7 @@ public interface Issue {
    * Gets the user.
    *
    * @return the user
+   * @since 2.0.0
    */
   @NonNull User user();
 
@@ -57,6 +62,7 @@ public interface Issue {
    * Gets the title.
    *
    * @return the title
+   * @since 2.0.0
    */
   @NonNull String title();
 
@@ -64,6 +70,7 @@ public interface Issue {
    * Gets the body.
    *
    * @return the body
+   * @since 2.0.0
    */
   @NonNull String body();
 
@@ -71,6 +78,7 @@ public interface Issue {
    * Gets the state.
    *
    * @return the state
+   * @since 2.0.0
    */
   @NonNull State state();
 
@@ -80,6 +88,7 @@ public interface Issue {
    * @param edit the edit
    * @param <E> the edit type
    * @throws IOException if an exception occurs during edit
+   * @since 2.0.0
    */
   <E extends Edit> void edit(final @NonNull E edit) throws IOException;
 
@@ -87,6 +96,7 @@ public interface Issue {
    * Gets the labels.
    *
    * @return the labels
+   * @since 2.0.0
    */
   @NonNull IssueLabels labels();
 
@@ -94,6 +104,7 @@ public interface Issue {
    * Gets the comments.
    *
    * @return the comments
+   * @since 2.0.0
    */
   @NonNull Comments comments();
 
@@ -101,6 +112,7 @@ public interface Issue {
    * Locks the issue.
    *
    * @throws IOException if an exception occurs during lock
+   * @since 2.0.0
    */
   void lock() throws IOException;
 
@@ -108,6 +120,7 @@ public interface Issue {
    * Unlocks the issue.
    *
    * @throws IOException if an exception occurs during unlock
+   * @since 2.0.0
    */
   void unlock() throws IOException;
 
@@ -115,19 +128,28 @@ public interface Issue {
    * Gets the pull request.
    *
    * @return the pull request
+   * @since 2.0.0
    */
   @NonNull Optional<PullRequest> pullRequest();
 
-  // Inheritance hack
+  /**
+   * Inheritance hack.
+   *
+   * @since 2.0.0
+   */
   interface AbstractCreate extends IssuePartial {
   }
 
   /**
    * A document that can be submitted during issue creation.
+   *
+   * @since 2.0.0
    */
   interface Create extends AbstractCreate, IssuePartial.TitlePartial {
     /**
      * A document containing all information that may be submitted during creation.
+     *
+     * @since 2.0.0
      */
     interface Full extends Create, TitlePartial, BodyPartial, MilestonePartial, LabelsPartial, AssigneesPartial {
     }
@@ -135,10 +157,14 @@ public interface Issue {
 
   /**
    * A document that can be submitted during an issue edit.
+   *
+   * @since 2.0.0
    */
   interface Edit extends IssuePartial {
     /**
      * A document containing all information that may be submitted during an edit.
+     *
+     * @since 2.0.0
      */
     interface Full extends Edit, TitlePartial, BodyPartial, StatePartial, MilestonePartial, LabelsPartial, AssigneesPartial {
     }
@@ -146,6 +172,8 @@ public interface Issue {
 
   /**
    * The state of an issue.
+   *
+   * @since 2.0.0
    */
   enum State {
     @JsonProperty("open")

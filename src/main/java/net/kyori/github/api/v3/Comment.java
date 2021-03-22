@@ -25,12 +25,15 @@ package net.kyori.github.api.v3;
 
 /**
  * A comment in an {@link Issue issue}.
+ *
+ * @since 2.0.0
  */
 public interface Comment {
   /**
    * Gets the id.
    *
    * @return the id
+   * @since 2.0.0
    */
   int id();
 }

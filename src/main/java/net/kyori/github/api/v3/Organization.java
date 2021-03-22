@@ -27,12 +27,15 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * An organization.
+ *
+ * @since 2.0.0
  */
 public interface Organization {
   /**
    * Gets the teams.
    *
    * @return the teams
+   * @since 2.0.0
    */
   @NonNull Teams teams();
 }

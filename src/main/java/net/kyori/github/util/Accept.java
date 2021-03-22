@@ -21,21 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.github.util.http;
+package net.kyori.github.util;
 
-import com.google.common.reflect.TypeToken;
-import java.io.IOException;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import com.google.api.client.http.HttpHeaders;
+import com.google.api.client.http.HttpRequest;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public interface Response extends AutoCloseable {
-  default <R> R as(final Class<R> type) throws IOException {
-    return this.as(TypeToken.of(type));
+/**
+ * HTTP {@code Accept} header utilities.
+ *
+ * @since 2.0.0
+ */
+public interface Accept {
+  /**
+   * The header name.
+   *
+   * @since 2.0.0
+   */
+  String HEADER_NAME = "Accept";
+
+  /**
+   * Add {@code accept} to the {@code Accept} headers in {@code request}.
+   *
+   * @param request the request
+   * @param accept the header
+   * @since 2.0.0
+   */
+  static void add(final HttpRequest request, final String accept) {
+    add(request, Collections.singletonList(accept));
   }
 
-  <R> R as(final TypeToken<R> type) throws IOException;
-
-  @NonNull Link link();
-
-  @Override
-  void close() throws IOException;
+  /**
+   * Add {@code accept} to the {@code Accept} headers in {@code request}.
+   *
+   * @param request the request
+   * @param accept the headers
+   * @since 2.0.0
+   */
+  static void add(final HttpRequest request, final List<String> accept) {
+    final HttpHeaders headers = request.getHeaders();
+    final List<String> result = new ArrayList<>(headers.getHeaderStringValues(HEADER_NAME));
+    result.addAll(accept);
+    headers.put(HEADER_NAME, result);
+  }
 }

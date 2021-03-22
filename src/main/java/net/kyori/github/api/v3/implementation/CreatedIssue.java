@@ -27,7 +27,6 @@ import java.util.Optional;
 import net.kyori.github.api.v3.Issue;
 import net.kyori.github.api.v3.PullRequest;
 import net.kyori.github.api.v3.User;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class CreatedIssue extends AbstractIssue {
@@ -37,7 +36,7 @@ final class CreatedIssue extends AbstractIssue {
   private final String body;
   private final Issue.State state;
 
-  CreatedIssue(final Request request, final Partial.Issue partial) {
+  CreatedIssue(final HTTP.RequestTemplate request, final Partial.Issue partial) {
     super(request, partial.number);
     this.html_url = partial.html_url;
     this.user = new UserImpl(partial.user.login, partial.user.name, partial.user.avatar_url);

@@ -24,18 +24,16 @@
 package net.kyori.github.api.v3.implementation;
 
 import java.util.Optional;
-import net.kyori.github.api.v3.Issue;
 import net.kyori.github.api.v3.PullRequest;
 import net.kyori.github.api.v3.Repository;
 import net.kyori.github.api.v3.User;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class IssueImpl extends AbstractIssue {
   private final Repository repository;
   private final Lazy<Partial.Issue> lazy;
 
-  IssueImpl(final Repository repository, final Request request, final int number) {
+  IssueImpl(final Repository repository, final HTTP.RequestTemplate request, final int number) {
     super(request, number);
     this.repository = repository;
     this.lazy = new Lazy<>(this.request, Partial.Issue.class);

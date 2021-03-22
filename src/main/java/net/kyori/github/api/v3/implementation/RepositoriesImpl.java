@@ -26,13 +26,12 @@ package net.kyori.github.api.v3.implementation;
 import net.kyori.github.api.v3.Repositories;
 import net.kyori.github.api.v3.Repository;
 import net.kyori.github.api.v3.RepositoryId;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class RepositoriesImpl implements Repositories {
-  private final Request request;
+  private final HTTP.RequestTemplate request;
 
-  RepositoriesImpl(final Request request) {
+  RepositoriesImpl(final HTTP.RequestTemplate request) {
     this.request = request.path("repos");
   }
 

@@ -27,6 +27,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * An id for accessing a repository.
+ *
+ * @since 2.0.0
  */
 public interface RepositoryId {
   /**
@@ -35,6 +37,7 @@ public interface RepositoryId {
    * @param user the user name
    * @param repo the repository name
    * @return the repository id
+   * @since 2.0.0
    */
   static @NonNull RepositoryId of(final @NonNull String user, final @NonNull String repo) {
     return new RepositoryIdImpl(user, repo);
@@ -44,6 +47,7 @@ public interface RepositoryId {
    * Gets the user name.
    *
    * @return the user name
+   * @since 2.0.0
    */
   @NonNull String user();
 
@@ -51,6 +55,7 @@ public interface RepositoryId {
    * Gets the repository name.
    *
    * @return the repository name
+   * @since 2.0.0
    */
   @NonNull String repo();
 
@@ -58,6 +63,7 @@ public interface RepositoryId {
    * Gets the repository id as a string.
    *
    * @return string
+   * @since 2.0.0
    */
   default @NonNull String asString() {
     return this.user() + '/' + this.repo();

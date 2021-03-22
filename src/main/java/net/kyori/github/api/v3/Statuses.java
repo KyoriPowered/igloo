@@ -28,6 +28,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Statuses.
+ *
+ * @since 2.0.0
  */
 public interface Statuses {
   /**
@@ -38,6 +40,7 @@ public interface Statuses {
    * @param sha the sha
    * @return the new status
    * @throws IOException if an exception occurs while creating a new status
+   * @since 2.0.0
    */
   <C extends Status.AbstractCreate> @NonNull Status create(final @NonNull String sha, final @NonNull C create) throws IOException;
 }

@@ -29,16 +29,21 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Partials that make up a full label.
+ *
+ * @since 2.0.0
  */
 public interface LabelPartial {
   /**
    * The name of a label.
+   *
+   * @since 2.0.0
    */
   interface NamePartial extends LabelPartial {
     /**
      * Gets the label's name.
      *
      * @return the label name
+     * @since 2.0.0
      */
     @JsonProperty
     @NonNull String name();
@@ -46,12 +51,15 @@ public interface LabelPartial {
 
   /**
    * The color of a label.
+   *
+   * @since 2.0.0
    */
   interface ColorPartial extends LabelPartial {
     /**
      * Gets the issue's color.
      *
      * @return the label color
+     * @since 2.0.0
      */
     @JsonProperty
     @NonNull String color();
@@ -59,12 +67,15 @@ public interface LabelPartial {
 
   /**
    * The description of a label.
+   *
+   * @since 2.0.0
    */
   interface DescriptionPartial extends LabelPartial {
     /**
      * Gets the issue's description.
      *
      * @return the label description
+     * @since 2.0.0
      */
     @JsonProperty
     @Nullable String description();

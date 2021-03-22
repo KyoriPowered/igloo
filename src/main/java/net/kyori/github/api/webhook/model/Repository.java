@@ -25,6 +25,11 @@ package net.kyori.github.api.webhook.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+/**
+ * A repository.
+ *
+ * @since 2.0.0
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Repository {
   public String name;

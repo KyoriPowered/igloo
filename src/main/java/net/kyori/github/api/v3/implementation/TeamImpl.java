@@ -29,15 +29,14 @@ import java.util.ArrayList;
 import java.util.List;
 import net.kyori.github.api.v3.Team;
 import net.kyori.github.api.v3.User;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class TeamImpl implements Team {
   @SuppressWarnings("UnstableApiUsage")
   private static final TypeToken<List<Partial.User>> MEMBERS_TYPE = new TypeToken<List<Partial.User>>() {};
-  private final Request request;
+  private final HTTP.RequestTemplate request;
 
-  TeamImpl(final Request request, final String slug) {
+  TeamImpl(final HTTP.RequestTemplate request, final String slug) {
     this.request = request.path(slug);
   }
 

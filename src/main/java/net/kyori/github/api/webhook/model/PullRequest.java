@@ -27,6 +27,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
+/**
+ * A pull request.
+ *
+ * @since 2.0.0
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PullRequest {
   public int number;
@@ -40,6 +45,11 @@ public class PullRequest {
   public Milestone milestone;
   public boolean merged;
 
+  /**
+   * The states of a pull request.
+   *
+   * @since 2.0.0
+   */
   public enum State {
     @JsonProperty("open")
     OPEN;

@@ -29,6 +29,11 @@ import net.kyori.github.api.webhook.model.Issue;
 import net.kyori.github.api.webhook.model.Label;
 import net.kyori.github.api.webhook.model.Repository;
 
+/**
+ * IssuesEvent.
+ *
+ * @since 2.0.0
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IssuesEvent {
   public Action action;
@@ -37,6 +42,11 @@ public class IssuesEvent {
   public Repository repository;
   // sender?
 
+  /**
+   * Action.
+   *
+   * @since 2.0.0
+   */
   public enum Action {
     @JsonProperty("opened")
     OPENED,

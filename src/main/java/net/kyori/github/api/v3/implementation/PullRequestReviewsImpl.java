@@ -29,15 +29,14 @@ import java.util.ArrayList;
 import java.util.List;
 import net.kyori.github.api.v3.PullRequestReview;
 import net.kyori.github.api.v3.PullRequestReviews;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class PullRequestReviewsImpl implements PullRequestReviews {
   @SuppressWarnings("UnstableApiUsage")
   private static final TypeToken<List<Partial.PullRequestReview>> GET_TYPE = new TypeToken<List<Partial.PullRequestReview>>() {};
-  final Request request;
+  final HTTP.RequestTemplate request;
 
-  PullRequestReviewsImpl(final Request request) {
+  PullRequestReviewsImpl(final HTTP.RequestTemplate request) {
     this.request = request;
   }
 

@@ -25,16 +25,21 @@ package net.kyori.github.api.v3;
 
 /**
  * Partial documents used during comment creation.
+ *
+ * @since 2.0.0
  */
 public interface CommentPartial {
   /**
    * A document representing a comment's body.
+   *
+   * @since 2.0.0
    */
   interface BodyPartial extends CommentPartial {
     /**
      * Gets the body.
      *
      * @return the body
+     * @since 2.0.0
      */
     String body();
   }

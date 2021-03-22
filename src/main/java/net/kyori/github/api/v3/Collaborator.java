@@ -29,6 +29,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A repository collaborator.
+ *
+ * @since 2.0.0
  */
 public interface Collaborator {
   /**
@@ -36,11 +38,14 @@ public interface Collaborator {
    *
    * @return the permission
    * @throws IOException if an exception occurs while getting the permission
+   * @since 2.0.0
    */
   @NonNull Permission permission() throws IOException;
 
   /**
    * The permission levels that are possible for a collaborator to have.
+   *
+   * @since 2.0.0
    */
   enum Permission {
     @JsonProperty("admin")
@@ -56,6 +61,7 @@ public interface Collaborator {
      * Tests if the permission has write access.
      *
      * @return {@code true} if the permission has write access
+     * @since 2.0.0
      */
     public boolean write() {
       return this == ADMIN || this == WRITE;

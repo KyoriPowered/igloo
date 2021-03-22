@@ -26,13 +26,12 @@ package net.kyori.github.api.v3.implementation;
 import java.io.IOException;
 import net.kyori.github.api.v3.Status;
 import net.kyori.github.api.v3.Statuses;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class StatusesImpl implements Statuses {
-  private final Request request;
+  private final HTTP.RequestTemplate request;
 
-  StatusesImpl(final Request request) {
+  StatusesImpl(final HTTP.RequestTemplate request) {
     this.request = request.path("statuses");
   }
 

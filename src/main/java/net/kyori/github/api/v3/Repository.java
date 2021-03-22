@@ -27,12 +27,15 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A repository.
+ *
+ * @since 2.0.0
  */
 public interface Repository {
   /**
    * Gets collaborators.
    *
    * @return collaborators
+   * @since 2.0.0
    */
   @NonNull Collaborators collaborators();
 
@@ -40,6 +43,7 @@ public interface Repository {
    * Gets issues.
    *
    * @return issues
+   * @since 2.0.0
    */
   @NonNull Issues issues();
 
@@ -47,6 +51,7 @@ public interface Repository {
    * Gets labels.
    *
    * @return labels
+   * @since 2.0.0
    */
   @NonNull RepositoryLabels labels();
 
@@ -54,6 +59,7 @@ public interface Repository {
    * Gets pull requests.
    *
    * @return pull requests
+   * @since 2.0.0
    */
   @NonNull PullRequests pullRequests();
 
@@ -61,6 +67,7 @@ public interface Repository {
    * Gets statuses.
    *
    * @return statuses
+   * @since 2.0.0
    */
   @NonNull Statuses statuses();
 }

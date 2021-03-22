@@ -26,18 +26,25 @@ package net.kyori.github.api.v3;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+/**
+ * A status.
+ *
+ * @since 2.0.0
+ */
 public interface Status {
   /**
    * Gets the state.
    *
    * @return the state
+   * @since 2.0.0
    */
   @NonNull State state();
 
   /**
    * Gets the target url.
    *
-   * @return the target url.
+   * @return the target url
+   * @since 2.0.0
    */
   String target_url();
 
@@ -45,6 +52,7 @@ public interface Status {
    * Gets the description.
    *
    * @return the description
+   * @since 2.0.0
    */
   String description();
 
@@ -52,19 +60,28 @@ public interface Status {
    * Gets the context.
    *
    * @return the context
+   * @since 2.0.0
    */
   String context();
 
-  // Inheritance hack
+  /**
+   * Inheritance hack.
+   *
+   * @since 2.0.0
+   */
   interface AbstractCreate extends StatusPartial {
   }
 
   /**
    * A document that can be submitted during status creation.
+   *
+   * @since 2.0.0
    */
   interface Create extends AbstractCreate, StatusPartial.StatePartial {
     /**
      * A document containing all information that may be submitted during creation.
+     *
+     * @since 2.0.0
      */
     interface Full extends Create, TargetUrlPartial, DescriptionPartial, ContextPartial {
     }
@@ -72,6 +89,8 @@ public interface Status {
 
   /**
    * The state of a status.
+   *
+   * @since 2.0.0
    */
   enum State {
     @JsonProperty("error")

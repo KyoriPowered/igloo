@@ -28,6 +28,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * An {@link Issue issue}'s comments.
+ *
+ * @since 2.0.0
  */
 public interface Comments {
   /**
@@ -36,6 +38,7 @@ public interface Comments {
    * @param body the issue body
    * @return the comment that was posted
    * @throws IOException if an exception occurs while posting the comment
+   * @since 2.0.0
    */
   @NonNull Comment post(final CommentPartial.@NonNull BodyPartial body) throws IOException;
 }

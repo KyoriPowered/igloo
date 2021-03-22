@@ -28,6 +28,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import net.kyori.github.api.webhook.model.Issue;
 import net.kyori.github.api.webhook.model.Repository;
 
+/**
+ * IssueCommentEvent.
+ *
+ * @since 2.0.0
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class IssueCommentEvent {
   public Action action;
@@ -35,6 +40,11 @@ public class IssueCommentEvent {
   public Issue.Comment comment;
   public Repository repository;
 
+  /**
+   * Action.
+   *
+   * @since 2.0.0
+   */
   public enum Action {
     @JsonProperty("created")
     CREATED,

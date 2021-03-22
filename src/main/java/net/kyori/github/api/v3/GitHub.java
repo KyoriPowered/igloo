@@ -32,10 +32,14 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Provides access to v3 of the GitHub API.
+ *
+ * @since 2.0.0
  */
 public interface GitHub {
   /**
    * The endpoint for v3 of the GitHub API.
+   *
+   * @since 2.0.0
    */
   String API_ENDPOINT = "https://api.github.com";
 
@@ -43,6 +47,7 @@ public interface GitHub {
    * Creates a new builder.
    *
    * @return a new builder
+   * @since 2.0.0
    */
   static @NonNull Builder builder() {
     return new GitHubImpl.BuilderImpl();
@@ -52,6 +57,7 @@ public interface GitHub {
    * Gets repositories.
    *
    * @return repositories
+   * @since 2.0.0
    */
   @NonNull Repositories repositories();
 
@@ -59,6 +65,7 @@ public interface GitHub {
    * Gets users.
    *
    * @return users
+   * @since 2.0.0
    */
   @NonNull Users users();
 
@@ -66,11 +73,14 @@ public interface GitHub {
    * Gets organizations.
    *
    * @return organizations
+   * @since 2.0.0
    */
   @NonNull Organizations orgs();
 
   /**
    * A builder for creating instances of the GitHub API.
+   *
+   * @since 2.0.0
    */
   interface Builder {
     /**
@@ -78,6 +88,7 @@ public interface GitHub {
      *
      * @param json the gson instance
      * @return the builder
+     * @since 2.0.0
      */
     @NonNull Builder json(final @NonNull ObjectMapper json);
 
@@ -86,6 +97,7 @@ public interface GitHub {
      *
      * @param auth the api authentication string
      * @return the builder
+     * @since 2.0.0
      */
     default @NonNull Builder auth(final @NonNull String auth) {
       return this.auth(() -> auth);
@@ -96,6 +108,7 @@ public interface GitHub {
      *
      * @param auth the api authentication string
      * @return the builder
+     * @since 2.0.0
      */
     @NonNull Builder auth(final @NonNull Supplier<String> auth);
 
@@ -104,6 +117,7 @@ public interface GitHub {
      *
      * @param token the api authentication token
      * @return the builder
+     * @since 2.0.0
      */
     default @NonNull Builder authToken(final @NonNull Supplier<String> token) {
       return this.auth(() -> "token " + token.get());
@@ -114,6 +128,7 @@ public interface GitHub {
      *
      * @param token the api authentication token
      * @return the builder
+     * @since 2.0.0
      */
     default @NonNull Builder authToken(final @NonNull String token) {
       return this.authToken(() -> token);
@@ -124,6 +139,7 @@ public interface GitHub {
      *
      * @param configurer the configurer
      * @return the builder
+     * @since 2.0.0
      */
     @NonNull Builder http(final @NonNull Consumer<HttpRequest> configurer);
 
@@ -132,6 +148,7 @@ public interface GitHub {
      *
      * @param endpoint the api endpoint
      * @return the builder
+     * @since 2.0.0
      */
     @NonNull Builder endpoint(final @NonNull String endpoint);
 
@@ -139,6 +156,7 @@ public interface GitHub {
      * Builds.
      *
      * @return github api
+     * @since 2.0.0
      */
     @NonNull GitHub build();
   }

@@ -27,6 +27,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A repository's collaborators.
+ *
+ * @since 2.0.0
  */
 public interface Collaborators {
   /**
@@ -34,6 +36,7 @@ public interface Collaborators {
    *
    * @param user the user
    * @return the collaborator
+   * @since 2.0.0
    */
   @NonNull Collaborator get(final @NonNull User user);
 }

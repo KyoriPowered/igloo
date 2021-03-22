@@ -27,12 +27,18 @@ import java.io.IOException;
 import java.util.List;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+/**
+ * Pull request reviews.
+ *
+ * @since 2.0.0
+ */
 public interface PullRequestReviews {
   /**
    * Gets a list of the current pull request reviews.
    *
    * @return a list of the current pull request reviews
    * @throws IOException if an exception occurs during retrieval
+   * @since 2.0.0
    */
   @NonNull List<PullRequestReview> get() throws IOException;
 
@@ -42,6 +48,7 @@ public interface PullRequestReviews {
    * @param create the creation data
    * @return a pull request review
    * @throws IOException if an exception occurs during creation
+   * @since 2.0.0
    */
   @NonNull PullRequestReview create(final PullRequestReview.@NonNull Create create) throws IOException;
 }

@@ -27,6 +27,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Users.
+ *
+ * @since 2.0.0
  */
 public interface Users {
   /**
@@ -34,6 +36,7 @@ public interface Users {
    *
    * @param login the user login
    * @return the user
+   * @since 2.0.0
    */
   @NonNull User get(final @NonNull String login);
 }

@@ -27,6 +27,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
+/**
+ * An issue.
+ *
+ * @since 2.0.0
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Issue {
   public int number;
@@ -39,12 +44,22 @@ public class Issue {
   public Milestone milestone;
   public String body;
 
+  /**
+   * An issue comment.
+   *
+   * @since 2.0.0
+   */
   @JsonIgnoreProperties(ignoreUnknown = true)
   public static class Comment {
     public User user;
     public String body;
   }
 
+  /**
+   * The states of an issue.
+   *
+   * @since 2.0.0
+   */
   public enum State {
     @JsonProperty("open")
     OPEN;

@@ -28,13 +28,16 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Labels.
+ *
+ * @since 2.0.0
  */
 public interface Labels {
   /**
    * Gets all the labels.
    *
    * @return all the labels
-   * @throws IOException if an exception occured while getting the labels
+   * @throws IOException if an exception occurred while getting the labels
+   * @since 2.0.0
    */
   @NonNull Iterable<Label> all() throws IOException;
 }

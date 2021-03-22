@@ -28,6 +28,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A repository's labels.
+ *
+ * @since 2.0.0
  */
 public interface RepositoryLabels extends Labels {
   /**
@@ -37,6 +39,7 @@ public interface RepositoryLabels extends Labels {
    * @param <C> the creation data type
    * @return the new label
    * @throws IOException if an exception occurs while creating a new issue
+   * @since 2.0.0
    */
   <C extends Label.Create> @NonNull Label create(final @NonNull C create) throws IOException;
 }

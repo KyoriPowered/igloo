@@ -26,15 +26,14 @@ package net.kyori.github.api.v3.implementation;
 import net.kyori.github.api.v3.PullRequest;
 import net.kyori.github.api.v3.PullRequestReviews;
 import net.kyori.github.api.v3.User;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class PullRequestImpl implements PullRequest {
-  final Request request;
+  final HTTP.RequestTemplate request;
   private final int number;
   private final Lazy<Partial.PullRequest> lazy;
 
-  PullRequestImpl(final Request request, final int number) {
+  PullRequestImpl(final HTTP.RequestTemplate request, final int number) {
     this.request = request.path(Integer.toString(number));
     this.number = number;
     this.lazy = new Lazy<>(this.request, Partial.PullRequest.class);

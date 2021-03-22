@@ -25,13 +25,12 @@ package net.kyori.github.api.v3.implementation;
 
 import net.kyori.github.api.v3.Organization;
 import net.kyori.github.api.v3.Organizations;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class OrganizationsImpl implements Organizations {
-  private final Request request;
+  private final HTTP.RequestTemplate request;
 
-  OrganizationsImpl(final Request request) {
+  OrganizationsImpl(final HTTP.RequestTemplate request) {
     this.request = request.path("orgs");
   }
 

@@ -28,12 +28,15 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A pull request in a {@link Repository repository}.
+ *
+ * @since 2.0.0
  */
 public interface PullRequest {
   /**
    * Gets the number.
    *
    * @return the number
+   * @since 2.0.0
    */
   int number();
 
@@ -41,6 +44,7 @@ public interface PullRequest {
    * Gets the html url.
    *
    * @return the html url
+   * @since 2.0.0
    */
   @NonNull String html_url();
 
@@ -48,6 +52,7 @@ public interface PullRequest {
    * Gets the user.
    *
    * @return the user
+   * @since 2.0.0
    */
   @NonNull User user();
 
@@ -55,6 +60,7 @@ public interface PullRequest {
    * Gets the title.
    *
    * @return the title
+   * @since 2.0.0
    */
   @NonNull String title();
 
@@ -62,6 +68,7 @@ public interface PullRequest {
    * Gets the body.
    *
    * @return the body
+   * @since 2.0.0
    */
   @NonNull String body();
 
@@ -69,6 +76,7 @@ public interface PullRequest {
    * Gets the state.
    *
    * @return the state
+   * @since 2.0.0
    */
   @NonNull State state();
 
@@ -76,6 +84,7 @@ public interface PullRequest {
    * Checks if the pull request is merged.
    *
    * @return {@code true} if the pull request is merged, {@code false} otherwise
+   * @since 2.0.0
    */
   boolean merged();
 
@@ -83,11 +92,14 @@ public interface PullRequest {
    * Pull request reviews.
    *
    * @return pull request reviews
+   * @since 2.0.0
    */
   @NonNull PullRequestReviews reviews();
 
   /**
    * The state of a pull request.
+   *
+   * @since 2.0.0
    */
   enum State {
     @JsonProperty("open")

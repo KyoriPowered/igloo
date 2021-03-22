@@ -27,13 +27,12 @@ import java.io.IOException;
 import net.kyori.github.api.v3.Comment;
 import net.kyori.github.api.v3.CommentPartial;
 import net.kyori.github.api.v3.Comments;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class CommentsImpl implements Comments {
-  private final Request request;
+  private final HTTP.RequestTemplate request;
 
-  CommentsImpl(final Request request) {
+  CommentsImpl(final HTTP.RequestTemplate request) {
     this.request = request.path("comments");
   }
 

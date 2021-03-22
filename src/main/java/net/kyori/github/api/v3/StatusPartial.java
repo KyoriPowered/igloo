@@ -27,52 +27,66 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Partial documents used during status creation.
+ *
+ * @since 2.0.0
  */
 public interface StatusPartial {
   /**
    * A document representing a status's state.
+   *
+   * @since 2.0.0
    */
   interface StatePartial extends Status.AbstractCreate {
     /**
      * Gets the status's state.
      *
      * @return the status state
+     * @since 2.0.0
      */
     Status.@Nullable State state();
   }
 
   /**
    * A document representing an status's target url.
+   *
+   * @since 2.0.0
    */
   interface TargetUrlPartial extends Status.Create {
     /**
      * Gets the status's target url.
      *
      * @return the status target url
+     * @since 2.0.0
      */
     @Nullable String target_url();
   }
 
   /**
    * A document representing an status's description.
+   *
+   * @since 2.0.0
    */
   interface DescriptionPartial extends Status.Create {
     /**
      * Gets the status's description.
      *
      * @return the status description
+     * @since 2.0.0
      */
     @Nullable String description();
   }
 
   /**
    * A document representing an issue's context.
+   *
+   * @since 2.0.0
    */
   interface ContextPartial extends Status.Create {
     /**
      * Gets the status's context.
      *
      * @return the status context
+     * @since 2.0.0
      */
     @Nullable String context();
   }

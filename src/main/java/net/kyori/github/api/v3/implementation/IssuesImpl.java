@@ -27,14 +27,13 @@ import java.io.IOException;
 import net.kyori.github.api.v3.Issue;
 import net.kyori.github.api.v3.Issues;
 import net.kyori.github.api.v3.Repository;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class IssuesImpl implements Issues {
   private final Repository repository;
-  private final Request request;
+  private final HTTP.RequestTemplate request;
 
-  IssuesImpl(final Repository repository, final Request request) {
+  IssuesImpl(final Repository repository, final HTTP.RequestTemplate request) {
     this.repository = repository;
     this.request = request.path("issues");
   }

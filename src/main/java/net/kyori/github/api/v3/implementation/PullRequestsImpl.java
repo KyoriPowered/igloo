@@ -25,13 +25,12 @@ package net.kyori.github.api.v3.implementation;
 
 import net.kyori.github.api.v3.PullRequest;
 import net.kyori.github.api.v3.PullRequests;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class PullRequestsImpl implements PullRequests {
-  private final Request request;
+  private final HTTP.RequestTemplate request;
 
-  PullRequestsImpl(final Request request) {
+  PullRequestsImpl(final HTTP.RequestTemplate request) {
     this.request = request.path("pulls");
   }
 

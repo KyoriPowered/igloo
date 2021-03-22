@@ -28,16 +28,21 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Partials that make up a full issue.
+ *
+ * @since 2.0.0
  */
 public interface IssuePartial {
   /**
    * The title of an issue.
+   *
+   * @since 2.0.0
    */
   interface TitlePartial extends IssuePartial {
     /**
      * Gets the issue's title.
      *
      * @return the issue title
+     * @since 2.0.0
      */
     @JsonProperty
     @Nullable String title();

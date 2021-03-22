@@ -27,11 +27,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
+/**
+ * A pull request review.
+ *
+ * @since 2.0.0
+ */
 public interface PullRequestReview {
   /**
    * Gets the user who submitted the review.
    *
    * @return the user who submitted the review
+   * @since 2.0.0
    */
   @NonNull User user();
 
@@ -39,6 +45,7 @@ public interface PullRequestReview {
    * Gets the state of the review.
    *
    * @return the state of the review
+   * @since 2.0.0
    */
   @NonNull State state();
 
@@ -46,35 +53,44 @@ public interface PullRequestReview {
    * Gets the body of the review.
    *
    * @return the body of the review
+   * @since 2.0.0
    */
   @NonNull String body();
 
   /**
    * A document used to create a pull request review.
+   *
+   * @since 2.0.0
    */
   interface Create {
     /**
      * Gets the event.
      *
      * @return the event
+     * @since 2.0.0
      */
     @NonNull Event event();
   }
 
   /**
    * A document used to create a pull request review.
+   *
+   * @since 2.0.0
    */
   interface CreateWithBody extends Create {
     /**
      * Gets the body.
      *
      * @return the body
+     * @since 2.0.0
      */
     @Nullable String body();
   }
 
   /**
    * The type of a review, when creating.
+   *
+   * @since 2.0.0
    */
   enum Event {
     /*@SerializedName("PENDING")
@@ -89,6 +105,8 @@ public interface PullRequestReview {
 
   /**
    * The state of a review.
+   *
+   * @since 2.0.0
    */
   enum State {
     @JsonProperty("APPROVED")

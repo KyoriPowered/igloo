@@ -28,6 +28,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import net.kyori.github.api.webhook.model.PullRequest;
 import net.kyori.github.api.webhook.model.Repository;
 
+/**
+ * PullRequestEvent.
+ *
+ * @since 2.0.0
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PullRequestEvent {
   public Action action;
@@ -35,6 +40,11 @@ public class PullRequestEvent {
   public int number;
   public Repository repository;
 
+  /**
+   * Action.
+   *
+   * @since 2.0.0
+   */
   public enum Action {
     @JsonProperty("opened")
     OPENED,

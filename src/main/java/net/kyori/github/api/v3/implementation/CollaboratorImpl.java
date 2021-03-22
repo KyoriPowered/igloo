@@ -26,13 +26,12 @@ package net.kyori.github.api.v3.implementation;
 import java.io.IOException;
 import net.kyori.github.api.v3.Collaborator;
 import net.kyori.github.api.v3.User;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class CollaboratorImpl implements Collaborator {
-  private final Request request;
+  private final HTTP.RequestTemplate request;
 
-  CollaboratorImpl(final Request request, final User user) {
+  CollaboratorImpl(final HTTP.RequestTemplate request, final User user) {
     this.request = request.path(user.login());
   }
 

@@ -27,28 +27,37 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * Partials that make up a full label.
+ *
+ * @since 2.0.0
  */
 public interface LabelPartial extends net.kyori.github.api.LabelPartial {
   /**
    * The name of a label.
+   *
+   * @since 2.0.0
    */
   interface NamePartial extends Label.Edit, LabelPartial, net.kyori.github.api.LabelPartial.NamePartial {
   }
 
   /**
    * The color of a label.
+   *
+   * @since 2.0.0
    */
   interface ColorPartial extends Label.Edit, LabelPartial, net.kyori.github.api.LabelPartial.ColorPartial {
   }
 
   /**
    * The description of a label.
+   *
+   * @since 2.0.0
    */
   interface DescriptionPartial extends Label.Edit, LabelPartial, net.kyori.github.api.LabelPartial.DescriptionPartial {
     /**
      * Gets the issue's description.
      *
      * @return the label description
+     * @since 2.0.0
      */
     @Override
     @NonNull String description();

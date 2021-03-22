@@ -29,6 +29,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A team.
+ *
+ * @since 2.0.0
  */
 public interface Team {
   /**
@@ -36,6 +38,7 @@ public interface Team {
    *
    * @return the members
    * @throws IOException if an exception occurred while retrieving team members
+   * @since 2.0.0
    */
   @NonNull List<User> members() throws IOException;
 }

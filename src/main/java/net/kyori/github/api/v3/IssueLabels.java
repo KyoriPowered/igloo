@@ -29,6 +29,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * An issue's labels.
+ *
+ * @since 2.0.0
  */
 public interface IssueLabels extends Labels {
   /**
@@ -36,6 +38,7 @@ public interface IssueLabels extends Labels {
    *
    * @param name the label name
    * @throws IOException if an exception occurs while adding the label
+   * @since 2.0.0
    */
   default void add(final @NonNull String name) throws IOException {
     this.add(Collections.singleton(name));
@@ -46,6 +49,7 @@ public interface IssueLabels extends Labels {
    *
    * @param names the label names
    * @throws IOException if an exception occurs while adding the labels
+   * @since 2.0.0
    */
   void add(final @NonNull Iterable<String> names) throws IOException;
 
@@ -54,6 +58,7 @@ public interface IssueLabels extends Labels {
    *
    * @param names the label names
    * @throws IOException if an exception occurs while setting the labels
+   * @since 2.0.0
    */
   void set(final @NonNull Iterable<String> names) throws IOException;
 
@@ -62,6 +67,7 @@ public interface IssueLabels extends Labels {
    *
    * @param name the label name
    * @throws IOException if an exception occurs while removing the label
+   * @since 2.0.0
    */
   void remove(final @NonNull String name) throws IOException;
 }

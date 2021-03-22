@@ -28,14 +28,13 @@ import java.io.IOException;
 import net.kyori.github.api.v3.Comments;
 import net.kyori.github.api.v3.Issue;
 import net.kyori.github.api.v3.IssueLabels;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 abstract class AbstractIssue implements Issue {
-  final Request request;
+  final HTTP.RequestTemplate request;
   private final int number;
 
-  AbstractIssue(final Request request, final int number) {
+  AbstractIssue(final HTTP.RequestTemplate request, final int number) {
     this.request = request.path(Integer.toString(number));
     this.number = number;
   }

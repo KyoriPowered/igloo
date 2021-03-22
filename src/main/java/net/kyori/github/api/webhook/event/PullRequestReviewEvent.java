@@ -29,6 +29,11 @@ import net.kyori.github.api.webhook.model.PullRequest;
 import net.kyori.github.api.webhook.model.Repository;
 import net.kyori.github.api.webhook.model.User;
 
+/**
+ * PullRequestReviewEvent.
+ *
+ * @since 2.0.0
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PullRequestReviewEvent {
   public Action action;
@@ -37,18 +42,33 @@ public class PullRequestReviewEvent {
   public Repository repository;
   // sender?
 
+  /**
+   * A pull request review.
+   *
+   * @since 2.0.0
+   */
   @JsonIgnoreProperties(ignoreUnknown = true)
   public static class Review {
     public User user;
     public String body;
     public State state;
 
+    /**
+     * The states of a pull request review.
+     *
+     * @since 2.0.0
+     */
     public enum State {
       @JsonProperty("approved")
       APPROVED;
     }
   }
 
+  /**
+   * Action.
+   *
+   * @since 2.0.0
+   */
   public enum Action {
     @JsonProperty("submitted")
     SUBMITTED,

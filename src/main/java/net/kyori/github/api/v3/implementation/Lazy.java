@@ -26,17 +26,16 @@ package net.kyori.github.api.v3.implementation;
 import com.google.common.base.Suppliers;
 import com.google.common.reflect.TypeToken;
 import java.util.function.Supplier;
-import net.kyori.github.util.http.Request;
 import net.kyori.mu.function.ThrowingSupplier;
 
 final class Lazy<T> {
   private final Supplier<T> json;
 
-  Lazy(final Request request, final Class<T> type) {
+  Lazy(final HTTP.RequestTemplate request, final Class<T> type) {
     this(request, TypeToken.of(type));
   }
 
-  Lazy(final Request request, final TypeToken<T> type) {
+  Lazy(final HTTP.RequestTemplate request, final TypeToken<T> type) {
     this.json = Suppliers.memoize(ThrowingSupplier.of(() -> request.get().as(type))::get);
   }
 

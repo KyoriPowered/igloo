@@ -29,16 +29,21 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 
 /**
  * Partial documents used during issue creation and edits.
+ *
+ * @since 2.0.0
  */
 public interface IssuePartial extends net.kyori.github.api.IssuePartial {
   /**
    * A document representing an issue's title.
+   *
+   * @since 2.0.0
    */
   interface TitlePartial extends Issue.AbstractCreate, Issue.Edit, IssuePartial, net.kyori.github.api.IssuePartial.TitlePartial {
     /**
      * Gets the issue's title.
      *
      * @return the issue title
+     * @since 2.0.0
      */
     @Override
     @Nullable String title();
@@ -46,12 +51,15 @@ public interface IssuePartial extends net.kyori.github.api.IssuePartial {
 
   /**
    * A document representing an issue's body.
+   *
+   * @since 2.0.0
    */
   interface BodyPartial extends Issue.Create, Issue.Edit, IssuePartial {
     /**
      * Gets the issue's body.
      *
      * @return the issue body
+     * @since 2.0.0
      */
     @JsonProperty
     @Nullable String body();
@@ -59,12 +67,15 @@ public interface IssuePartial extends net.kyori.github.api.IssuePartial {
 
   /**
    * A document representing an issue's state.
+   *
+   * @since 2.0.0
    */
   interface StatePartial extends Issue.Edit, IssuePartial {
     /**
      * Gets the issue's state.
      *
      * @return the issue state
+     * @since 2.0.0
      */
     @JsonProperty
     Issue.@Nullable State state();
@@ -72,12 +83,15 @@ public interface IssuePartial extends net.kyori.github.api.IssuePartial {
 
   /**
    * A document representing an issue's milestone.
+   *
+   * @since 2.0.0
    */
   interface MilestonePartial extends Issue.Create, Issue.Edit, IssuePartial {
     /**
      * Gets the issue's milestone.
      *
      * @return the issue milestone
+     * @since 2.0.0
      */
     @JsonProperty("milestone")
     int milestone();
@@ -85,12 +99,15 @@ public interface IssuePartial extends net.kyori.github.api.IssuePartial {
 
   /**
    * A document representing an issue's labels.
+   *
+   * @since 2.0.0
    */
   interface LabelsPartial extends Issue.Create, Issue.Edit, IssuePartial {
     /**
      * Gets the issue's labels.
      *
      * @return the issue's labels
+     * @since 2.0.0
      */
     @JsonProperty("labels")
     @Nullable Collection<String> labels();
@@ -98,12 +115,15 @@ public interface IssuePartial extends net.kyori.github.api.IssuePartial {
 
   /**
    * A document representing an issue's assignees.
+   *
+   * @since 2.0.0
    */
   interface AssigneesPartial extends Issue.Create, Issue.Edit, IssuePartial {
     /**
      * Gets the issue's assignees.
      *
      * @return the issue's assignees
+     * @since 2.0.0
      */
     @JsonProperty("assignees")
     @Nullable Collection<String> assignees();

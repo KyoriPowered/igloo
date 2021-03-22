@@ -27,6 +27,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A repository's pull requests.
+ *
+ * @since 2.0.0
  */
 public interface PullRequests {
   /**
@@ -34,6 +36,7 @@ public interface PullRequests {
    *
    * @param number the pull request number
    * @return the pull request
+   * @since 2.0.0
    */
   @NonNull PullRequest get(final int number);
 }

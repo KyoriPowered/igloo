@@ -25,12 +25,18 @@ package net.kyori.github.api.v3;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+/**
+ * Teams.
+ *
+ * @since 2.0.0
+ */
 public interface Teams {
   /**
    * Gets a team.
    *
    * @param slug the slug
    * @return the team
+   * @since 2.0.0
    */
   @NonNull Team get(final @NonNull String slug);
 }

@@ -27,12 +27,15 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A user.
+ *
+ * @since 2.0.0
  */
 public interface User {
   /**
    * Gets the login.
    *
    * @return the login
+   * @since 2.0.0
    */
   @NonNull String login();
 
@@ -40,13 +43,15 @@ public interface User {
    * Gets the name.
    *
    * @return the name
+   * @since 2.0.0
    */
   @NonNull String name();
 
   /**
    * Gets the avatar url.
    *
-   * @return The avatar url
+   * @return the avatar url
+   * @since 2.0.0
    */
   @NonNull String avatarUrl();
 }

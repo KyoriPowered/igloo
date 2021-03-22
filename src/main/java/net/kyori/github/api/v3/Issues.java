@@ -28,6 +28,8 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
  * A repository's issues.
+ *
+ * @since 2.0.0
  */
 public interface Issues {
   /**
@@ -35,6 +37,7 @@ public interface Issues {
    *
    * @param number the issue number
    * @return the issue
+   * @since 2.0.0
    */
   @NonNull Issue get(final int number);
 
@@ -45,6 +48,7 @@ public interface Issues {
    * @param <C> the creation data type
    * @return the new issue
    * @throws IOException if an exception occurs while creating a new issue
+   * @since 2.0.0
    */
   <C extends Issue.AbstractCreate> @NonNull Issue create(final @NonNull C create) throws IOException;
 }

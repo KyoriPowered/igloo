@@ -25,13 +25,12 @@ package net.kyori.github.api.v3.implementation;
 
 import net.kyori.github.api.v3.Organization;
 import net.kyori.github.api.v3.Teams;
-import net.kyori.github.util.http.Request;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class OrganizationImpl implements Organization {
-  private final Request request;
+  private final HTTP.RequestTemplate request;
 
-  OrganizationImpl(final Request request, final String name) {
+  OrganizationImpl(final HTTP.RequestTemplate request, final String name) {
     this.request = request.path(name);
   }
 
