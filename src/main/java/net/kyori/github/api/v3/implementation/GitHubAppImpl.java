@@ -23,32 +23,18 @@
  */
 package net.kyori.github.api.v3.implementation;
 
-import com.google.common.base.Suppliers;
-import com.google.common.reflect.TypeToken;
-import java.io.IOException;
-import java.util.function.Supplier;
-import net.kyori.mu.function.ThrowingSupplier;
+import net.kyori.github.api.v3.GitHubApp;
+import net.kyori.github.api.v3.Installations;
 
-final class Lazy<T> {
-  private final Supplier<T> json;
+final class GitHubAppImpl implements GitHubApp {
+  private final HTTP.RequestTemplate request;
 
-  Lazy(final HTTP.RequestTemplate request, final Class<T> type) {
-    this(request, TypeToken.of(type));
+  GitHubAppImpl(final HTTP.RequestTemplate request) {
+    this.request = request.path("app");
   }
 
-  Lazy(final HTTP.RequestTemplate request, final TypeToken<T> type) {
-    this(request::get, type);
-  }
-
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final Class<T> type) {
-    this(requestExecutor, TypeToken.of(type));
-  }
-
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final TypeToken<T> type) {
-    this.json = Suppliers.memoize(ThrowingSupplier.of(() -> requestExecutor.get().as(type))::get);
-  }
-
-  T get() {
-    return this.json.get();
+  @Override
+  public Installations installations() {
+    return new InstallationsImpl(this.request);
   }
 }

@@ -23,7 +23,12 @@
  */
 package net.kyori.github.api.v3.auth;
 
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.function.Supplier;
+import net.kyori.github.api.v3.Installation;
+import net.kyori.github.api.v3.auth.implementation.GitHubAppInstallationTokenAuthorizationSource;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 /**
@@ -39,7 +44,7 @@ public interface TokenAuthorizationSource extends AuthorizationSource {
    * @return the new authentication source
    * @since 2.0.0
    */
-  static TokenAuthorizationSource of(final @NonNull String token) {
+  static @NonNull TokenAuthorizationSource of(final @NonNull String token) {
     return () -> token;
   }
 
@@ -50,8 +55,50 @@ public interface TokenAuthorizationSource extends AuthorizationSource {
    * @return the new authentication source
    * @since 2.0.0
    */
-  static TokenAuthorizationSource from(final @NonNull Supplier<@NonNull String> tokenSupplier) {
+  static @NonNull TokenAuthorizationSource from(final @NonNull Supplier<@NonNull String> tokenSupplier) {
     return tokenSupplier::get;
+  }
+
+  /**
+   * Create a token-based authorization source from an installation.
+   *
+   * <p>
+   * The installation must be part of a GitHub-App-authorized instance.
+   * </p>
+   *
+   * <p>
+   * This is equivalent to calling {@link #forInstallation(Installation, ScheduledExecutorService)} with
+   * a brand new single-threaded {@link ScheduledExecutorService}.
+   * </p>
+   *
+   * @param installation the installation to get access tokens from
+   * @return the new authentication source
+   * @since 2.0.0
+   */
+  static @NonNull TokenAuthorizationSource forInstallation(final @NonNull Installation installation) {
+    final ScheduledExecutorService refreshExecutor = Executors.newSingleThreadScheduledExecutor(
+      new ThreadFactoryBuilder().setDaemon(true).setNameFormat("igloo-installation-token-refresh-%d").build()
+    );
+    return forInstallation(installation, refreshExecutor);
+  }
+
+  /**
+   * Create a token-based authorization source from an installation.
+   *
+   * <p>
+   * The installation must be part of a GitHub-App-authorized instance.
+   * </p>
+   *
+   * @param installation the installation to get access tokens from
+   * @param refreshExecutor the executor to schedule refresh tasks on
+   * @return the new authentication source
+   * @since 2.0.0
+   */
+  static @NonNull TokenAuthorizationSource forInstallation(final @NonNull Installation installation,
+                                                           final @NonNull ScheduledExecutorService refreshExecutor) {
+    return new GitHubAppInstallationTokenAuthorizationSource(
+      installation::createAccessToken, refreshExecutor
+    );
   }
 
   @Override

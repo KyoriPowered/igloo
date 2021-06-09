@@ -44,7 +44,7 @@ public interface JwtAuthorizationSource extends AuthorizationSource {
    * @return the new authorization source
    * @since 2.0.0
    */
-  static JwtAuthorizationSource forGithubApp(final String appId, final String privateKeyText) {
+  static @NonNull JwtAuthorizationSource forGithubApp(final @NonNull String appId, final @NonNull String privateKeyText) {
     return new GitHubAppJwtAuthorizationSource(appId, privateKeyText);
   }
 
@@ -61,7 +61,7 @@ public interface JwtAuthorizationSource extends AuthorizationSource {
    * @throws IOException if the file could not be read
    * @since 2.0.0
    */
-  static JwtAuthorizationSource forGithubApp(final String appId, final Path privateKeyFile) throws IOException {
+  static @NonNull JwtAuthorizationSource forGithubApp(final @NonNull String appId, final @NonNull Path privateKeyFile) throws IOException {
     return forGithubApp(appId, new String(Files.readAllBytes(privateKeyFile), StandardCharsets.UTF_8));
   }
 

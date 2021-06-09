@@ -23,7 +23,6 @@
  */
 package net.kyori.github.api.v3;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.HttpRequest;
 import java.util.function.Consumer;
 import net.kyori.github.api.v3.auth.AuthorizationSource;
@@ -78,22 +77,21 @@ public interface GitHub {
   @NonNull Organizations orgs();
 
   /**
+   * Gets a GitHub App.
+   *
+   * @return a GitHub App
+   * @since 2.0.0
+   */
+  @NonNull GitHubApp app();
+
+  /**
    * A builder for creating instances of the GitHub API.
    *
    * @since 2.0.0
    */
   interface Builder {
     /**
-     * Sets the object mapper instance.
-     *
-     * @param json the gson instance
-     * @return the builder
-     * @since 2.0.0
-     */
-    @NonNull Builder json(final @NonNull ObjectMapper json);
-
-    /**
-     * Sets the API {@link net.kyori.github.api.v3.auth.AuthorizationSource}.
+     * Sets the api {@link net.kyori.github.api.v3.auth.AuthorizationSource}.
      *
      * @param auth the authorization source
      * @return the builder

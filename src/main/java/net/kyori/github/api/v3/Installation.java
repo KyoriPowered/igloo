@@ -21,34 +21,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.github.api.v3.implementation;
+package net.kyori.github.api.v3;
 
-import com.google.common.base.Suppliers;
-import com.google.common.reflect.TypeToken;
-import java.io.IOException;
-import java.util.function.Supplier;
-import net.kyori.mu.function.ThrowingSupplier;
+import java.time.Instant;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class Lazy<T> {
-  private final Supplier<T> json;
+/**
+ * A GitHub App's installation.
+ *
+ * @since 2.0.0
+ */
+public interface Installation {
+  /**
+   * Create a new access token for this installation.
+   *
+   * @return the new access token
+   * @since 2.0.0
+   */
+  @NonNull AccessToken createAccessToken();
 
-  Lazy(final HTTP.RequestTemplate request, final Class<T> type) {
-    this(request, TypeToken.of(type));
-  }
+  /**
+   * An installation access token.
+   *
+   * @since 2.0.0
+   */
+  interface AccessToken {
+    /**
+     * Gets the token value.
+     *
+     * @return the token value
+     * @since 2.0.0
+     */
+    @NonNull String token();
 
-  Lazy(final HTTP.RequestTemplate request, final TypeToken<T> type) {
-    this(request::get, type);
-  }
-
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final Class<T> type) {
-    this(requestExecutor, TypeToken.of(type));
-  }
-
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final TypeToken<T> type) {
-    this.json = Suppliers.memoize(ThrowingSupplier.of(() -> requestExecutor.get().as(type))::get);
-  }
-
-  T get() {
-    return this.json.get();
+    /**
+     * Gets the expiration time.
+     *
+     * @return the expiration time
+     * @since 2.0.0
+     */
+    @NonNull Instant expiresAt();
   }
 }

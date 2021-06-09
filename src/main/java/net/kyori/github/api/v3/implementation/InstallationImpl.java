@@ -23,32 +23,38 @@
  */
 package net.kyori.github.api.v3.implementation;
 
-import com.google.common.base.Suppliers;
-import com.google.common.reflect.TypeToken;
-import java.io.IOException;
-import java.util.function.Supplier;
-import net.kyori.mu.function.ThrowingSupplier;
+import java.time.Instant;
+import java.util.Collections;
+import net.kyori.github.api.v3.Installation;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class Lazy<T> {
-  private final Supplier<T> json;
+final class InstallationImpl implements Installation {
+  private final HTTP.RequestTemplate request;
 
-  Lazy(final HTTP.RequestTemplate request, final Class<T> type) {
-    this(request, TypeToken.of(type));
+  InstallationImpl(final HTTP.RequestTemplate request, final int id) {
+    this.request = request.path(String.valueOf(id));
   }
 
-  Lazy(final HTTP.RequestTemplate request, final TypeToken<T> type) {
-    this(request::get, type);
+  @Override
+  public @NonNull AccessToken createAccessToken() {
+    return new AccessTokenImpl(this.request);
   }
 
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final Class<T> type) {
-    this(requestExecutor, TypeToken.of(type));
-  }
+  private static final class AccessTokenImpl implements AccessToken {
+    private final Lazy<Partial.AccessToken> lazy;
 
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final TypeToken<T> type) {
-    this.json = Suppliers.memoize(ThrowingSupplier.of(() -> requestExecutor.get().as(type))::get);
-  }
+    private AccessTokenImpl(final HTTP.RequestTemplate request) {
+      this.lazy = new Lazy<>(() -> request.path("access_tokens").post(Collections.emptyMap()), Partial.AccessToken.class);
+    }
 
-  T get() {
-    return this.json.get();
+    @Override
+    public @NonNull String token() {
+      return this.lazy.get().token;
+    }
+
+    @Override
+    public @NonNull Instant expiresAt() {
+      return this.lazy.get().expires_at;
+    }
   }
 }
