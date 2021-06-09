@@ -37,5 +37,5 @@ public interface AuthorizationSource {
    * @return the value for the {@code Authorization} header
    * @since 2.0.0
    */
-  @NonNull String currentAuthorization();
+  @NonNull String get();
 }

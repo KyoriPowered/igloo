@@ -102,7 +102,7 @@ public interface TokenAuthorizationSource extends AuthorizationSource {
   }
 
   @Override
-  default @NonNull String currentAuthorization() {
+  default @NonNull String get() {
     return "token " + this.currentToken();
   }
 

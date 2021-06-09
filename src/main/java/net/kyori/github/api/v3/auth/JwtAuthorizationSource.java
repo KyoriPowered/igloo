@@ -62,11 +62,11 @@ public interface JwtAuthorizationSource extends AuthorizationSource {
    * @since 2.0.0
    */
   static @NonNull JwtAuthorizationSource forGithubApp(final @NonNull String appId, final @NonNull Path privateKeyFile) throws IOException {
-    return forGithubApp(appId, new String(Files.readAllBytes(privateKeyFile), StandardCharsets.UTF_8));
+    return forGithubApp(appId, new String(Files.readAllBytes(privateKeyFile), StandardCharsets.UTF_8)); // todo: Files.readString
   }
 
   @Override
-  default @NonNull String currentAuthorization() {
+  default @NonNull String get() {
     return "Bearer " + this.currentJwt();
   }
 

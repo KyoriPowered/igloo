@@ -79,7 +79,7 @@ public final class GitHubImpl implements GitHub {
       headers.put(Accept.HEADER_NAME, HEADER_VALUES);
       headers.setContentType(Json.MEDIA_TYPE);
       if(auth != null) {
-        headers.setAuthorization(auth.currentAuthorization());
+        headers.setAuthorization(auth.get());
       }
       if(headers.getUserAgent() == null) {
         headers.setUserAgent("igloo");

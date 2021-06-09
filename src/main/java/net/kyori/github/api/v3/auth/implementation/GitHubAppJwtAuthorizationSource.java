@@ -28,6 +28,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.time.Instant;
@@ -46,6 +47,29 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  */
 public final class GitHubAppJwtAuthorizationSource implements JwtAuthorizationSource {
 
+  private static PrivateKey readPemPrivateKey(final String privateKeyText) {
+    final byte[] privateKeyBytes = Base64.getDecoder().decode(
+      privateKeyText
+        .replaceFirst("-----BEGIN.*?\n", "")
+        .replaceFirst("-----END.*?\n", "")
+        .replaceAll("\r?\n", "")
+    );
+    final PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(privateKeyBytes);
+    final KeyFactory kf;
+    try {
+      kf = KeyFactory.getInstance("RSA");
+    } catch(final NoSuchAlgorithmException e) {
+      throw new AssertionError("Missing RSA key factory", e);
+    }
+    final PrivateKey privateKey;
+    try {
+      privateKey = kf.generatePrivate(spec);
+    } catch(final InvalidKeySpecException e) {
+      throw new IllegalArgumentException("Invalid private key given", e);
+    }
+    return privateKey;
+  }
+
   private final String appId;
   private final Key privateKey;
   private final ReadWriteLock lock = new ReentrantReadWriteLock();
@@ -63,24 +87,7 @@ public final class GitHubAppJwtAuthorizationSource implements JwtAuthorizationSo
    */
   public GitHubAppJwtAuthorizationSource(final String appId, final String privateKeyText) {
     this.appId = appId;
-    final byte[] privateKeyBytes = Base64.getDecoder().decode(
-      privateKeyText
-        .replaceFirst("-----BEGIN.*?\n", "")
-        .replaceFirst("-----END.*?\n", "")
-        .replaceAll("\r?\n", "")
-    );
-    final PKCS8EncodedKeySpec spec = new PKCS8EncodedKeySpec(privateKeyBytes);
-    final KeyFactory kf;
-    try {
-      kf = KeyFactory.getInstance("RSA");
-    } catch(final NoSuchAlgorithmException e) {
-      throw new AssertionError("Missing RSA key factory", e);
-    }
-    try {
-      this.privateKey = kf.generatePrivate(spec);
-    } catch(final InvalidKeySpecException e) {
-      throw new IllegalArgumentException("Invalid private key given", e);
-    }
+    this.privateKey = readPemPrivateKey(privateKeyText);
   }
 
   @Override
@@ -116,8 +123,8 @@ public final class GitHubAppJwtAuthorizationSource implements JwtAuthorizationSo
       this.lastJwt = Jwts.builder()
         .setIssuer(this.appId)
         // Allow up to 60 seconds of clock drift
-        .setIssuedAt(new Date(now.minus(1, ChronoUnit.MINUTES).toEpochMilli()))
-        .setExpiration(new Date(now.plus(10, ChronoUnit.MINUTES).toEpochMilli()))
+        .setIssuedAt(Date.from(now.minus(1, ChronoUnit.MINUTES)))
+        .setExpiration(Date.from(now.plus(10, ChronoUnit.MINUTES)))
         .signWith(this.privateKey, SignatureAlgorithm.RS256)
         .compact();
       // Refresh 1 minute before it would expire, to prevent clock drift errors
