@@ -51,6 +51,9 @@ dependencies {
   implementation("com.google.http-client:google-http-client:1.39.1")
   implementation("com.google.http-client:google-http-client-apache-v2:1.39.1")
   implementation("net.kyori:mu:1.0.0-SNAPSHOT")
+  implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+  runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
+  runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
 }
 
 jar {

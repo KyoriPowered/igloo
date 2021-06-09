@@ -26,7 +26,7 @@ package net.kyori.github.api.v3;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.client.http.HttpRequest;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
+import net.kyori.github.api.v3.auth.AuthorizationSource;
 import net.kyori.github.api.v3.implementation.GitHubImpl;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -93,46 +93,13 @@ public interface GitHub {
     @NonNull Builder json(final @NonNull ObjectMapper json);
 
     /**
-     * Sets the api authentication string.
+     * Sets the API {@link net.kyori.github.api.v3.auth.AuthorizationSource}.
      *
-     * @param auth the api authentication string
+     * @param auth the authorization source
      * @return the builder
      * @since 2.0.0
      */
-    default @NonNull Builder auth(final @NonNull String auth) {
-      return this.auth(() -> auth);
-    }
-
-    /**
-     * Sets the api authentication string.
-     *
-     * @param auth the api authentication string
-     * @return the builder
-     * @since 2.0.0
-     */
-    @NonNull Builder auth(final @NonNull Supplier<String> auth);
-
-    /**
-     * Sets the api authentication token.
-     *
-     * @param token the api authentication token
-     * @return the builder
-     * @since 2.0.0
-     */
-    default @NonNull Builder authToken(final @NonNull Supplier<String> token) {
-      return this.auth(() -> "token " + token.get());
-    }
-
-    /**
-     * Sets the api authentication token.
-     *
-     * @param token the api authentication token
-     * @return the builder
-     * @since 2.0.0
-     */
-    default @NonNull Builder authToken(final @NonNull String token) {
-      return this.authToken(() -> token);
-    }
+    @NonNull Builder auth(final @NonNull AuthorizationSource auth);
 
     /**
      * Sets the HTTP request configurer.

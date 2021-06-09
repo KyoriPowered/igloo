@@ -34,13 +34,13 @@ import com.google.api.client.util.ExponentialBackOff;
 import com.google.common.collect.Streams;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.kyori.github.api.v3.GitHub;
 import net.kyori.github.api.v3.Organizations;
 import net.kyori.github.api.v3.Repositories;
 import net.kyori.github.api.v3.Users;
+import net.kyori.github.api.v3.auth.AuthorizationSource;
 import net.kyori.github.util.Accept;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
@@ -67,7 +67,7 @@ public final class GitHubImpl implements GitHub {
   ).collect(Collectors.toList());
   private final HTTP.RequestTemplate request;
 
-  GitHubImpl(final ObjectMapper json, final String endpoint, final @Nullable Supplier<String> auth, final @Nullable Consumer<HttpRequest> httpRequestConfigurer) {
+  GitHubImpl(final ObjectMapper json, final String endpoint, final @Nullable AuthorizationSource auth, final @Nullable Consumer<HttpRequest> httpRequestConfigurer) {
     final HttpRequestFactory factory = new ApacheHttpTransport().createRequestFactory(request -> {
       request.setIOExceptionHandler(new HttpBackOffIOExceptionHandler(new ExponentialBackOff()));
       request.setNumberOfRetries(10);
@@ -78,7 +78,7 @@ public final class GitHubImpl implements GitHub {
       headers.put(Accept.HEADER_NAME, HEADER_VALUES);
       headers.setContentType(Json.MEDIA_TYPE);
       if(auth != null) {
-        headers.setAuthorization(auth.get());
+        headers.setAuthorization(auth.currentAuthorization());
       }
       if(headers.getUserAgent() == null) {
         headers.setUserAgent("igloo");
@@ -110,7 +110,7 @@ public final class GitHubImpl implements GitHub {
   public static final class BuilderImpl implements Builder {
     private ObjectMapper json;
     private String endpoint = API_ENDPOINT;
-    private @Nullable Supplier<String> auth;
+    private @Nullable AuthorizationSource auth;
     private @Nullable Consumer<HttpRequest> httpRequestConfigurer;
 
     @Override
@@ -126,7 +126,7 @@ public final class GitHubImpl implements GitHub {
     }
 
     @Override
-    public @NonNull Builder auth(final @NonNull Supplier<String> auth) {
+    public @NonNull Builder auth(final @NonNull AuthorizationSource auth) {
       this.auth = auth;
       return this;
     }
