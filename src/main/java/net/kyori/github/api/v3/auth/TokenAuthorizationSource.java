@@ -62,14 +62,10 @@ public interface TokenAuthorizationSource extends AuthorizationSource {
   /**
    * Create a token-based authorization source from an installation.
    *
-   * <p>
-   * The installation must be part of a GitHub-App-authorized instance.
-   * </p>
+   * <p>The installation must be part of a GitHub-App-authorized instance.</p>
    *
-   * <p>
-   * This is equivalent to calling {@link #forInstallation(Installation, ScheduledExecutorService)} with
-   * a brand new single-threaded {@link ScheduledExecutorService}.
-   * </p>
+   * <p>This is equivalent to calling {@link #forInstallation(Installation, ScheduledExecutorService)} with
+   * a brand new single-threaded {@link ScheduledExecutorService}.</p>
    *
    * @param installation the installation to get access tokens from
    * @return the new authentication source
@@ -85,9 +81,7 @@ public interface TokenAuthorizationSource extends AuthorizationSource {
   /**
    * Create a token-based authorization source from an installation.
    *
-   * <p>
-   * The installation must be part of a GitHub-App-authorized instance.
-   * </p>
+   * <p>The installation must be part of a GitHub-App-authorized instance.</p>
    *
    * @param installation the installation to get access tokens from
    * @param refreshExecutor the executor to schedule refresh tasks on

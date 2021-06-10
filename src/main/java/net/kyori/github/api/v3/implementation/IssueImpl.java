@@ -66,7 +66,7 @@ final class IssueImpl extends AbstractIssue {
 
   @Override
   public @NonNull Optional<PullRequest> pullRequest() {
-    if(this.lazy.get().pull_request == null) {
+    if (this.lazy.get().pull_request == null) {
       return Optional.empty();
     }
     return Optional.of(this.repository.pullRequests().get(this.number()));

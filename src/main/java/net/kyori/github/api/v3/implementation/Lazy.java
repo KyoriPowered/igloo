@@ -27,7 +27,6 @@ import com.google.common.base.Suppliers;
 import com.google.common.reflect.TypeToken;
 import java.io.IOException;
 import java.util.function.Supplier;
-import net.kyori.mu.function.ThrowingSupplier;
 
 final class Lazy<T> {
   private final Supplier<T> json;
@@ -40,12 +39,12 @@ final class Lazy<T> {
     this(request::get, type);
   }
 
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final Class<T> type) {
+  Lazy(final Hacks.ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final Class<T> type) {
     this(requestExecutor, TypeToken.of(type));
   }
 
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final TypeToken<T> type) {
-    this.json = Suppliers.memoize(ThrowingSupplier.of(() -> requestExecutor.get().as(type))::get);
+  Lazy(final Hacks.ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final TypeToken<T> type) {
+    this.json = Suppliers.memoize(Hacks.ThrowingSupplier.of(() -> requestExecutor.get().as(type)));
   }
 
   T get() {

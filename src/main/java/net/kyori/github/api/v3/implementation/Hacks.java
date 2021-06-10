@@ -23,20 +23,48 @@
  */
 package net.kyori.github.api.v3.implementation;
 
-import net.kyori.github.api.RepositoryIdentifier;
-import net.kyori.github.api.v3.Repositories;
-import net.kyori.github.api.v3.Repository;
-import org.checkerframework.checker.nullness.qual.NonNull;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
-final class RepositoriesImpl implements Repositories {
-  private final HTTP.RequestTemplate request;
-
-  RepositoriesImpl(final HTTP.RequestTemplate request) {
-    this.request = request.path("repos");
+final class Hacks {
+  private Hacks() {
   }
 
-  @Override
-  public @NonNull Repository get(final @NonNull RepositoryIdentifier id) {
-    return new RepositoryImpl(this.request, id);
+  static <T extends Throwable> RuntimeException yeet(final Throwable object) throws T {
+    throw (T) object;
+  }
+
+  interface ThrowingFunction<T, R, E extends Throwable> extends Function<T, R> {
+    static <T, R, E extends Throwable> ThrowingFunction<T, R, E> of(final ThrowingFunction<T, R, E> tf) {
+      return tf;
+    }
+
+    @Override
+    default R apply(final T t) {
+      try {
+        return this.apply0(t);
+      } catch (final Throwable e) {
+        throw yeet(e);
+      }
+    }
+
+    R apply0(final T t) throws E;
+  }
+
+  interface ThrowingSupplier<T, E extends Throwable> extends Supplier<T>, com.google.common.base.Supplier<T> {
+    static <T, E extends Throwable> ThrowingSupplier<T, E> of(final ThrowingSupplier<T, E> ts) {
+      return ts;
+    }
+
+    @Override
+    default T get() {
+      try {
+        return this.get0();
+      } catch(final Throwable t) {
+        throw yeet(t);
+      }
+    }
+
+    T get0() throws E;
   }
 }

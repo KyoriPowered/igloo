@@ -36,8 +36,8 @@ public class User {
 
   @Override
   public boolean equals(final Object other) {
-    if(this == other) return true;
-    if(other == null || this.getClass() != other.getClass()) return false;
+    if (this == other) return true;
+    if (other == null || this.getClass() != other.getClass()) return false;
     final User user = (User) other;
     return this.login.equals(user.login);
   }

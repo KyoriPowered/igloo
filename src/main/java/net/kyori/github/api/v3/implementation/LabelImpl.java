@@ -76,8 +76,8 @@ final class LabelImpl implements Label {
 
   @Override
   public boolean equals(final Object other) {
-    if(this == other) return true;
-    if(!(other instanceof Label)) return false;
+    if (this == other) return true;
+    if (!(other instanceof Label)) return false;
     final Label that = (Label) other;
     return this.url.equals(that.url()) && this.name.equals(that.name()) && this.color.equals(that.color());
   }

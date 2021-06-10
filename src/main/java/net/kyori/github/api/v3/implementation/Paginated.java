@@ -52,8 +52,8 @@ final class Paginated<T> implements Iterable<T> {
     HTTP.RequestTemplate next;
 
     private LinkedList<T> current() {
-      if(this.current == null) {
-        if(this.next != null) {
+      if (this.current == null) {
+        if (this.next != null) {
           final HTTP.Response response = Paginated.this.requestFunction.apply(this.next);
           this.next = response.link().next().orElse(null);
           this.current = Paginated.this.responseFunction.apply(response).collect(Collectors.toCollection(LinkedList::new));
@@ -66,9 +66,9 @@ final class Paginated<T> implements Iterable<T> {
 
     @Override
     public boolean hasNext() {
-      if(!this.current().isEmpty()) {
+      if (!this.current().isEmpty()) {
         return true;
-      } else if(this.next != null) {
+      } else if (this.next != null) {
         this.current = null;
         return !this.current().isEmpty();
       } else {

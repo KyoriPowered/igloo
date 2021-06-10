@@ -44,7 +44,7 @@ final class TeamImpl implements Team {
   public @NonNull List<User> members() throws IOException {
     final List<Partial.User> partials = this.request.path("members").get().as(MEMBERS_TYPE);
     final List<User> members = new ArrayList<>(partials.size());
-    for(final Partial.User partial : partials) {
+    for (final Partial.User partial : partials) {
       members.add(new UserImpl(partial.login, partial.name, partial.avatar_url));
     }
     return members;

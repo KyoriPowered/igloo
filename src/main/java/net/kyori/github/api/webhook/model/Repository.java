@@ -49,10 +49,10 @@ public class Repository implements RepositoryIdentifier {
 
   @Override
   public boolean equals(final Object other) {
-    if(this == other) return true;
-    if(other == null || this.getClass() != other.getClass()) return false;
+    if (this == other) return true;
+    if (other == null || this.getClass() != other.getClass()) return false;
     final Repository that = (Repository) other;
-    if(!this.name.equals(that.name)) return false;
+    if (!this.name.equals(that.name)) return false;
     return this.owner.equals(that.owner);
   }
 

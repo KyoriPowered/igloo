@@ -1,35 +1,32 @@
-buildscript {
-  ext {
-    indraVersion = "1.3.1"
-  }
-}
-
 plugins {
-  id "net.kyori.indra" version "$indraVersion"
-  id "net.kyori.indra.checkstyle" version "$indraVersion"
-  id "net.kyori.indra.license-header" version "$indraVersion"
-  id "net.kyori.indra.publishing" version "$indraVersion"
-  id "net.kyori.indra.publishing.sonatype" version "$indraVersion"
+  val indraVersion = "2.0.5"
+  id("net.kyori.indra") version indraVersion
+  id("net.kyori.indra.checkstyle") version indraVersion
+  id("net.kyori.indra.license-header") version indraVersion
+  id("net.kyori.indra.publishing") version indraVersion
+  id("net.kyori.indra.publishing.sonatype") version indraVersion
 }
 
-group("net.kyori")
-version("2.0.0-SNAPSHOT")
-description("A library for interacting with the GitHub API.")
+group = "net.kyori"
+version = "2.0.0-SNAPSHOT"
+description = "A library for interacting with the GitHub API."
 
 indra {
   javaVersions {
-    target = 8
+    target(8)
   }
 
-  github("KyoriPowered", "igloo")
+  github("KyoriPowered", "igloo") {
+    ci(true)
+  }
   mitLicense()
 
   configurePublications {
     pom {
       developers {
         developer {
-          id = "kashike"
-          timezone = "America/Vancouver"
+          id.set("kashike")
+          timezone.set("America/Vancouver")
         }
       }
     }
@@ -39,7 +36,6 @@ indra {
 repositories {
   mavenLocal()
   mavenCentral()
-  sonatypeSnapshots()
 }
 
 dependencies {
@@ -51,14 +47,11 @@ dependencies {
   implementation("com.google.guava:guava:30.1.1-jre")
   implementation("com.google.http-client:google-http-client:1.39.1")
   implementation("com.google.http-client:google-http-client-apache-v2:1.39.1")
-  implementation("net.kyori:mu:1.0.0-SNAPSHOT")
   implementation("io.jsonwebtoken:jjwt-api:0.11.2")
   runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.2")
   runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.2")
 }
 
-jar {
-  manifest.attributes(
-    "Automatic-Module-Name": "net.kyori.igloo"
-  )
+tasks.withType<Jar> {
+  manifest.attributes("Automatic-Module-Name" to "net.kyori.igloo")
 }

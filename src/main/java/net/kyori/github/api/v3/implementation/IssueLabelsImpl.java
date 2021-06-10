@@ -27,7 +27,6 @@ import java.io.IOException;
 import java.util.Arrays;
 import net.kyori.github.api.v3.IssueLabels;
 import net.kyori.github.api.v3.Label;
-import net.kyori.mu.function.ThrowingFunction;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 final class IssueLabelsImpl implements IssueLabels {
@@ -42,8 +41,8 @@ final class IssueLabelsImpl implements IssueLabels {
   public @NonNull Iterable<Label> all() throws IOException {
     return new Paginated<>(
       this.request,
-      ThrowingFunction.of(HTTP.RequestTemplate::get),
-      ThrowingFunction.of(response -> Arrays.stream(response.as(Partial.Label[].class)).map(label -> new LabelImpl(this.request.up(3), label.url, label.name, label.description, label.color)))
+      Hacks.ThrowingFunction.of(HTTP.RequestTemplate::get),
+      Hacks.ThrowingFunction.of(response -> Arrays.stream(response.as(Partial.Label[].class)).map(label -> new LabelImpl(this.request.up(3), label.url, label.name, label.description, label.color)))
     );
   }
 

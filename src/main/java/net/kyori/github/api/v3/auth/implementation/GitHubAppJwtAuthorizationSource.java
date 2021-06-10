@@ -46,7 +46,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  * @since 2.0.0
  */
 public final class GitHubAppJwtAuthorizationSource implements JwtAuthorizationSource {
-
   private static PrivateKey readPemPrivateKey(final String privateKeyText) {
     final byte[] privateKeyBytes = Base64.getDecoder().decode(
       privateKeyText
@@ -58,13 +57,13 @@ public final class GitHubAppJwtAuthorizationSource implements JwtAuthorizationSo
     final KeyFactory kf;
     try {
       kf = KeyFactory.getInstance("RSA");
-    } catch(final NoSuchAlgorithmException e) {
+    } catch (final NoSuchAlgorithmException e) {
       throw new AssertionError("Missing RSA key factory", e);
     }
     final PrivateKey privateKey;
     try {
       privateKey = kf.generatePrivate(spec);
-    } catch(final InvalidKeySpecException e) {
+    } catch (final InvalidKeySpecException e) {
       throw new IllegalArgumentException("Invalid private key given", e);
     }
     return privateKey;
@@ -94,7 +93,7 @@ public final class GitHubAppJwtAuthorizationSource implements JwtAuthorizationSo
   public @NonNull String currentJwt() {
     this.lock.readLock().lock();
     try {
-      if(this.refreshTime.isBefore(Instant.now())) {
+      if (this.refreshTime.isBefore(Instant.now())) {
         this.lock.readLock().unlock();
         try {
           this.refreshJwt();
@@ -103,7 +102,7 @@ public final class GitHubAppJwtAuthorizationSource implements JwtAuthorizationSo
         }
       }
       final String lastJwt = this.lastJwt;
-      if(lastJwt == null) {
+      if (lastJwt == null) {
         throw new AssertionError("Failed to refresh JWT");
       }
       return lastJwt;
@@ -116,7 +115,7 @@ public final class GitHubAppJwtAuthorizationSource implements JwtAuthorizationSo
     this.lock.writeLock().lock();
     try {
       // We might get the lock after it's been updated, if so just bail
-      if(!this.refreshTime.isBefore(Instant.now())) {
+      if (!this.refreshTime.isBefore(Instant.now())) {
         return;
       }
       final Instant now = Instant.now();

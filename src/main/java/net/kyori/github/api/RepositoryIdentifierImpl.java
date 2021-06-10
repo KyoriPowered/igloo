@@ -48,8 +48,8 @@ final class RepositoryIdentifierImpl implements RepositoryIdentifier {
 
   @Override
   public boolean equals(final Object other) {
-    if(this == other) return true;
-    if(!(other instanceof RepositoryIdentifier)) return false;
+    if (this == other) return true;
+    if (!(other instanceof RepositoryIdentifier)) return false;
     final RepositoryIdentifier that = (RepositoryIdentifier) other;
     return this.user.equals(that.user()) && this.repo.equals(that.repo());
   }

@@ -54,9 +54,6 @@ import org.checkerframework.checker.nullness.qual.Nullable;
  * @since 2.0.0
  */
 public final class GitHubImpl implements GitHub {
-  /**
-   * The standard values.
-   */
   private static final List<String> HEADER_VALUES = Streams.concat(
     Stream.of(
       // GraphQL Global Relay IDs
@@ -72,16 +69,16 @@ public final class GitHubImpl implements GitHub {
     final HttpRequestFactory factory = new ApacheHttpTransport().createRequestFactory(request -> {
       request.setIOExceptionHandler(new HttpBackOffIOExceptionHandler(new ExponentialBackOff()));
       request.setNumberOfRetries(10);
-      if(httpRequestConfigurer != null) {
+      if (httpRequestConfigurer != null) {
         httpRequestConfigurer.accept(request);
       }
       final HttpHeaders headers = request.getHeaders();
       headers.put(Accept.HEADER_NAME, HEADER_VALUES);
       headers.setContentType(Json.MEDIA_TYPE);
-      if(auth != null) {
+      if (auth != null) {
         headers.setAuthorization(auth.get());
       }
-      if(headers.getUserAgent() == null) {
+      if (headers.getUserAgent() == null) {
         headers.setUserAgent("igloo");
       }
     });

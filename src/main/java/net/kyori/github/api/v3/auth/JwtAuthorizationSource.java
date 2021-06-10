@@ -39,30 +39,28 @@ public interface JwtAuthorizationSource extends AuthorizationSource {
   /**
    * Creates a new JWT-based authorization source for a GitHub App.
    *
-   * @param appId           the ID of the GitHub App
+   * @param appId the id of the GitHub App
    * @param privateKeyText the private key of the GitHub App, in PEM form
    * @return the new authorization source
    * @since 2.0.0
    */
-  static @NonNull JwtAuthorizationSource forGithubApp(final @NonNull String appId, final @NonNull String privateKeyText) {
+  static @NonNull JwtAuthorizationSource forGitHubApp(final @NonNull String appId, final @NonNull String privateKeyText) {
     return new GitHubAppJwtAuthorizationSource(appId, privateKeyText);
   }
 
   /**
    * Creates a new JWT-based authorization source for a GitHub App.
    *
-   * <p>
-   * The {@code privateKeyFile} must contain UTF-8 encoded text.
-   * </p>
+   * <p>The {@code privateKeyFile} must contain UTF-8 encoded text.</p>
    *
-   * @param appId          the ID of the GitHub App
+   * @param appId  the id of the GitHub App
    * @param privateKeyFile the private key of the GitHub App, in PEM form
    * @return the new authorization source
    * @throws IOException if the file could not be read
    * @since 2.0.0
    */
-  static @NonNull JwtAuthorizationSource forGithubApp(final @NonNull String appId, final @NonNull Path privateKeyFile) throws IOException {
-    return forGithubApp(appId, new String(Files.readAllBytes(privateKeyFile), StandardCharsets.UTF_8)); // todo: Files.readString
+  static @NonNull JwtAuthorizationSource forGitHubApp(final @NonNull String appId, final @NonNull Path privateKeyFile) throws IOException {
+    return forGitHubApp(appId, new String(Files.readAllBytes(privateKeyFile), StandardCharsets.UTF_8)); // todo: Files.readString
   }
 
   @Override

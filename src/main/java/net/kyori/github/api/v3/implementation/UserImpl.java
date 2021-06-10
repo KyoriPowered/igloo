@@ -56,8 +56,8 @@ final class UserImpl implements User {
 
   @Override
   public boolean equals(final Object other) {
-    if(this == other) return true;
-    if(!(other instanceof User)) return false;
+    if (this == other) return true;
+    if (!(other instanceof User)) return false;
     final User that = (User) other;
     return this.login.equals(that.login());
   }

@@ -115,7 +115,7 @@ final class HTTP {
     }
 
     private HttpContent content(final Object object) throws JsonProcessingException {
-      if(object instanceof HttpContent) {
+      if (object instanceof HttpContent) {
         return (HttpContent) object;
       }
       return new ByteArrayContent(Json.MEDIA_TYPE, this.json.writeValueAsString(object).getBytes(StandardCharsets.UTF_8));
@@ -156,7 +156,7 @@ final class HTTP {
 
     public @NonNull Link link() {
       final String header = this.response.getHeaders().getFirstHeaderStringValue("Link");
-      if(header == null) {
+      if (header == null) {
         return Link.Empty.INSTANCE;
       }
       return new Link.Impl(this.request, header);

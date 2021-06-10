@@ -44,7 +44,7 @@ final class PullRequestReviewsImpl implements PullRequestReviews {
   public @NonNull List<PullRequestReview> get() throws IOException {
     final List<Partial.PullRequestReview> partials = this.request.get().as(GET_TYPE);
     final List<PullRequestReview> reviews = new ArrayList<>(partials.size());
-    for(final Partial.PullRequestReview partial : partials) {
+    for (final Partial.PullRequestReview partial : partials) {
       reviews.add(new PullRequestReviewImpl(new UserImpl(partial.user.login, partial.user.name, partial.user.avatar_url), partial.state, partial.body));
     }
     return reviews;

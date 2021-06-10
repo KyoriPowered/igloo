@@ -41,7 +41,6 @@ import org.checkerframework.checker.nullness.qual.NonNull;
  * @since 2.0.0
  */
 public final class GitHubAppInstallationTokenAuthorizationSource implements TokenAuthorizationSource {
-
   private final Callable<Installation.AccessToken> accessTokenProvider;
   private final ScheduledExecutorService refreshExecutor;
   private final CountDownLatch firstTokenAcquired = new CountDownLatch(1);
@@ -71,7 +70,7 @@ public final class GitHubAppInstallationTokenAuthorizationSource implements Toke
     try {
       token = this.accessTokenProvider.call();
       this.currentToken = CompletableFuture.completedFuture(token.token());
-    } catch(final Throwable t) {
+    } catch (final Throwable t) {
       this.currentToken = new CompletableFuture<>();
       this.currentToken.completeExceptionally(t);
       throw t;
@@ -89,15 +88,15 @@ public final class GitHubAppInstallationTokenAuthorizationSource implements Toke
   public @NonNull String currentToken() {
     try {
       // Be generous, but do eventually time out
-      if(!this.firstTokenAcquired.await(5, TimeUnit.MINUTES)) {
+      if (!this.firstTokenAcquired.await(5, TimeUnit.MINUTES)) {
         throw new RuntimeException("Timed out while waiting for first token");
       }
-    } catch(final InterruptedException e) {
+    } catch (final InterruptedException e) {
       Thread.currentThread().interrupt();
       throw new RuntimeException("Interrupted while waiting for first token", e);
     }
     final String currentToken = this.currentToken.join();
-    if(currentToken == null) {
+    if (currentToken == null) {
       throw new AssertionError("Missing current token");
     }
     return currentToken;
