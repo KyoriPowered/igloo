@@ -23,32 +23,19 @@
  */
 package net.kyori.github.api.v3.implementation;
 
-import com.google.common.base.Suppliers;
-import com.google.common.reflect.TypeToken;
-import java.io.IOException;
-import java.util.function.Supplier;
-import net.kyori.mu.function.ThrowingSupplier;
+import net.kyori.github.api.v3.Installation;
+import net.kyori.github.api.v3.Installations;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class Lazy<T> {
-  private final Supplier<T> json;
+final class InstallationsImpl implements Installations {
+  private final HTTP.RequestTemplate request;
 
-  Lazy(final HTTP.RequestTemplate request, final Class<T> type) {
-    this(request, TypeToken.of(type));
+  InstallationsImpl(final HTTP.RequestTemplate request) {
+    this.request = request.path("installations");
   }
 
-  Lazy(final HTTP.RequestTemplate request, final TypeToken<T> type) {
-    this(request::get, type);
-  }
-
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final Class<T> type) {
-    this(requestExecutor, TypeToken.of(type));
-  }
-
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final TypeToken<T> type) {
-    this.json = Suppliers.memoize(ThrowingSupplier.of(() -> requestExecutor.get().as(type))::get);
-  }
-
-  T get() {
-    return this.json.get();
+  @Override
+  public @NonNull Installation get(final int id) {
+    return new InstallationImpl(this.request, id);
   }
 }

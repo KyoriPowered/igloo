@@ -24,6 +24,8 @@
 package net.kyori.github.api.v3.implementation;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.api.client.http.HttpBackOffIOExceptionHandler;
 import com.google.api.client.http.HttpHeaders;
 import com.google.api.client.http.HttpRequest;
@@ -34,18 +36,17 @@ import com.google.api.client.util.ExponentialBackOff;
 import com.google.common.collect.Streams;
 import java.util.List;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import net.kyori.github.api.v3.GitHub;
+import net.kyori.github.api.v3.GitHubApp;
 import net.kyori.github.api.v3.Organizations;
 import net.kyori.github.api.v3.Repositories;
 import net.kyori.github.api.v3.Users;
+import net.kyori.github.api.v3.auth.AuthorizationSource;
 import net.kyori.github.util.Accept;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * GitHub API.
@@ -67,7 +68,7 @@ public final class GitHubImpl implements GitHub {
   ).collect(Collectors.toList());
   private final HTTP.RequestTemplate request;
 
-  GitHubImpl(final ObjectMapper json, final String endpoint, final @Nullable Supplier<String> auth, final @Nullable Consumer<HttpRequest> httpRequestConfigurer) {
+  GitHubImpl(final String endpoint, final @Nullable AuthorizationSource auth, final @Nullable Consumer<HttpRequest> httpRequestConfigurer) {
     final HttpRequestFactory factory = new ApacheHttpTransport().createRequestFactory(request -> {
       request.setIOExceptionHandler(new HttpBackOffIOExceptionHandler(new ExponentialBackOff()));
       request.setNumberOfRetries(10);
@@ -84,6 +85,9 @@ public final class GitHubImpl implements GitHub {
         headers.setUserAgent("igloo");
       }
     });
+    final ObjectMapper json = JsonMapper.builder()
+      .addModule(new JavaTimeModule())
+      .build();
     this.request = new HTTP.RequestTemplate(json, factory, new HTTP.Url(endpoint));
   }
 
@@ -102,22 +106,20 @@ public final class GitHubImpl implements GitHub {
     return new OrganizationsImpl(this.request);
   }
 
+  @Override
+  public @NonNull GitHubApp app() {
+    return new GitHubAppImpl(this.request);
+  }
+
   /**
    * GitHub API builder.
    *
    * @since 2.0.0
    */
   public static final class BuilderImpl implements Builder {
-    private ObjectMapper json;
     private String endpoint = API_ENDPOINT;
-    private @Nullable Supplier<String> auth;
+    private @Nullable AuthorizationSource auth;
     private @Nullable Consumer<HttpRequest> httpRequestConfigurer;
-
-    @Override
-    public @NonNull Builder json(final @NonNull ObjectMapper json) {
-      this.json = json;
-      return this;
-    }
 
     @Override
     public @NonNull Builder endpoint(final @NonNull String endpoint) {
@@ -126,7 +128,7 @@ public final class GitHubImpl implements GitHub {
     }
 
     @Override
-    public @NonNull Builder auth(final @NonNull Supplier<String> auth) {
+    public @NonNull Builder auth(final @NonNull AuthorizationSource auth) {
       this.auth = auth;
       return this;
     }
@@ -139,8 +141,7 @@ public final class GitHubImpl implements GitHub {
 
     @Override
     public @NonNull GitHub build() {
-      requireNonNull(this.json, "json");
-      return new GitHubImpl(this.json, this.endpoint, this.auth, this.httpRequestConfigurer);
+      return new GitHubImpl(this.endpoint, this.auth, this.httpRequestConfigurer);
     }
   }
 }

@@ -21,34 +21,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.github.api.v3.implementation;
+package net.kyori.github.api.v3.auth;
 
-import com.google.common.base.Suppliers;
-import com.google.common.reflect.TypeToken;
-import java.io.IOException;
-import java.util.function.Supplier;
-import net.kyori.mu.function.ThrowingSupplier;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
-final class Lazy<T> {
-  private final Supplier<T> json;
-
-  Lazy(final HTTP.RequestTemplate request, final Class<T> type) {
-    this(request, TypeToken.of(type));
-  }
-
-  Lazy(final HTTP.RequestTemplate request, final TypeToken<T> type) {
-    this(request::get, type);
-  }
-
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final Class<T> type) {
-    this(requestExecutor, TypeToken.of(type));
-  }
-
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final TypeToken<T> type) {
-    this.json = Suppliers.memoize(ThrowingSupplier.of(() -> requestExecutor.get().as(type))::get);
-  }
-
-  T get() {
-    return this.json.get();
-  }
+/**
+ * An authorization source.
+ *
+ * @since 2.0.0
+ */
+public interface AuthorizationSource {
+  /**
+   * Gets the current {@code Authorization} header value.
+   *
+   * @return the value for the {@code Authorization} header
+   * @since 2.0.0
+   */
+  @NonNull String get();
 }

@@ -21,34 +21,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.kyori.github.api.v3.implementation;
+package net.kyori.github.api.v3;
 
-import com.google.common.base.Suppliers;
-import com.google.common.reflect.TypeToken;
-import java.io.IOException;
-import java.util.function.Supplier;
-import net.kyori.mu.function.ThrowingSupplier;
-
-final class Lazy<T> {
-  private final Supplier<T> json;
-
-  Lazy(final HTTP.RequestTemplate request, final Class<T> type) {
-    this(request, TypeToken.of(type));
-  }
-
-  Lazy(final HTTP.RequestTemplate request, final TypeToken<T> type) {
-    this(request::get, type);
-  }
-
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final Class<T> type) {
-    this(requestExecutor, TypeToken.of(type));
-  }
-
-  Lazy(final ThrowingSupplier<HTTP.Response, IOException> requestExecutor, final TypeToken<T> type) {
-    this.json = Suppliers.memoize(ThrowingSupplier.of(() -> requestExecutor.get().as(type))::get);
-  }
-
-  T get() {
-    return this.json.get();
-  }
+/**
+ * A GitHub App's installations.
+ *
+ * @since 2.0.0
+ */
+public interface Installations {
+  /**
+   * Gets an installation.
+   *
+   * @param id the id
+   * @return the installation
+   * @since 2.0.0
+   */
+  Installation get(int id);
 }

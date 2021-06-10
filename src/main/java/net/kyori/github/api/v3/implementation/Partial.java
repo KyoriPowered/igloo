@@ -25,6 +25,7 @@ package net.kyori.github.api.v3.implementation;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.time.Instant;
 import net.kyori.github.api.v3.Collaborator;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
@@ -97,5 +98,12 @@ interface Partial {
     String login;
     String name;
     String avatar_url;
+  }
+
+  @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+  @JsonIgnoreProperties(ignoreUnknown = true)
+  class AccessToken {
+    String token;
+    Instant expires_at;
   }
 }
