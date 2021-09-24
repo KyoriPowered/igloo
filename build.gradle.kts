@@ -44,7 +44,7 @@ dependencies {
   implementation(platform("com.fasterxml.jackson:jackson-bom:2.12.3"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
   implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-  implementation("com.google.guava:guava:30.1.1-jre")
+  implementation("com.google.guava:guava:31.0-jre")
   implementation("com.google.http-client:google-http-client:1.39.1")
   implementation("com.google.http-client:google-http-client-apache-v2:1.39.1")
   implementation("io.jsonwebtoken:jjwt-api:0.11.2")
